@@ -1,0 +1,114 @@
+buildscript {
+    apply from: "./gradle-script/ext-config.gradle"
+    apply from: "./gradle-script/ext-version.gradle"
+    apply from: "./gradle-script/ext-func-allprojects.gradle"
+
+    repositories {
+        mavenLocal()
+        maven {
+            url "https://maven.aliyun.com/repository/public-snapshots"
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/public"
+        }
+    }
+    dependencies {
+        classpath(app_plugins['spring-boot-gradle-plugin'])
+        classpath(app_plugins['gradle-docker-plugin'])
+    }
+
+}
+
+
+
+plugins {
+    id 'java'
+    id 'maven'
+
+}
+
+allprojects {
+    group 'com.kylinhunter.nlp.dic'
+    version '1.2.2-SNAPSHOT'
+
+    repositories {
+        mavenLocal()
+        maven {
+            url "https://maven.aliyun.com/repository/public-snapshots"
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/public"
+        }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+
+    apply from: "../gradle-script/ext-func-subprojects.gradle"
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+
+
+    dependencies {
+
+
+
+        compile("org.projectlombok:lombok:1.18.20")
+        annotationProcessor 'org.projectlombok:lombok:1.18.20'
+        compile(rootProject.dep['commons-io'])
+        compile(rootProject.dep['commons-lang3'])
+        compile(rootProject.dep['pinyin4j'])
+
+
+        compile("ch.qos.logback:logback-classic:1.2.3")
+        compile("org.apache.logging.log4j:log4j-to-slf4j:2.13.3")
+        compile("org.slf4j:jul-to-slf4j:1.7.30")
+
+
+        testCompile("org.projectlombok:lombok:1.18.20")
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+        testImplementation(rootProject.dep['jmockit'])
+
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.3'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.3'
+
+
+    }
+
+    test {
+        testLogging {
+            outputs.upToDateWhen {false}
+            showStandardStreams = true
+        }
+        useJUnitPlatform()
+    }
+
+    task taskChangeActiveProfile {
+        doLast {
+            changeActiveProfile(project.profile)
+        }
+    }
+    classes.finalizedBy(taskChangeActiveProfile)
+
+
+
+
+    addDockerBuildTask(project.name)
+
+}
+
+group 'com.kylinhunter.nlp.dic'
+version '1.2.2-SNAPSHOT'
+
+wrapper{
+    gradleVersion = '6.9'
+    archiveBase = 'GRADLE_USER_HOME'
+    archivePath = 'wrapper/dists'
+    distributionBase = 'GRADLE_USER_HOME"'
+    distributionPath = 'wrapper/dists'
+    distributionUrl = 'https://services.gradle.org/distributions/gradle-6.9-bin.zip'
+}

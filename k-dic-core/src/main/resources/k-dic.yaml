@@ -1,0 +1,14 @@
+local:
+  # 扩展词典的本地配置
+  exDicDir: /Users/bijian/workspace/XXX/icpd/kylinhunter-dic/tmp
+  # 是否开启自动扫描功能，开启自动扫描功能后，一旦扩展词典被修改，会自动生效。扩展词典的定义见下面 dics.SENSITIVE.exDic
+  autoScan: true
+dics:
+  # 敏感词词典配置
+  SENSITIVE:
+    # 是否开启默认词典
+    defaultDicEnabled: true
+    # 词典最大词长度
+    wordMaxLen: 10
+    # 扩展词典的名字，配合 local.exDicDir 使用，等价于 new File(local.exDicDir,dics.SENSITIVE.exDic);
+    exDic: dic-sensitive-ex.xlsx

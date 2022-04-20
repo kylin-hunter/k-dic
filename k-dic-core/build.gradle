@@ -1,0 +1,12 @@
+dependencies {
+    compile project(':k-dic-commons')
+    compile(rootProject.dep['IKAnalyzer']) ;
+    compile("com.alibaba:easyexcel:3.0.5")
+    implementation 'org.yaml:snakeyaml:1.30'
+
+}
+
+jar.enabled = true
+
+
+
