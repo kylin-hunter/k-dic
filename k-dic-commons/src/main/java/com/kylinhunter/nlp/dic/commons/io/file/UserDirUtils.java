@@ -29,7 +29,7 @@ public class UserDirUtils {
      * @author BiJi'an
      * @updateTime 2022-01-01 01:57
      */
-    public static File getUserDir() {
+    public static File get() {
         return USER_DIR;
     }
 

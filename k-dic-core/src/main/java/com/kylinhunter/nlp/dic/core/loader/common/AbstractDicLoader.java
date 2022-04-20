@@ -11,7 +11,7 @@ import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
 import com.kylinhunter.nlp.dic.core.config.Config;
 import com.kylinhunter.nlp.dic.core.config.DicConfig;
-import com.kylinhunter.nlp.dic.core.config.DicConfigParser;
+import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
 import com.kylinhunter.nlp.dic.core.dic.Dic;
 import com.kylinhunter.nlp.dic.core.dic.imp.DicImp;
 import com.kylinhunter.nlp.dic.core.dictionary.component.FindSkipper;
@@ -35,7 +35,7 @@ public abstract class AbstractDicLoader implements DicLoader {
 
     protected FindSkipper findSkipper = FindSkipper.getInstance();
     protected Dic[] dics = new Dic[DicType.values().length];
-    protected Config config = DicConfigParser.load();
+    protected Config config = ConfigHelper.load();
 
     public AbstractDicLoader() {
 

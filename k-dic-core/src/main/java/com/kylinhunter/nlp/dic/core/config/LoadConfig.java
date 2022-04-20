@@ -8,7 +8,6 @@ import lombok.Data;
  * @create: 2022-01-01 23:54
  **/
 @Data
-public class DicDataSourceLocal {
-    private String exDicDir;
-    private boolean autoScan;
+public class LoadConfig {
+    private LoadConfigLocal local;
 }

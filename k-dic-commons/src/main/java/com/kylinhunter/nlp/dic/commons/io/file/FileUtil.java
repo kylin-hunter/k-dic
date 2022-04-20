@@ -7,8 +7,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.commons.io.Charsets;
+import org.apache.commons.lang3.StringUtils;
 
 import com.kylinhunter.nlp.dic.commons.exception.internal.KIOException;
+import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
+import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
 
 /**
  * @description:
@@ -16,6 +19,29 @@ import com.kylinhunter.nlp.dic.commons.exception.internal.KIOException;
  * @create: 2022/1/1
  **/
 public class FileUtil {
+    public static final String USER_DIR_TAG = "$user.dir$";
+    public static final String CLASSPATH_TAG = "classpath:";
+
+    /**
+     * @param path
+     * @return java.lang.String
+     * @throws
+     * @title correctPath
+     * @description
+     * @author BiJi'an
+     * @updateTime 2022-04-21 00:52
+     */
+    public static String correctPath(String path) {
+        if (!StringUtils.isEmpty(path)) {
+            if (path.startsWith(CLASSPATH_TAG)) {
+              return   ResourceHelper.getFileInClassPath(path.replace(CLASSPATH_TAG, "")).getAbsolutePath();
+            } else {
+                return path.replace(USER_DIR_TAG, UserDirUtils.get().getAbsolutePath());
+
+            }
+        }
+        return path;
+    }
 
     /**
      * @param file

@@ -1,8 +1,16 @@
-local:
-  # 扩展词典的本地配置
-  exDicDir: /Users/bijian/workspace/XXX/icpd/kylinhunter-dic/tmp
-  # 是否开启自动扫描功能，开启自动扫描功能后，一旦扩展词典被修改，会自动生效。扩展词典的定义见下面 dics.SENSITIVE.exDic
-  autoScan: true
+# 词典加载方式
+load:
+  #本地磁盘加载方式
+  local:
+    # 扩展词典的本地存储目录，3种写法
+    # 写法1：写绝对路径 ，例如：/home/work
+    # 写法2：写当前工作路径($user.dir$)的相对路径，例如： $user.dir$/tmp
+    # 写法3：在classpath中寻找目录，例如： classpath:config/ex_dic_path
+    exDicDir: "classpath:config/ex_dic_path"
+    # 是否开启自动扫描功能，开启自动扫描功能后，一旦扩展词典被修改，会自动生效。扩展词典的定义见下面 dics.SENSITIVE.exDic
+    autoScan: true
+
+# 词典的具体配置
 dics:
   # 敏感词词典配置
   SENSITIVE:

@@ -1,5 +1,7 @@
 package com.kylinhunter.nlp.dic.core.config;
 
+import java.io.File;
+
 import lombok.Data;
 
 /**
@@ -8,6 +10,9 @@ import lombok.Data;
  * @create: 2022-01-01 23:54
  **/
 @Data
-public class DicDataSource {
-    private DicDataSourceLocal local;
+public class LoadConfigLocal {
+    private String exDicDir;
+    private File exDicDirPath;
+    private boolean autoScan;
+
 }

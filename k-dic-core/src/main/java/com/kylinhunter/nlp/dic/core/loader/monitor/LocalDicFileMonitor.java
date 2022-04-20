@@ -10,34 +10,42 @@ import org.apache.commons.io.monitor.FileAlterationObserver;
 
 import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
 import com.kylinhunter.nlp.dic.core.config.Config;
-import com.kylinhunter.nlp.dic.core.config.DicDataSourceLocal;
+import com.kylinhunter.nlp.dic.core.config.LoadConfigLocal;
 import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @description:
  * @author: BiJi'an
  * @create: 2022-01-01 10:41
  **/
+@Slf4j
 public class LocalDicFileMonitor {
     FileAlterationMonitor monitor;
+    LoadConfigLocal loadConfigLocal;
 
     public LocalDicFileMonitor(Config config) {
-        DicDataSourceLocal dicDataSourceLocal = config.getDataSource().getLocal();
-        File exDicPath = new File(dicDataSourceLocal.getExDicDir());
-
-        Map<String, DicType> fileToDicType =
-                config.getDics().values().stream().collect(Collectors.toMap(e -> e.getExDic(), e -> e.getType()));
-        long interval = TimeUnit.SECONDS.toMillis(10);
-        FileAlterationObserver observer = new FileAlterationObserver(exDicPath,
-                (pathname) -> fileToDicType.containsKey(pathname.getName()));
-        observer.addListener(new ExDicPathFileListener(fileToDicType));
-        monitor = new FileAlterationMonitor(interval, observer);
+        this.loadConfigLocal = config.getLoad().getLocal();
+        if (loadConfigLocal.isAutoScan()) {
+            File exDicPath = new File(loadConfigLocal.getExDicDir());
+            log.info("monitor path:" + exDicPath.getAbsolutePath());
+            Map<String, DicType> fileToDicType =
+                    config.getDics().values().stream().collect(Collectors.toMap(e -> e.getExDic(), e -> e.getType()));
+            long interval = TimeUnit.SECONDS.toMillis(10);
+            FileAlterationObserver observer = new FileAlterationObserver(exDicPath,
+                    (pathname) -> fileToDicType.containsKey(pathname.getName()));
+            observer.addListener(new ExDicPathFileListener(fileToDicType));
+            this.monitor = new FileAlterationMonitor(interval, observer);
+        }
 
     }
 
     public void start() {
         try {
-            monitor.start();
+            if (loadConfigLocal.isAutoScan()) {
+                monitor.start();
+            }
         } catch (Exception e) {
             throw new KInitException("init local dic monitor error", e);
         }

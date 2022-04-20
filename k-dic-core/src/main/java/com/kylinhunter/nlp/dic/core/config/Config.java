@@ -15,7 +15,7 @@ import lombok.Data;
 @Data
 public class Config {
     private WordAnalyzerType wordAnalyzer = WordAnalyzerType.DEFAULT;
-    private DicDataSource dataSource;
+    private LoadConfig load;
     private Map<DicType, DicConfig> dics;
 
 }

@@ -12,13 +12,13 @@ import com.alibaba.excel.read.listener.PageReadListener;
 import com.alibaba.excel.util.ListUtils;
 import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
 import com.kylinhunter.nlp.dic.commons.io.file.UserDirUtils;
-import com.kylinhunter.nlp.dic.core.config.DicDataSourceLocal;
+import com.kylinhunter.nlp.dic.core.config.LoadConfigLocal;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 import com.kylinhunter.nlp.dic.core.loader.bean.DicData;
 import com.kylinhunter.nlp.dic.core.loader.common.AbstractDicLoader;
 import com.kylinhunter.nlp.dic.core.config.Config;
 import com.kylinhunter.nlp.dic.core.config.DicConfig;
-import com.kylinhunter.nlp.dic.core.config.DicConfigParser;
+import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
 import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 import com.kylinhunter.nlp.dic.core.loader.monitor.LocalDicFileMonitor;
 
@@ -36,7 +36,6 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 public class LocalDicLoader extends AbstractDicLoader {
     private static LocalDicLoader singleton = new LocalDicLoader();
-    protected Config config = DicConfigParser.load();
 
     private LocalDicFileMonitor localDicFileMonitor = new LocalDicFileMonitor(config);
 
@@ -106,8 +105,8 @@ public class LocalDicLoader extends AbstractDicLoader {
      * @updateTime 2022-04-18 01:14
      */
     protected List<DicData> loadExDicData(DicType dicType, DicConfig dicConfig) {
-        DicDataSourceLocal dicDataSourceLocal = config.getDataSource().getLocal();
-        File file = new File(dicDataSourceLocal.getExDicDir(), dicConfig.getExDic());
+        LoadConfigLocal loadConfigLocal = config.getLoad().getLocal();
+        File file = new File(loadConfigLocal.getExDicDir(), dicConfig.getExDic());
         if (file == null || !file.exists()) {
             return null;
         }
