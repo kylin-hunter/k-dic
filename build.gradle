@@ -1,7 +1,7 @@
 buildscript {
-    apply from: "./gradle-script/ext-config.gradle"
-    apply from: "./gradle-script/ext-version.gradle"
-    apply from: "./gradle-script/ext-func-allprojects.gradle"
+    apply from: "./script/gradle-script/ext-config.gradle"
+    apply from: "./script/gradle-script/ext-version.gradle"
+    apply from: "./script/gradle-script/ext-func-allprojects.gradle"
 
     repositories {
         mavenLocal()
@@ -46,7 +46,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
 
-    apply from: "../gradle-script/ext-func-subprojects.gradle"
+    apply from: "../script/gradle-script/ext-func-subprojects.gradle"
 
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8

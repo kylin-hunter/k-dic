@@ -2,10 +2,10 @@
 # exit whenever encounter errors
 set -e
 
-./build-script/build-before.sh
+./script/build-script/build-before.sh
 
 #gradle clean build dockerImageBuild -x test -Pprofile=dev-k8s-share
 
 ./gradlew clean build  -x test -Pprofile=dev-k8s-share
 
-./build-script/build-after.sh
+./script/build-script/build-after.sh
