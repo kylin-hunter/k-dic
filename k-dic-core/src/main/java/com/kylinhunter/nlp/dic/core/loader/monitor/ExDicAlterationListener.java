@@ -21,17 +21,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Data
 @AllArgsConstructor
-public class ExDicPathFileListener implements FileAlterationListener {
+public class ExDicAlterationListener implements FileAlterationListener {
     Map<String, DicType> fileToDicType;
 
     @Override
     public void onStart(FileAlterationObserver fileAlterationObserver) {
-        log.info("monitor start scan files..");
+//        log.info("monitor start scan files..");
     }
 
     @Override
     public void onStop(FileAlterationObserver fileAlterationObserver) {
-        log.info("monitor stop scanning..");
+//        log.info("monitor stop scanning..");
     }
 
     @Override
@@ -59,7 +59,11 @@ public class ExDicPathFileListener implements FileAlterationListener {
         log.info(file.getName() + " changed.");
         DicType dicType = fileToDicType.get(file.getName());
         if (dicType != null) {
-            LocalDicLoader.getInstance().load(dicType, true);
+            try {
+                LocalDicLoader.getInstance().reload(dicType);
+            } catch (Exception e) {
+                log.error("reload error", e);
+            }
         }
     }
 

@@ -3,6 +3,8 @@ package com.kylinhunter.nlp.dic.core.loader.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kylinhunter.nlp.dic.core.loader.DicManager;
+import com.kylinhunter.nlp.dic.core.loader.wrapper.DicWrapper;
 import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -34,12 +36,8 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class AbstractDicLoader implements DicLoader {
 
     protected FindSkipper findSkipper = FindSkipper.getInstance();
-    protected Dic[] dics = new Dic[DicType.values().length];
     protected Config config = ConfigHelper.load();
 
-    public AbstractDicLoader() {
-
-    }
 
     /**
      * @param dicType
@@ -58,7 +56,7 @@ public abstract class AbstractDicLoader implements DicLoader {
             dictionaryGroup = new DictionaryGroup();
             WordAnalyzer analyzer = SimpleServiceFactory.get(config.getWordAnalyzer());
             for (DicData dicData : dicDatas) {
-                add(dictionaryGroup, dicData, analyzer, dicConfig.getWordMaxLen());
+                addDicData(dictionaryGroup, dicData, analyzer, dicConfig.getWordMaxLen());
             }
             dictionaryGroup.setSecondaryWordsMatch(dicType.isSecondaryWordsMatch());
         }
@@ -76,50 +74,51 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @author BiJi'an
      * @updateTime 2022/3/26 5:48 下午
      */
-    private void add(DictionaryGroup dictionaryGroup, DicData dicData, WordAnalyzer analyzer, int maxKeywordLen) {
-        String wordsOri = dicData.getWords();
-        String secondaryWordsOri = dicData.getSecondaryWords();
-        int classId = dicData.getClassId();
-        int type = dicData.getType();
-        if (!StringUtils.isEmpty(wordsOri)) {
+    private void addDicData(DictionaryGroup dictionaryGroup, DicData dicData, WordAnalyzer analyzer, int maxKeywordLen) {
+        String words = dicData.getWords();
+        if (!StringUtils.isEmpty(words)) {
             WordNode wordNode = new WordNode();
+            wordNode.setType(dicData.getType());
+            wordNode.setClassId(dicData.getClassId());
+            wordNode.setHitMode(HitMode.valueOf(dicData.getHitMode().toUpperCase()));
+
+
             String relationWordsOri = dicData.getRelationWords();
             String[] relationWordsOriSplit = StringUtils.split(relationWordsOri, ' ');
             wordNode.setRelationWords(relationWordsOriSplit);
-            wordNode.setType(type);
-            wordNode.setClassId(classId);
 
-            wordNode.setHitMode(HitMode.valueOf(dicData.getHitMode().toUpperCase()));
-            if (!StringUtils.isEmpty(wordsOri) && wordsOri.length() > 1 && wordsOri.length() <= maxKeywordLen) {
-                wordNode.setKeyword(wordsOri);
-                wordNode.setKeywordSplit(analyzer.analyze(wordsOri));
 
-                if (!StringUtils.isEmpty(secondaryWordsOri)) {
-                    String[] secondaryWordsOriSplit = StringUtils.split(secondaryWordsOri, ' ');
-                    List<String> secondKeyWords = new ArrayList<>();
-                    List<Words> secondaryWordsSplit = new ArrayList<>();
+            if (!StringUtils.isEmpty(words) && words.length() > 0 && words.length() <= maxKeywordLen) {
+                wordNode.setKeyword(words);
+                wordNode.setKeywordSplit(analyzer.analyze(words));
 
-                    for (String nowWord : secondaryWordsOriSplit) {
-                        if (!StringUtils.isEmpty(nowWord) && nowWord.length() > 1
-                                && nowWord.length() <= maxKeywordLen) {
-                            secondKeyWords.add(nowWord);
-                            secondaryWordsSplit.add(analyzer.analyze(nowWord));
+                String secondaryWords = dicData.getSecondaryWords();
+                if (!StringUtils.isEmpty(secondaryWords)) {
+
+                    List<String> secondaryWordsList = new ArrayList<>();
+                    List<Words> secondaryWordsSplitList = new ArrayList<>();
+
+                    for (String secondaryWord : StringUtils.split(secondaryWords, ' ')) {
+                        if (!StringUtils.isEmpty(secondaryWord) && secondaryWord.length() > 1
+                                && secondaryWord.length() <= maxKeywordLen) {
+                            secondaryWordsList.add(secondaryWord);
+                            secondaryWordsSplitList.add(analyzer.analyze(secondaryWord));
                         }
 
                     }
-                    if (secondKeyWords.size() > 0) {
-                        wordNode.setSecondaryWords(secondKeyWords.toArray(new String[0]));
-                        wordNode.setSecondaryWordsSplit(secondaryWordsSplit.toArray(new Words[0]));
+                    if (secondaryWordsList.size() > 0) {
+                        wordNode.setSecondaryWords(secondaryWordsList.toArray(new String[0]));
+                        wordNode.setSecondaryWordsSplit(secondaryWordsSplitList.toArray(new Words[0]));
                     }
                 }
 
                 dictionaryGroup.put(wordNode);
 
                 if (HitMode.HIGH == wordNode.getHitMode()) {
-                    for (int i = 0; i < wordsOri.length(); i++) {
-                        if (wordsOri.charAt(i) != ' ' && !CharUtils.isAsciiAlphanumeric(wordsOri.charAt(i))) {
-                            if (findSkipper.remove(FindLevel.HIGH, wordsOri.charAt(i))) {
-                                log.error("remove FindLevel.HIGH char skip:" + wordsOri.charAt(i));
+                    for (int i = 0; i < words.length(); i++) {
+                        if (words.charAt(i) != ' ' && !CharUtils.isAsciiAlphanumeric(words.charAt(i))) {
+                            if (findSkipper.remove(FindLevel.HIGH, words.charAt(i))) {
+                                log.error("remove FindLevel.HIGH char skip:" + words.charAt(i));
                             }
                         }
                     }
@@ -127,7 +126,9 @@ public abstract class AbstractDicLoader implements DicLoader {
             }
 
         } else {
-            log.warn("invalid word:" + dicData);
+            if (!StringUtils.isEmpty(words)) {
+                log.warn("invalid word:" + dicData);
+            }
         }
     }
 
@@ -153,20 +154,19 @@ public abstract class AbstractDicLoader implements DicLoader {
      */
     @Override
     public Dic load(DicType dicType) {
-        return load(dicType, false);
+        DicConfig dicConfig = config.getDics().get(dicType);
+        List<DicData> dicDatas = loadDicData(dicType, dicConfig);
+        return createDic(dicType, dicDatas, dicConfig);
+
     }
 
     @Override
-
-    public Dic load(DicType dicType, boolean force) {
-        Dic dic = dics[dicType.ordinal()];
-        if (dic == null || force) {
-            DicConfig dicConfig = config.getDics().get(dicType);
-            List<DicData> dicDatas = loadDicData(dicType, dicConfig);
-            dics[dicType.ordinal()] = createDic(dicType, dicDatas, dicConfig);
-            dic = dics[dicType.ordinal()];
+    public void reload(DicType dicType) {
+        DicWrapper dicWrapper = DicManager.get(dicType, false);
+        if (dicWrapper != null) {
+            Dic dic = this.load(dicType);
+            dicWrapper.setDic(dic);
         }
-        return dic;
     }
 
     /**

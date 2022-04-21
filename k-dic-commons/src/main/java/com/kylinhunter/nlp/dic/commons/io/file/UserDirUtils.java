@@ -119,7 +119,7 @@ public class UserDirUtils {
     }
 
     public static File getTmpFile(String child) {
-        return getFile(USER_DIR_TMP + child, true);
+        return getFile(USER_DIR_TMP + File.separator +  child, true);
     }
 
     /**
@@ -132,7 +132,7 @@ public class UserDirUtils {
      * @updateTime 2022-01-01 01:57
      */
     public static File getTmpFile(String child, boolean createParent) {
-        return getFile(USER_DIR_TMP + child, createParent);
+        return getFile(USER_DIR_TMP + File.separator +  child, createParent);
 
     }
 

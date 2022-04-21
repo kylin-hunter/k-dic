@@ -3,7 +3,7 @@ package com.kylinhunter.nlp.dic.core.loader.constants;
 import lombok.Getter;
 
 /**
- * @description:
+ * @description: DicType
  * @author: BiJi'an
  * @create: 2022-01-01 15:10
  **/
@@ -20,14 +20,14 @@ public enum DicType {
     private String name;
 
     @Getter
-    private String configPath;
+    private String path;
     @Getter
     private boolean secondaryWordsMatch = true;
 
-    DicType(int code, String name, String configPath, boolean secondaryWordsMatch) {
+    DicType(int code, String name, String path, boolean secondaryWordsMatch) {
         this.code = code;
         this.name = name;
-        this.configPath = configPath;
+        this.path = path;
         this.secondaryWordsMatch = secondaryWordsMatch;
     }
 

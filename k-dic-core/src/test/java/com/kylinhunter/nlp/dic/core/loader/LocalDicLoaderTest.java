@@ -16,7 +16,7 @@ class LocalDicLoaderTest {
 
     @Test
     public void test() {
-        Dic dic = LocalDicLoader.getInstance().load(DicType.SENSITIVE);
+        Dic dic = DicManager.get(DicType.SENSITIVE);
         DictionaryGroup dictionaryGroup = dic.getDictionaryGroup();
         Dictionary<WordNode> dictionary = dictionaryGroup.getDic(DictionaryGroupType.HIGH);
 

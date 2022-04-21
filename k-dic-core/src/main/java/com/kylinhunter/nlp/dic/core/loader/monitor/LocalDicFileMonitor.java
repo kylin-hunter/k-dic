@@ -25,26 +25,40 @@ public class LocalDicFileMonitor {
     FileAlterationMonitor monitor;
     LoadConfigLocal loadConfigLocal;
 
+
     public LocalDicFileMonitor(Config config) {
         this.loadConfigLocal = config.getLoad().getLocal();
         if (loadConfigLocal.isAutoScan()) {
             File exDicPath = new File(loadConfigLocal.getExDicDir());
-            log.info("monitor path:" + exDicPath.getAbsolutePath());
-            Map<String, DicType> fileToDicType =
-                    config.getDics().values().stream().collect(Collectors.toMap(e -> e.getExDic(), e -> e.getType()));
-            long interval = TimeUnit.SECONDS.toMillis(10);
-            FileAlterationObserver observer = new FileAlterationObserver(exDicPath,
-                    (pathname) -> fileToDicType.containsKey(pathname.getName()));
-            observer.addListener(new ExDicPathFileListener(fileToDicType));
-            this.monitor = new FileAlterationMonitor(interval, observer);
+            if (exDicPath.exists()) {
+                log.info("monitor path:" + exDicPath.getAbsolutePath());
+                Map<String, DicType> fileToDicType =
+                        config.getDics().values().stream().collect(Collectors.toMap(e -> e.getExDic(), e -> e.getType()));
+                long interval = TimeUnit.SECONDS.toMillis(10);
+                FileAlterationObserver observer = new FileAlterationObserver(exDicPath,
+                        (pathname) -> fileToDicType.containsKey(pathname.getName()));
+                observer.addListener(new ExDicAlterationListener(fileToDicType));
+                this.monitor = new FileAlterationMonitor(interval, observer);
+            } else {
+                log.error("invalid ex dic path" + exDicPath.getAbsolutePath());
+            }
+
         }
 
     }
 
+    /*
+     * @description  start
+     * @date  2022/4/22 1:53
+     * @author  BiJi'an
+     * @Param:
+     * @return void
+     */
     public void start() {
         try {
             if (loadConfigLocal.isAutoScan()) {
                 monitor.start();
+                log.info(" ex dic monitor started...... ");
             }
         } catch (Exception e) {
             throw new KInitException("init local dic monitor error", e);

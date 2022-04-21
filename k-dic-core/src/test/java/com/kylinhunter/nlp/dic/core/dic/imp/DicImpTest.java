@@ -2,6 +2,7 @@ package com.kylinhunter.nlp.dic.core.dic.imp;
 
 import java.util.List;
 
+import com.kylinhunter.nlp.dic.core.loader.DicManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ class DicImpTest {
     @Test
     void process1() {
 
-        Dic dic = LocalDicLoader.getInstance().load(DicType.SENSITIVE);
+        Dic dic = DicManager.get(DicType.SENSITIVE);
         String text = "我猜测"
                 + "北京和北*京和北*1京人民"
                 + "上海和上*海和上*1海黄浦区大钟寺人民"

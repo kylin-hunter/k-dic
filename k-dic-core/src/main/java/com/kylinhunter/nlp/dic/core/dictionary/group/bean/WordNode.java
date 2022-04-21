@@ -13,13 +13,17 @@ public class WordNode {
     private int type;
     private int classId;
     private HitMode hitMode;
+
     private String keyword;
+    private Words keywordSplit;
+
     private String[] secondaryWords;
+    private Words[] secondaryWordsSplit;
+
     private String[] relationWords;
 
 
-    private Words keywordSplit;
-    private Words[] secondaryWordsSplit;
+
 
 
 
