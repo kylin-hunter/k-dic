@@ -20,6 +20,7 @@ class EnumUtilTest {
     @Test
     void testFromCode2() {
         TestEnum[] testEnum = EnumUtil.fromCode(TestEnum.class, new int[]{1, 2});
+
         assertEquals(TestEnum.TEST1, testEnum[0]);
         assertEquals(TestEnum.TEST2, testEnum[1]);
     }
