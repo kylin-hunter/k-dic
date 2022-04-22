@@ -162,7 +162,7 @@ public abstract class AbstractDicLoader implements DicLoader {
 
     @Override
     public void reload(DicType dicType) {
-        DicWrapper dicWrapper = DicManager.get(dicType, false);
+        DicWrapper dicWrapper = DicManager.getDicWrapper(dicType);
         if (dicWrapper != null) {
             Dic dic = this.load(dicType);
             dicWrapper.setDic(dic);

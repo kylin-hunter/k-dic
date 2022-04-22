@@ -1,17 +1,15 @@
 package com.kylinhunter.nlp.dic.core.dic.imp;
 
-import java.util.List;
-
+import com.kylinhunter.nlp.dic.core.dic.Dic;
+import com.kylinhunter.nlp.dic.core.dic.bean.MatchResult;
+import com.kylinhunter.nlp.dic.core.dic.option.MatchOptions;
 import com.kylinhunter.nlp.dic.core.loader.DicManager;
+import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.kylinhunter.nlp.dic.core.dic.Dic;
-import com.kylinhunter.nlp.dic.core.loader.LocalDicLoader;
-import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
-import com.kylinhunter.nlp.dic.core.dic.bean.MatchResult;
-import com.kylinhunter.nlp.dic.core.dic.option.MatchOptions;
+import java.util.List;
 
 class DicImpTest {
 
@@ -41,7 +39,7 @@ class DicImpTest {
         matchResults.forEach(System.out::println);
         Assertions.assertTrue(matchResults != null && matchResults.size() == 10);
 
-        matchResults = dic.match(text,  MatchOptions.FULL_LOW);
+        matchResults = dic.match(text, MatchOptions.FULL_LOW);
         System.out.println("===== low");
         matchResults.forEach(System.out::println);
         Assertions.assertTrue(matchResults != null && matchResults.size() == 12);

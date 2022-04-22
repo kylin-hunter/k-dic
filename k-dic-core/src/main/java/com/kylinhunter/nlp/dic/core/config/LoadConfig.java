@@ -1,5 +1,6 @@
 package com.kylinhunter.nlp.dic.core.config;
 
+import com.kylinhunter.nlp.dic.core.loader.constants.LoadSource;
 import lombok.Data;
 
 /**
@@ -10,4 +11,5 @@ import lombok.Data;
 @Data
 public class LoadConfig {
     private LoadConfigLocal local;
+    private LoadSource loadSource;
 }

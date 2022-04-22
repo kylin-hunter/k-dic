@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.kylinhunter.nlp.dic.core.loader.constants.LoadSource;
 import org.apache.commons.io.FileUtils;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -11,7 +12,6 @@ import org.yaml.snakeyaml.constructor.Constructor;
 import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
 import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
 import com.kylinhunter.nlp.dic.commons.io.file.FileUtil;
-import com.kylinhunter.nlp.dic.commons.io.file.UserDirUtils;
 
 /**
  * @description:
@@ -19,6 +19,8 @@ import com.kylinhunter.nlp.dic.commons.io.file.UserDirUtils;
  * @create: 2022-01-01 00:25
  **/
 public class ConfigHelper {
+
+    private static Config config;
 
     /**
      * @return com.kylinhunter.nlp.dic.core.config.Config
@@ -30,6 +32,9 @@ public class ConfigHelper {
      */
     public static Config load() {
         try {
+            if (config != null) {
+                return config;
+            }
             Yaml yaml = new Yaml(new Constructor(Config.class));
             InputStream in = ResourceHelper.getInputStreamInClassPath("k-dic.yaml");
             Config config = yaml.load(in);
@@ -52,17 +57,22 @@ public class ConfigHelper {
      */
 
     public static void loadAfter(Config config) {
+        LoadConfig configLoad = config.getLoad();
         LoadConfigLocal loadConfigLocal = config.getLoad().getLocal();
-        loadConfigLocal.setExDicDir(FileUtil.correctPath(loadConfigLocal.getExDicDir()));
-        String exDicDir = loadConfigLocal.getExDicDir();
-        File exDicDirPath = new File(exDicDir);
-        if (!exDicDirPath.isDirectory()) {
-            try {
-                FileUtils.forceMkdir(exDicDirPath);
-            } catch (IOException e) {
-                throw new KInitException("mkdir error" + exDicDir, e);
+        if (loadConfigLocal != null) {
+            loadConfigLocal.setExDicDir(FileUtil.correctPath(loadConfigLocal.getExDicDir()));
+            String exDicDir = loadConfigLocal.getExDicDir();
+            File exDicDirPath = new File(exDicDir);
+            if (!exDicDirPath.isDirectory()) {
+                try {
+                    FileUtils.forceMkdir(exDicDirPath);
+                } catch (IOException e) {
+                    throw new KInitException("mkdir error" + exDicDir, e);
+                }
             }
+            configLoad.setLoadSource(LoadSource.LOCAL);
         }
+
 
         config.getDics().forEach((k, v) -> {
             v.setType(k);

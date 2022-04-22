@@ -7,13 +7,20 @@ import com.kylinhunter.nlp.dic.core.loader.common.AbstractDicLoader;
 import com.kylinhunter.nlp.dic.core.config.DicConfig;
 import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 
+import com.kylinhunter.nlp.dic.core.loader.monitor.LocalDicFileMonitor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 
 public class DBDicLoader extends AbstractDicLoader {
-    public DBDicLoader() {
-        super();
+    private static DBDicLoader singleton = new DBDicLoader();
+ 
+    private DBDicLoader() {
+         
+    }
+
+    public static DBDicLoader getInstance() {
+        return singleton;
     }
 
     @Override

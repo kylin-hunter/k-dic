@@ -1,16 +1,15 @@
 package com.kylinhunter.nlp.dic.core.loader;
 
+import com.kylinhunter.nlp.dic.core.dic.Dic;
+import com.kylinhunter.nlp.dic.core.dictionary.Dictionary;
+import com.kylinhunter.nlp.dic.core.dictionary.bean.FindContext;
+import com.kylinhunter.nlp.dic.core.dictionary.constant.MatchLevel;
+import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
+import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroupType;
+import com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode;
+import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import com.kylinhunter.nlp.dic.core.dictionary.Dictionary;
-import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
-import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
-import com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode;
-import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroupType;
-import com.kylinhunter.nlp.dic.core.dictionary.constant.MatchLevel;
-import com.kylinhunter.nlp.dic.core.dictionary.bean.FindContext;
-import com.kylinhunter.nlp.dic.core.dic.Dic;
 
 class LocalDicLoaderTest {
 
