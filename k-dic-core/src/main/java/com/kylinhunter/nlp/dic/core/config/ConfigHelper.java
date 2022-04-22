@@ -60,12 +60,11 @@ public class ConfigHelper {
         LoadConfig configLoad = config.getLoad();
         LoadConfigLocal loadConfigLocal = config.getLoad().getLocal();
         if (loadConfigLocal != null) {
-            loadConfigLocal.setExDicDir(FileUtil.correctPath(loadConfigLocal.getExDicDir()));
-            String exDicDir = loadConfigLocal.getExDicDir();
-            File exDicDirPath = new File(exDicDir);
-            if (!exDicDirPath.isDirectory()) {
+            File exDicDir = FileUtil.correctPath(loadConfigLocal.getExDicDir());
+            loadConfigLocal.setExDicDir(exDicDir.getAbsolutePath());
+            if (!exDicDir.isDirectory()) {
                 try {
-                    FileUtils.forceMkdir(exDicDirPath);
+                    FileUtils.forceMkdir(exDicDir);
                 } catch (IOException e) {
                     throw new KInitException("mkdir error" + exDicDir, e);
                 }

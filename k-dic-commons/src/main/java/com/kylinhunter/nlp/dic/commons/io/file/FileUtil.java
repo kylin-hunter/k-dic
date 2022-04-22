@@ -31,16 +31,21 @@ public class FileUtil {
      * @author BiJi'an
      * @updateTime 2022-04-21 00:52
      */
-    public static String correctPath(String path) {
+    public static File correctPath(String path) {
         if (!StringUtils.isEmpty(path)) {
             if (path.startsWith(CLASSPATH_TAG)) {
-              return   ResourceHelper.getFileInClassPath(path.replace(CLASSPATH_TAG, "")).getAbsolutePath();
+                path = path.replace(CLASSPATH_TAG, "");
+                File file = ResourceHelper.getFileInClassPath(path);
+                if (file != null) {
+                    return file;
+                } else {
+                    return new File(path);
+                }
             } else {
-                return path.replace(USER_DIR_TAG, UserDirUtils.get().getAbsolutePath());
-
+                return new File(path.replace(USER_DIR_TAG, UserDirUtils.get().getAbsolutePath()));
             }
         }
-        return path;
+        return new File(path);
     }
 
     /**

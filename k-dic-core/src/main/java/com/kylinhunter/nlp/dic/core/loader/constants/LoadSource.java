@@ -12,7 +12,7 @@ import lombok.Getter;
 public enum LoadSource implements EnumUtil.EnumCode {
     LOCAL(1, "LOCAL"),
 
-    DB(1, "DB");
+    DB(2, "DB");
 
     @Getter
     private int code;
