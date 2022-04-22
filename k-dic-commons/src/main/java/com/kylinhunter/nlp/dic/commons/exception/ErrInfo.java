@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022/1/1
+ * @description 
+ * @author  BiJi'an
+ * @date 2022/1/1
  **/
 @Data
 @AllArgsConstructor

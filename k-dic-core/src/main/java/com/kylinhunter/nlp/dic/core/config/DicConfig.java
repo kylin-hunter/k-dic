@@ -5,9 +5,9 @@ import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 import lombok.Data;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022-01-01 23:54
+ * @description 
+ * @author  BiJi'an
+ * @date 2022-01-01 23:54
  **/
 @Data
 public class DicConfig {

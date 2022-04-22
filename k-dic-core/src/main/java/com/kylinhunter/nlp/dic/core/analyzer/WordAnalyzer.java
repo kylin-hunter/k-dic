@@ -3,9 +3,9 @@ package com.kylinhunter.nlp.dic.core.analyzer;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
 
 /**
- * @description: word analyzer
- * @author: BiJi'an
- * @create: 2022/1/1
+ * @description  word analyzer
+ * @author  BiJi'an
+ * @date 2022/1/1
  **/
 public interface WordAnalyzer {
     /**

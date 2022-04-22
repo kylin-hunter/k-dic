@@ -5,9 +5,9 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022/1/1
+ * @description 
+ * @author  BiJi'an
+ * @date 2022/1/1
  **/
 @Slf4j
 public class CollectionUtil {
@@ -21,6 +21,7 @@ public class CollectionUtil {
      * @author BiJi'an
      * @updateTime 2022/1/1 8:30
      */
+    @SafeVarargs
     public static <T> List<T> merge(List<T>... results) {
 
         List<T> resultAll = null;

@@ -4,9 +4,9 @@ import com.kylinhunter.nlp.dic.core.dic.constant.FindType;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022-01-01 15:10
+ * @description 
+ * @author  BiJi'an
+ * @date 2022-01-01 15:10
  **/
 
 public class MatchOptions {

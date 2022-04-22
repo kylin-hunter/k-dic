@@ -7,14 +7,14 @@ import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description: a simpler service factory
- * @author: BiJi'an
- * @create: 2022/1/1
+ * @description  a simpler service factory
+ * @author  BiJi'an
+ * @date 2022/1/1
  **/
 @Slf4j
 public class SimpleServiceFactory {
     private static final int MAX_SERVICE_NUMS = 1000; // max service nums supported
-    private static Object[] SERVICES = new Object[MAX_SERVICE_NUMS];
+    private static final Object[] SERVICES = new Object[MAX_SERVICE_NUMS];
     private static final AtomicInteger SERVICE_ID_GENERATOR = new AtomicInteger(0);
 
     /**

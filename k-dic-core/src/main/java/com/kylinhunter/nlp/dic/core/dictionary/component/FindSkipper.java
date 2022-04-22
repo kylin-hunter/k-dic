@@ -15,9 +15,9 @@ import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022-01-01
+ * @description 
+ * @author  BiJi'an
+ * @date 2022-01-01
  **/
 @Slf4j
 public class FindSkipper {

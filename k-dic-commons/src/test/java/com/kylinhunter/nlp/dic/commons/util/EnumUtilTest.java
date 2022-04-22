@@ -24,18 +24,16 @@ class EnumUtilTest {
         assertEquals(TestEnum.TEST2, testEnum[1]);
     }
 
-    public static enum TestEnum implements EnumUtil.EnumCode {
-        TEST1(1, "TEST1"),
+    public enum TestEnum implements EnumUtil.EnumCode {
+        TEST1(1),
 
-        TEST2(2, "TEST2");
+        TEST2(2);
 
         @Getter
-        private int code;
-        private String name;
+        private final int code;
 
-        TestEnum(int code, String name) {
+        TestEnum(int code) {
             this.code = code;
-            this.name = name;
         }
 
     }

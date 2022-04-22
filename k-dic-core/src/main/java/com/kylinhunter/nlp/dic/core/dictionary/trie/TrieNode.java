@@ -9,9 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022/1/1
+ * @description 
+ * @author  BiJi'an
+ * @date 2022/1/1
  **/
 @Getter
 @Setter

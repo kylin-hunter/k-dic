@@ -12,9 +12,9 @@ import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022/1/1
+ * @description 
+ * @author  BiJi'an
+ * @date 2022/1/1
  **/
 @Slf4j
 public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {

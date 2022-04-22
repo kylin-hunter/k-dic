@@ -8,9 +8,9 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022/1/1
+ * @description 
+ * @author  BiJi'an
+ * @date 2022/1/1
  **/
 @Data
 public class DicData implements Serializable {

@@ -33,9 +33,7 @@ class FileUtilTest {
         String path = "classpath:/test/test.txt";
         File distFile = FileUtil.correctPath(path);
         AtomicInteger lines = new AtomicInteger(0);
-        FileUtil.process(distFile, "UTF-8", (line -> {
-            lines.incrementAndGet();
-        }));
+        FileUtil.process(distFile, "UTF-8", (line -> lines.incrementAndGet()));
         assertEquals(1, lines.get());
     }
 }

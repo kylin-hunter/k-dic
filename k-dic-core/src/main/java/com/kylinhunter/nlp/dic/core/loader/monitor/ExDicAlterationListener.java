@@ -14,9 +14,9 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022-01-01 23:51
+ * @description 
+ * @author  BiJi'an
+ * @date 2022-01-01 23:51
  **/
 @Slf4j
 @Data

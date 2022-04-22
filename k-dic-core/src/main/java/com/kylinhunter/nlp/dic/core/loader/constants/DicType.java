@@ -3,9 +3,9 @@ package com.kylinhunter.nlp.dic.core.loader.constants;
 import lombok.Getter;
 
 /**
- * @description: DicType
- * @author: BiJi'an
- * @create: 2022-01-01 15:10
+ * @description  DicType
+ * @author  BiJi'an
+ * @date 2022-01-01 15:10
  **/
 public enum DicType {
     SENSITIVE(1, "敏感词典", "/config/dic/dic-sensitive.xlsx", true),

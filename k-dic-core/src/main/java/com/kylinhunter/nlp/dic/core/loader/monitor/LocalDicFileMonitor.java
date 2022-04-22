@@ -16,9 +16,9 @@ import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022-01-01 10:41
+ * @description 
+ * @author  BiJi'an
+ * @date 2022-01-01 10:41
  **/
 @Slf4j
 public class LocalDicFileMonitor {

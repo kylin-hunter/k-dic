@@ -14,9 +14,9 @@ import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description: a implementation based on ik
- * @author: BiJi'an
- * @create: 2022-01-01 19:26
+ * @description  a implementation based on ik
+ * @author  BiJi'an
+ * @date 2022-01-01 19:26
  **/
 @Slf4j
 public class IKWordAnalyzer extends AbstractWordAnalyzer {

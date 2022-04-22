@@ -6,9 +6,9 @@ import com.kylinhunter.nlp.dic.core.dictionary.bean.FindContext;
 import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022/1/1
+ * @description 
+ * @author  BiJi'an
+ * @date 2022/1/1
  **/
 public interface Dictionary<T> {
 

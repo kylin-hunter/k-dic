@@ -6,9 +6,9 @@ import com.kylinhunter.nlp.dic.commons.util.EnumUtil;
 import lombok.Getter;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022-01-01 15:10
+ * @description 
+ * @author  BiJi'an
+ * @date 2022-01-01 15:10
  **/
 public enum FindLevel implements EnumUtil.EnumCode {
     HIGH(1, "HIGH"),

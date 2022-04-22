@@ -1,22 +1,16 @@
 package com.kylinhunter.nlp.dic.commons.io.file;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
+import com.kylinhunter.nlp.dic.commons.exception.internal.KIOException;
+import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.lang3.StringUtils;
 
-import com.kylinhunter.nlp.dic.commons.exception.internal.KIOException;
-import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
-import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
+import java.io.*;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022/1/1
+ * @description 
+ * @author  BiJi'an
+ * @date 2022/1/1
  **/
 public class FileUtil {
     public static final String USER_DIR_TAG = "$user.dir$";
@@ -52,7 +46,6 @@ public class FileUtil {
      * @param file
      * @param encoding
      * @param processor
-     * @return void
      * @throws
      * @title process
      * @description
@@ -83,7 +76,7 @@ public class FileUtil {
     public static void process(InputStream input, String encoding, LinesProcessor<?> processor) {
 
         try (InputStreamReader streamReader = new InputStreamReader(input, Charsets.toCharset(encoding));
-             BufferedReader bufferReader = new BufferedReader(streamReader);) {
+             BufferedReader bufferReader = new BufferedReader(streamReader)) {
             String line = bufferReader.readLine();
             while (line != null) {
                 processor.process(line);

@@ -14,9 +14,9 @@ import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
 import com.kylinhunter.nlp.dic.commons.io.file.FileUtil;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022-01-01 00:25
+ * @description 
+ * @author  BiJi'an
+ * @date 2022-01-01 00:25
  **/
 public class ConfigHelper {
 

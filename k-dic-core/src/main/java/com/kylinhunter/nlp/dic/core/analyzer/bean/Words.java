@@ -8,9 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @description: a group words
- * @author: BiJi'an
- * @create: 2022/1/1
+ * @description  a group words
+ * @author  BiJi'an
+ * @date 2022/1/1
  **/
 @Getter
 @Setter

@@ -9,9 +9,9 @@ import com.kylinhunter.nlp.dic.commons.exception.internal.KIOException;
 import com.kylinhunter.nlp.dic.commons.exception.internal.KInternalException;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022/1/1
+ * @description 
+ * @author  BiJi'an
+ * @date 2022/1/1
  **/
 public class UserDirUtils {
     private static final File USER_DIR = new File(System.getProperty("user.dir"));

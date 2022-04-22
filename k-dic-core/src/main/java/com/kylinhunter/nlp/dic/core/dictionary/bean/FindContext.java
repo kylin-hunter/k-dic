@@ -3,9 +3,9 @@ package com.kylinhunter.nlp.dic.core.dictionary.bean;
 import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022-01-01
+ * @description 
+ * @author  BiJi'an
+ * @date 2022-01-01
  **/
 public class FindContext<T> {
 
