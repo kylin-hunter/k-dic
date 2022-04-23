@@ -7,31 +7,27 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022/1/1
  **/
 @Slf4j
 public class TrieHelper {
 
     /**
-     * @param trie
-     * @return void
-     * @throws
+     * @param trie trie
      * @title showStatistics
      * @description
      * @author BiJi'an
      * @updateTime 2022-04-16 02:01
      */
     public static <T> void showStatistics(Trie<T> trie) {
-        log.debug(trie.getTrieStat().toString());
+        log.info(trie.getTrieStat().toString());
 
     }
 
     /**
-     * @param trie
-     * @return void
-     * @throws
+     * @param trie trie
      * @title showConfilicMessage
      * @description
      * @author BiJi'an
@@ -62,22 +58,21 @@ public class TrieHelper {
         for (int key : map.keySet()) {
             int value = map.get(key);
             count += key * value;
-            sb.append("there is  " + value + " slot  whose conflict Num is " + key + "\n");
+            sb.append("there is  ").append(value).append(" slot  whose conflict Num is ").append(key).append("\n");
         }
         int firstCharIndexSlotNum = Trie.FIRST_CHAR_INDEX_SLOT_NUM;
-        sb.append("all conflict num:" + count + "\n");
-        sb.append("usage rate:(" + (firstCharIndexSlotNum - emptySlot) + "/" + firstCharIndexSlotNum + ")="
-                + (float) (firstCharIndexSlotNum - emptySlot) / firstCharIndexSlotNum * 100 + "%" + "\n");
-        sb.append("remaining:" + emptySlot + "\n");
+        sb.append("all conflict num:").append(count).append("\n");
+        sb.append("usage rate:(").append(firstCharIndexSlotNum - emptySlot).append("/");
+        sb.append(firstCharIndexSlotNum).append(")=");
+        sb.append((float) (firstCharIndexSlotNum - emptySlot) / firstCharIndexSlotNum * 100).append("%").append("\n");
+        sb.append("remaining:").append(emptySlot).append("\n");
 
-        log.debug("\n " + sb.toString());
+        log.info("\n" + sb);
     }
 
     /**
-     * @param trie
-     * @param character
-     * @return void
-     * @throws
+     * @param trie      trie
+     * @param character character
      * @title show
      * @description
      * @author BiJi'an
@@ -86,13 +81,11 @@ public class TrieHelper {
     public static <T> void show(Trie<T> trie, char character) {
         StringBuilder sb = new StringBuilder();
         show(sb, trie.getRootNode(character), "");
-        log.debug("\n" + sb.toString());
+        log.info("\n" + sb);
     }
 
     /**
-     * @param trie
-     * @return void
-     * @throws
+     * @param trie trie
      * @title show
      * @description
      * @author BiJi'an
@@ -105,14 +98,12 @@ public class TrieHelper {
                 show(sb, node, "");
             }
         }
-        log.debug("\n" + sb.toString());
+        log.info("\n" + sb);
     }
 
     /**
-     * @param node
-     * @param indent
-     * @return void
-     * @throws
+     * @param node   node
+     * @param indent indent
      * @title show
      * @description
      * @author BiJi'an
@@ -120,9 +111,9 @@ public class TrieHelper {
      */
     private static <T> void show(StringBuilder sb, TrieNode<T> node, String indent) {
         if (node.isTerminal()) {
-            sb.append(indent + node.getCharacter() + ":" + node.getValues() + "(T) \n");
+            sb.append(indent).append(node.getCharacter()).append(":").append(node.getValues()).append("(T) \n");
         } else {
-            sb.append(indent + node.getCharacter() + ":" + node.getValues() + "\n");
+            sb.append(indent).append(node.getCharacter()).append(":").append(node.getValues()).append("\n");
         }
         for (TrieNode<T> item : node.getChildren()) {
             show(sb, item, indent + "\t");

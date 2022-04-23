@@ -1,31 +1,28 @@
 package com.kylinhunter.nlp.dic.core.loader;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.read.listener.PageReadListener;
+import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
+import com.kylinhunter.nlp.dic.core.config.DicConfig;
+import com.kylinhunter.nlp.dic.core.config.LoadConfigLocal;
+import com.kylinhunter.nlp.dic.core.dic.Dic;
+import com.kylinhunter.nlp.dic.core.loader.bean.DicData;
+import com.kylinhunter.nlp.dic.core.loader.common.AbstractDicLoader;
+import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
+import com.kylinhunter.nlp.dic.core.loader.monitor.LocalDicFileMonitor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
+
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
-import com.kylinhunter.nlp.dic.core.dic.Dic;
-import org.apache.commons.io.IOUtils;
-
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.read.listener.PageReadListener;
-import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
-import com.kylinhunter.nlp.dic.core.config.LoadConfigLocal;
-import com.kylinhunter.nlp.dic.core.loader.bean.DicData;
-import com.kylinhunter.nlp.dic.core.loader.common.AbstractDicLoader;
-import com.kylinhunter.nlp.dic.core.config.DicConfig;
-import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
-import com.kylinhunter.nlp.dic.core.loader.monitor.LocalDicFileMonitor;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022-01-01
  **/
 @Slf4j
@@ -49,9 +46,8 @@ public class LocalDicLoader extends AbstractDicLoader {
     }
 
     /**
-     * @param dicType
+     * @param dicType dicType
      * @return java.util.List<com.kylinhunter.nlp.Config.core.loader.bean.DicData>
-     * @throws
      * @title load
      * @description
      * @author BiJi'an
@@ -60,7 +56,7 @@ public class LocalDicLoader extends AbstractDicLoader {
     protected List<DicData> loadDicData(DicType dicType, DicConfig dicConfig) {
 
         List<DicData> dicDatas = loadDefaultDicData(dicType);
-        List<DicData> exDicDatas = loadExDicData(dicType, dicConfig);
+        List<DicData> exDicDatas = loadExDicData(dicConfig);
         if (exDicDatas != null) {
             dicDatas.addAll(exDicDatas);
         }
@@ -68,9 +64,8 @@ public class LocalDicLoader extends AbstractDicLoader {
     }
 
     /**
-     * @param dicType
+     * @param dicType dicType
      * @return java.util.List<com.kylinhunter.nlp.Config.core.loader.bean.DicData>
-     * @throws
      * @title loadDefaultDicData
      * @description
      * @author BiJi'an
@@ -83,9 +78,7 @@ public class LocalDicLoader extends AbstractDicLoader {
         try {
             List<DicData> dicDatas = new ArrayList<>();
             InputStream input = ResourceHelper.getInputStreamInClassPath(path);
-            EasyExcel.read(input, DicData.class, new PageReadListener<DicData>(dataList -> {
-                dicDatas.addAll(dataList);
-            })).sheet().doRead();
+            EasyExcel.read(input, DicData.class, new PageReadListener<DicData>(dicDatas::addAll)).sheet().doRead();
             log.info("load loadDefaultDicData,size={}", dicDatas.size());
             return dicDatas;
         } catch (Exception e) {
@@ -95,26 +88,24 @@ public class LocalDicLoader extends AbstractDicLoader {
         }
     }
 
-    /**
-     * @param
-     * @return java.util.List<com.kylinhunter.nlp.Config.core.loader.bean.DicData>
-     * @throws
-     * @title loadExDicData
-     * @description
-     * @author BiJi'an
-     * @updateTime 2022-04-18 01:14
+    /*
+     * @description  loadExDicData
+     * @date  2022/4/24 3:04
+     * @author  BiJi'an
+     * @Param dicType dicType
+     * @Param dicConfig dicConfig
+     * @return java.util.List<com.kylinhunter.nlp.dic.core.loader.bean.DicData>
      */
-    protected List<DicData> loadExDicData(DicType dicType, DicConfig dicConfig) {
-        LoadConfigLocal loadConfigLocal = config.getLoad().getLocal();
-        File file = new File(loadConfigLocal.getExDicDir(), dicConfig.getExDic());
-        if (file == null || !file.exists()) {
-            return null;
-        }
+    protected List<DicData> loadExDicData(DicConfig dicConfig) {
         try {
+            LoadConfigLocal loadConfigLocal = config.getLoad().getLocal();
+            File file = new File(loadConfigLocal.getExDicDir(), dicConfig.getExDic());
+            if (!file.exists()) {
+                return null;
+            }
+
             List<DicData> dicDatas = new ArrayList<>();
-            EasyExcel.read(file, DicData.class, new PageReadListener<DicData>(dataList -> {
-                dicDatas.addAll(dataList);
-            })).sheet().doRead();
+            EasyExcel.read(file, DicData.class, new PageReadListener<DicData>(dicDatas::addAll)).sheet().doRead();
             log.info("load loadExDicData,size={}", dicDatas.size());
             return dicDatas;
 

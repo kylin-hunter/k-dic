@@ -1,10 +1,11 @@
 
-package com.kylinhunter.nlp.dic.core.dictionary.component;
+package com.kylinhunter.nlp.dic.core.dic.component;
 
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.kylinhunter.nlp.dic.core.dictionary.constant.DictionaryConst;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,27 +16,27 @@ import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022-01-01
  **/
 @Slf4j
-public class FindSkipper {
-    private static FindSkipper singleton = new FindSkipper();
-    public static final char SPECIAL_CHAR = '`';
+public class DicSkipper {
+    private static DicSkipper singleton = new DicSkipper();
+    public static final char SPECIAL_CHAR = DictionaryConst.SPECIAL_CHAR;
 
-    private FindSkipper() {
+    private DicSkipper() {
         init();
     }
 
-    public static FindSkipper getInstance() {
+    public static DicSkipper getInstance() {
         return singleton;
     }
 
     private Set<Character> hiChars = new HashSet<>();
     private Set<Character> defaultChars = new HashSet<>();
 
-    private static final String CONFIG_PATH = "/config/dic/find_skipper.txt";
+    private static final String CONFIG_PATH = "/config/dic/dic_skipper.txt";
 
     public void init() {
 

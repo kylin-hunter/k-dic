@@ -3,7 +3,7 @@ package com.kylinhunter.nlp.dic.core.analyzer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.kylinhunter.nlp.dic.commons.service.SimpleServiceFactory;
+import com.kylinhunter.nlp.dic.commons.service.KServices;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
 
 class WordAnalyzerTest {
@@ -16,9 +16,9 @@ class WordAnalyzerTest {
                         + "，它主要作用是对切出来的词进行进一步的处理（如去掉敏感词、英文大小写转换、单复数处理）等。lucene中的Tokenstram方法首先创建一个tokenizer"
                         + "对象处理Reader对象中的流式文本，然后利用TokenFilter对输出流进行过滤处理";
 
-        Words words = SimpleServiceFactory.get(WordAnalyzerType.IK).analyze(text);
+        Words words = KServices.get(WordAnalyzerType.IK).analyze(text);
         words.forEach(System.out::println);
-        Words words2 = SimpleServiceFactory.get(WordAnalyzerType.IK).analyze(text);
+        Words words2 = KServices.get(WordAnalyzerType.IK).analyze(text);
         words2.forEach(System.out::println);
         Assertions.assertTrue(words.size()==words2.size());
     }

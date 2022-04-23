@@ -17,9 +17,8 @@ public class FileUtil {
     public static final String CLASSPATH_TAG = "classpath:";
 
     /**
-     * @param path
+     * @param path path
      * @return java.lang.String
-     * @throws
      * @title correctPath
      * @description
      * @author BiJi'an
@@ -43,16 +42,15 @@ public class FileUtil {
     }
 
     /**
-     * @param file
-     * @param encoding
-     * @param processor
-     * @throws
+     * @param file  a file
+     * @param encoding the encoding of the file
+     * @param processor a processor to process the file
      * @title process
      * @description
      * @author BiJi'an
      * @updateTime 2022-01-01 01:48
      */
-    public static void process(File file, String encoding, LinesProcessor<?> processor) {
+    public static void process(File file, String encoding, LinesProcessor processor) {
 
         try (InputStream input = new FileInputStream(file)) {
             process(input, encoding, processor);
@@ -63,17 +61,15 @@ public class FileUtil {
     }
 
     /**
-     * @param input
-     * @param encoding
-     * @param processor
-     * @return void
-     * @throws
+     * @param input  the input stream
+     * @param encoding the encoding
+     * @param processor the processor
      * @title process
      * @description
      * @author BiJi'an
      * @updateTime 2022-01-01 02:00
      */
-    public static void process(InputStream input, String encoding, LinesProcessor<?> processor) {
+    public static void process(InputStream input, String encoding, LinesProcessor processor) {
 
         try (InputStreamReader streamReader = new InputStreamReader(input, Charsets.toCharset(encoding));
              BufferedReader bufferReader = new BufferedReader(streamReader)) {

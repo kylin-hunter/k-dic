@@ -5,7 +5,7 @@ package com.kylinhunter.nlp.dic.commons.service;
  * @author  BiJi'an
  * @date 2022/1/1
  **/
-public interface SimpleService<T> {
+public interface KService<T> {
 
     Class<? extends T> getClazz();
 

@@ -1,53 +1,30 @@
 package com.kylinhunter.nlp.dic.core.dictionary.imp;
 
+import com.kylinhunter.nlp.dic.core.dictionary.constant.DictionaryConst;
+import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
+import com.kylinhunter.nlp.dic.core.dictionary.constant.MatchLevel;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.kylinhunter.nlp.dic.commons.service.SimpleServiceFactory;
+import com.kylinhunter.nlp.dic.commons.service.KServices;
 import com.kylinhunter.nlp.dic.core.dictionary.DictionaryType;
-import com.kylinhunter.nlp.dic.core.dictionary.bean.FindContext;
-import com.kylinhunter.nlp.dic.core.dictionary.imp.DictionaryTrie;
-import com.kylinhunter.nlp.dic.core.dictionary.trie.Trie;
+import com.kylinhunter.nlp.dic.core.dictionary.bean.MatchContext;
 import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieHelper;
 
 public class DictionaryTrieTest {
 
-    @Test
-    void test1() {
-        final Trie<Integer> trie = new Trie<Integer>();
-        trie.put("毕庄", 1);
-        trie.put("毕家庄", 1);
-        trie.put("毕继安", 1);
-        trie.put("毕平安", 1);
-        trie.put("胡庄", 1);
-        trie.put("罗小培", 1);
-        trie.put("罗小杰", 1);
-        trie.put("中华人民共和国", 1);
-        trie.put("中华", 1);
-        TrieHelper.showConfilicMessage(trie);
-        TrieHelper.show(trie);
-        Assertions.assertEquals(false, trie.contains("毕"));
-        Assertions.assertEquals(true, trie.contains("毕庄"));
-        Assertions.assertEquals(true, trie.contains("毕继安"));
-        Assertions.assertEquals(true, trie.contains("罗小培"));
+    static DictionaryTrie<Long> trie = KServices.create(DictionaryType.TRIE);
+    private static final char SC = DictionaryConst.SPECIAL_CHAR;
 
-        trie.remove("罗小培");
-        Assertions.assertEquals(false, trie.contains("罗小培"));
-        TrieHelper.showConfilicMessage(trie);
-        TrieHelper.show(trie);
-
-    }
-
-    @Test
-    public void test2() {
-
+    @BeforeAll
+    public static void init() {
         // 定义了三种匹配模式
         // 1、精确匹配，一模一样
         // 2、中度匹配、词中含有常见符号，
-        // 3、低度匹配、含有常见符号之外，额外含有一个其他字符，例如一个中英文字符
+        // 3、低度匹配、含有常见符号之外，额外含有若干个其他字符，例如一个中英文字符
 
-        DictionaryTrie<Long> trie = SimpleServiceFactory.create(DictionaryType.TRIE);
-        FindContext<Long> findContext = new FindContext<Long>();
+
         trie.put("毕庄", 1L);
         trie.put("毕家庄", 2L);
         trie.put("毕继安", 3L);
@@ -61,31 +38,109 @@ public class DictionaryTrieTest {
         TrieHelper.showStatistics(trie);
         TrieHelper.showConfilicMessage(trie);
         TrieHelper.show(trie);
-        trie.find("毕", findContext);
-        System.out.println("findContext.matchLevel:" + findContext.matchLevel);
-        Assertions.assertEquals(true, findContext.matchLevel == 0);
-        trie.find("毕庄", findContext);
-        Assertions.assertEquals(true, findContext.matchLevel == 1);
-        trie.find("毕继安", findContext);
-        Assertions.assertEquals(true, findContext.matchLevel == 1);
+    }
 
-        trie.find("罗小培", findContext);
-        Assertions.assertEquals(true, findContext.matchLevel == 1);
+    @Test
+    public void test1() {
 
-        findContext.findLevel = 3;
-        trie.find("罗``小``培", findContext);
-        System.out.println("findContext.matchLevel:" + findContext.matchLevel);
+        MatchContext<Long> matchContext = new MatchContext<>();
+        matchContext.findLevel = FindLevel.HIGH.getCode();
 
-        Assertions.assertEquals(true, findContext.matchLevel == 2);
+        trie.match("毕", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
 
-        trie.find("罗``1小1``培", findContext);
-        System.out.println("findContext.matchLevel:" + findContext.matchLevel);
+        trie.match("毕", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
 
-        Assertions.assertEquals(true, findContext.matchLevel == 3);
 
-        TrieHelper.showStatistics(trie);
-        TrieHelper.showConfilicMessage(trie);
-        TrieHelper.show(trie);
+        trie.match("毕庄", matchContext);
+        Assertions.assertEquals(matchContext.matchLevel, MatchLevel.HIGH.getCode());
+
+        trie.match("毕庄1", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+
+
+        trie.match("毕继安", matchContext);
+        Assertions.assertEquals(matchContext.matchLevel, MatchLevel.HIGH.getCode());
+
+        trie.match("毕继安1", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+
+
+        trie.match("罗小培", matchContext);
+        Assertions.assertEquals(matchContext.matchLevel, MatchLevel.HIGH.getCode());
+
+        trie.match("罗小培1", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+
+
+    }
+
+    @Test
+    public void test2() {
+        MatchContext<Long> matchContext = new MatchContext<>();
+        matchContext.findLevel = FindLevel.HIGH_MIDDLE.getCode();
+
+        trie.match("罗小培", matchContext);
+        Assertions.assertEquals(matchContext.matchLevel, MatchLevel.HIGH.getCode());
+        trie.match("罗小培1", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+
+        trie.match("罗" + SC + SC + "小" + SC + SC + "培", matchContext);
+        Assertions.assertEquals(matchContext.matchLevel, MatchLevel.MIDDLE.getCode());
+
+        trie.match("罗" + SC + SC + "小" + SC + SC + "培1", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+
+        matchContext.maxSkip = 2;
+        trie.match("罗" + SC + SC + SC + SC + "小" + SC + SC + SC + SC + "培", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+
+        trie.match("罗" + SC + SC + SC + SC + "小" + SC + SC + SC + SC + "培1", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+
+        matchContext.maxSkip = 4;
+        trie.match("罗" + SC + SC + SC + SC + "小" + SC + SC + SC + SC + "培", matchContext);
+        Assertions.assertEquals(matchContext.matchLevel, MatchLevel.MIDDLE.getCode());
+
+        trie.match("罗" + SC + SC + SC + SC + "小" + SC + SC + SC + SC + "培1", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+
+
+    }
+
+    @Test
+    public void test3() {
+        MatchContext<Long> matchContext = new MatchContext<>();
+
+        matchContext.findLevel = FindLevel.HIGH_MIDDLE_LOW.getCode();
+        trie.match("罗小培", matchContext);
+        Assertions.assertEquals(matchContext.matchLevel, MatchLevel.HIGH.getCode());
+        trie.match("罗小培1", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+        trie.match("罗" + SC + SC + "小" + SC + SC + "培", matchContext);
+        Assertions.assertEquals(matchContext.matchLevel, MatchLevel.MIDDLE.getCode());
+        trie.match("罗" + SC + SC + "小" + SC + SC + "培1", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+        trie.match("罗" + SC + SC + "小" + SC + SC + "1" + SC + SC + "培", matchContext);
+        Assertions.assertEquals(matchContext.matchLevel, MatchLevel.LOW.getCode());
+        trie.match("罗" + SC + SC + "小" + SC + SC + "1" + SC + SC + "培1", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+
+        matchContext.maxSkip = 2;
+        trie.match("罗" + SC + SC + SC + SC + "小" + SC + SC + SC + SC + "1培", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+
+        trie.match("罗" + SC + SC + SC + SC + "小" + SC + SC + SC + SC + "1培1", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+
+        matchContext.maxSkip = 4;
+        trie.match("罗" + SC + SC + SC + SC + "小" + SC + SC + SC + SC + "1培", matchContext);
+        Assertions.assertEquals(matchContext.matchLevel, MatchLevel.LOW.getCode());
+
+        trie.match("罗" + SC + SC + SC + SC + "小" + SC + SC + SC + SC + "1培1", matchContext);
+        Assertions.assertEquals(0, matchContext.matchLevel);
+
 
     }
 }

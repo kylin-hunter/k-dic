@@ -2,12 +2,11 @@ package com.kylinhunter.nlp.dic.core.dictionary;
 
 import java.util.List;
 
-import com.kylinhunter.nlp.dic.core.dictionary.bean.FindContext;
-import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
+import com.kylinhunter.nlp.dic.core.dictionary.bean.MatchContext;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022/1/1
  **/
 public interface Dictionary<T> {
@@ -24,18 +23,15 @@ public interface Dictionary<T> {
 
     T getValue(String item);
 
-    TrieNode<T> getRootNode(char character);
-
     /**
      * judge a part of text if a word or not
      *
      * @param text   the text for judge
      * @param start  the start postion of text
      * @param length the length from start position
-     * @return
      */
-    void find(char[] text, int start, int length, FindContext<T> dicResult);
+    void match(char[] text, int start, int length, MatchContext<T> matchContext);
 
-    void find(String text, FindContext<T> dicResult);
+    void match(String text, MatchContext<T> matchContext);
 
 }

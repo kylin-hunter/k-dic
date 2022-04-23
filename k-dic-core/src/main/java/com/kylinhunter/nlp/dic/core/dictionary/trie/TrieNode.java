@@ -9,8 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022/1/1
  **/
 @Getter
@@ -21,12 +21,12 @@ public class TrieNode<T> {
     private boolean terminal;
     private TrieNode<T> sibling;
     private char[] childrenChar = new char[0];
+    @SuppressWarnings("unchecked")
     private TrieNode<T>[] children = new TrieNode[0];
     private List<T> values = null;
 
     /**
      * @return int
-     * @throws
      * @title getSiblingNum
      * @description
      * @author BiJi'an
@@ -44,8 +44,7 @@ public class TrieNode<T> {
     /**
      * getChild
      *
-     * @param character
-     * @return
+     * @param character character
      */
     public TrieNode<T> getChild(char character) {
         int index = Arrays.binarySearch(childrenChar, character);
@@ -56,16 +55,15 @@ public class TrieNode<T> {
     }
 
     /**
-     * getChildIfNotExistThenCreate
+     * addChild
      *
-     * @param childChar
-     * @return
+     * @param childChar childChar
      */
     @SuppressWarnings("unchecked")
     public TrieNode<T> addChild(char childChar) {
         TrieNode<T> childNode = getChild(childChar);
         if (childNode == null) {
-            childNode = new TrieNode<T>(childChar);
+            childNode = new TrieNode<>(childChar);
             int length = childrenChar.length;
             if (length == 0) {
                 childrenChar = new char[1];

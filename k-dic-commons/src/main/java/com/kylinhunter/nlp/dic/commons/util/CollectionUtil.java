@@ -5,17 +5,16 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022/1/1
  **/
 @Slf4j
 public class CollectionUtil {
 
     /**
-     * @param results
+     * @param results results
      * @return java.util.List<T>
-     * @throws
      * @title merge list
      * @description
      * @author BiJi'an

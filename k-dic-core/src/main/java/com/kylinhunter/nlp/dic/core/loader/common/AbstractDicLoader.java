@@ -3,12 +3,13 @@ package com.kylinhunter.nlp.dic.core.loader.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kylinhunter.nlp.dic.core.dic.component.DicSkipper;
 import com.kylinhunter.nlp.dic.core.loader.DicManager;
 import com.kylinhunter.nlp.dic.core.loader.wrapper.DicWrapper;
 import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.kylinhunter.nlp.dic.commons.service.SimpleServiceFactory;
+import com.kylinhunter.nlp.dic.commons.service.KServices;
 import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
 import com.kylinhunter.nlp.dic.core.config.Config;
@@ -16,7 +17,6 @@ import com.kylinhunter.nlp.dic.core.config.DicConfig;
 import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
 import com.kylinhunter.nlp.dic.core.dic.Dic;
 import com.kylinhunter.nlp.dic.core.dic.imp.DicImp;
-import com.kylinhunter.nlp.dic.core.dictionary.component.FindSkipper;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
@@ -28,22 +28,21 @@ import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022-01-01
  **/
 @Slf4j
 public abstract class AbstractDicLoader implements DicLoader {
 
-    protected FindSkipper findSkipper = FindSkipper.getInstance();
-    protected Config config = ConfigHelper.load();
+    protected DicSkipper dicSkipper = DicSkipper.getInstance();
+    protected Config config = ConfigHelper.get();
 
 
     /**
-     * @param dicType
-     * @param dicDatas
+     * @param dicType  dicType
+     * @param dicDatas dicDatas
      * @return com.kylinhunter.nlp.Config.core.dictionary.group.DictionaryGroup
-     * @throws
      * @title createDictionaryGroup
      * @description
      * @author BiJi'an
@@ -54,7 +53,7 @@ public abstract class AbstractDicLoader implements DicLoader {
         DictionaryGroup dictionaryGroup = null;
         if (dicDatas != null && dicDatas.size() > 0) {
             dictionaryGroup = new DictionaryGroup();
-            WordAnalyzer analyzer = SimpleServiceFactory.get(config.getWordAnalyzer());
+            WordAnalyzer analyzer = KServices.get(config.getWordAnalyzer());
             for (DicData dicData : dicDatas) {
                 addDicData(dictionaryGroup, dicData, analyzer, dicConfig.getWordMaxLen());
             }
@@ -65,10 +64,8 @@ public abstract class AbstractDicLoader implements DicLoader {
     }
 
     /**
-     * @param dictionaryGroup
-     * @param dicData
-     * @return void
-     * @throws
+     * @param dictionaryGroup dictionaryGroup
+     * @param dicData         dicData
      * @title add
      * @description
      * @author BiJi'an
@@ -117,7 +114,7 @@ public abstract class AbstractDicLoader implements DicLoader {
                 if (HitMode.HIGH == wordNode.getHitMode()) {
                     for (int i = 0; i < words.length(); i++) {
                         if (words.charAt(i) != ' ' && !CharUtils.isAsciiAlphanumeric(words.charAt(i))) {
-                            if (findSkipper.remove(FindLevel.HIGH, words.charAt(i))) {
+                            if (dicSkipper.remove(FindLevel.HIGH, words.charAt(i))) {
                                 log.error("remove FindLevel.HIGH char skip:" + words.charAt(i));
                             }
                         }
@@ -133,9 +130,8 @@ public abstract class AbstractDicLoader implements DicLoader {
     }
 
     /**
-     * @param dicType
+     * @param dicType dicType
      * @return java.util.List<com.kylinhunter.nlp.Config.core.loader.bean.DicData>
-     * @throws
      * @title loadDicData
      * @description
      * @author BiJi'an
@@ -144,9 +140,8 @@ public abstract class AbstractDicLoader implements DicLoader {
     protected abstract List<DicData> loadDicData(DicType dicType, DicConfig dicConfig);
 
     /**
-     * @param dicType
+     * @param dicType dicType
      * @return com.kylinhunter.nlp.Config.core.Config.Dic
-     * @throws
      * @title load
      * @description
      * @author BiJi'an
@@ -170,17 +165,16 @@ public abstract class AbstractDicLoader implements DicLoader {
     }
 
     /**
-     * @param dicType
-     * @param dicDatas
+     * @param dicType  dicType
+     * @param dicDatas dicDatas
      * @return com.kylinhunter.nlp.Config.core.Config.Dic
-     * @throws
      * @title createDic
      * @description
      * @author BiJi'an
      * @updateTime 2022-01-01 23:41
      */
     private Dic createDic(DicType dicType, List<DicData> dicDatas, DicConfig dicConfig) {
-        WordAnalyzer analyzer = SimpleServiceFactory.get(config.getWordAnalyzer());
+        WordAnalyzer analyzer = KServices.get(config.getWordAnalyzer());
         DictionaryGroup dictionaryGroup = createDictionaryGroup(dicType, dicDatas, dicConfig);
         Dic dic = new DicImp(dictionaryGroup, analyzer);
         log.info("createDic success,dicData'size={}", dicDatas.size());

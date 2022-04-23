@@ -10,10 +10,10 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @description  DicCache
- * @author  bijian
- * @date: 2022/4/22 1:12
- * @version: 1.0
+ * @author bijian
+ * @version 1.0
+ * @description DicCache
+ * @date 2022/4/22 1:12
  */
 @AllArgsConstructor
 @Data

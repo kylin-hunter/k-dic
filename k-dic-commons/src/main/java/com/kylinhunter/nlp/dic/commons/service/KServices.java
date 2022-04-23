@@ -12,14 +12,13 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2022/1/1
  **/
 @Slf4j
-public class SimpleServiceFactory {
+public class KServices {
     private static final int MAX_SERVICE_NUMS = 1000; // max service nums supported
     private static final Object[] SERVICES = new Object[MAX_SERVICE_NUMS];
     private static final AtomicInteger SERVICE_ID_GENERATOR = new AtomicInteger(0);
 
     /**
      * @return int
-     * @throws
      * @title get next service Id
      * @description
      * @author BiJi'an
@@ -34,54 +33,53 @@ public class SimpleServiceFactory {
     }
 
     /**
-     * @param simpleService
+     * @param kService kService
      * @return T
-     * @throws
      * @title get a service
      * @description
      * @author BiJi'an
      * @updateTime 2022/1/1 1:00
      */
-    public static <T, R extends T> R get(SimpleService<T> simpleService) {
-        int serviceId = simpleService.getServiceId();
+    @SuppressWarnings("unchecked")
+    public static <T, R extends T> R get(KService<T> kService) {
+        int serviceId = kService.getServiceId();
         R service = (R) SERVICES[serviceId];
         if (service != null) {
             return service;
         } else {
-            return (R) init(simpleService);
+            return (R) init(kService);
         }
 
     }
 
     /**
-     * @param simpleService
+     * @param kService kService
      * @return T
-     * @throws
      * @title init service
      * @description
      * @author BiJi'an
      * @updateTime 2022/1/1 1:07
      */
 
-    private static <T> T init(SimpleService<T> simpleService) {
+    @SuppressWarnings("unchecked")
+    private static <T> T init(KService<T> kService) {
 
-        int serviceId = simpleService.getServiceId();
-        synchronized(SimpleServiceFactory.class) {
+        int serviceId = kService.getServiceId();
+        synchronized(KServices.class) {
             T service = (T) SERVICES[serviceId];
             if (service != null) {
                 return service;
             } else {
-                return setService(serviceId, simpleService.getClazz());
+                return setService(serviceId, kService.getClazz());
             }
         }
 
     }
 
     /**
-     * @param serviceId
-     * @param clazz
+     * @param serviceId serviceId
+     * @param clazz clazz
      * @return T
-     * @throws
      * @title set a service
      * @description
      * @author BiJi'an
@@ -102,17 +100,17 @@ public class SimpleServiceFactory {
     }
 
     /**
-     * @param simpleService
+     * @param kService kService
      * @return T
-     * @throws
      * @title create
      * @description
      * @author BiJi'an
      * @updateTime 2022-01-01 01:11
      */
-    public static <T, R extends T> R create(SimpleService<T> simpleService) {
+    @SuppressWarnings("unchecked")
+    public static <T, R extends T> R create(KService<T> kService) {
         try {
-            Class<? extends T> clazz = simpleService.getClazz();
+            Class<? extends T> clazz = kService.getClazz();
             if (clazz == null) {
                 throw new KInitException("clazz can't be null");
             }

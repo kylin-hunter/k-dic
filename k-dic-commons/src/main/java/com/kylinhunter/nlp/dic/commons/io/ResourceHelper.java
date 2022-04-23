@@ -9,17 +9,16 @@ import java.net.URL;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022/1/1
  **/
 @Slf4j
 public class ResourceHelper {
 
     /**
-     * @param resourcePath
+     * @param resourcePath the path
      * @return java.io.InputStream
-     * @throws
      * @title getInputStreamInClassPath
      * @description
      * @author BiJi'an
@@ -36,9 +35,8 @@ public class ResourceHelper {
     }
 
     /**
-     * @param resourcePath
+     * @param resourcePath resourcePath
      * @return java.io.InputStreamReader
-     * @throws
      * @title getStreamReaderInClassPath
      * @description
      * @author BiJi'an
@@ -49,10 +47,9 @@ public class ResourceHelper {
     }
 
     /**
-     * @param resourcePath
-     * @param charset
+     * @param resourcePath resourcePath
+     * @param charset      charset
      * @return java.io.InputStreamReader
-     * @throws
      * @title getStreamReaderInClassPath
      * @description
      * @author BiJi'an
@@ -64,7 +61,13 @@ public class ResourceHelper {
             if (in != null) {
                 return new InputStreamReader(in, charset);
             } else {
-                return new InputStreamReader(ResourceHelper.class.getResourceAsStream(resourcePath), charset);
+                in = ResourceHelper.class.getResourceAsStream(resourcePath);
+                if (in != null) {
+                    return new InputStreamReader(in, charset);
+
+                } else {
+                    return null;
+                }
             }
         } catch (Exception e) {
             throw new IOException("getStreamReaderInClassPath error", e);
@@ -73,9 +76,8 @@ public class ResourceHelper {
     }
 
     /**
-     * @param resourcePath
+     * @param resourcePath resourcePath
      * @return java.io.File
-     * @throws
      * @title getFileInClassPath
      * @description
      * @author BiJi'an
@@ -85,25 +87,22 @@ public class ResourceHelper {
     public static File getFileInClassPath(String resourcePath) {
 
         URL url = ResourceHelper.class.getClassLoader().getResource(resourcePath);
-        if (url != null) {
-            return getFile(url);
-        } else {
+        if (url == null) {
             url = ResourceHelper.class.getResource(resourcePath);
-            return getFile(url);
         }
+        return getFile(url);
     }
 
     /**
-     * @param url
+     * @param url url
      * @return java.io.File
-     * @throws
      * @title getFile
      * @description
      * @author BiJi'an
      * @updateTime 2022-01-01 02:11
      */
     public static File getFile(URL url) {
-        File file = null;
+        File file;
         try {
             if (url != null) {
                 file = new File(url.getPath());

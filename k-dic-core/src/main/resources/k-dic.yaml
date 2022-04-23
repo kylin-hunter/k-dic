@@ -1,5 +1,6 @@
 # 词典加载方式
 load:
+
   #本地磁盘加载方式
   local:
     # 扩展词典的本地存储目录，3种写法
@@ -16,7 +17,8 @@ dics:
   SENSITIVE:
     # 是否开启默认词典
     defaultDicEnabled: true
-    # 词典最大词长度
-    wordMaxLen: 10
     # 扩展词典的名字，配合 local.exDicDir 使用，等价于 new File(local.exDicDir,dics.SENSITIVE.exDic);
     exDic: dic-sensitive-ex.xlsx
+    # 词典最大词长度
+    wordMaxLen: 10
+

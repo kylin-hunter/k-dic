@@ -5,7 +5,7 @@ package com.kylinhunter.nlp.dic.commons.io.file;
  * @author  BiJi'an
  * @date 2022/1/1
  **/
-public interface LinesProcessor<T> {
+public interface LinesProcessor {
     void process(String line);
 
 }

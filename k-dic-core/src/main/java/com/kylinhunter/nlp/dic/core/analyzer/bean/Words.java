@@ -18,9 +18,7 @@ public class Words {
     private List<Word> words = new ArrayList<>();
 
     /**
-     * @param word
-     * @return void
-     * @throws
+     * @param word word
      * @title add a word
      * @description
      * @author BiJi'an
@@ -34,21 +32,17 @@ public class Words {
      * @title add a word
      * @description
      * @author BiJi'an
-     * @param text
-     * @param statOffset
-     * @param endOffset
+     * @param text text
+     * @param statOffset statOffset
+     * @param endOffset endOffset
      * @updateTime 2022/1/1 11:22 下午
-     * @return void
-     * @throws
      */
     public void addWord(String text, int statOffset, int endOffset) {
         words.add(new Word(text, statOffset, endOffset));
     }
 
     /**
-     * @param action
-     * @return void
-     * @throws
+     * @param action action
      * @title traversal words
      * @description
      * @author BiJi'an
@@ -59,9 +53,8 @@ public class Words {
     }
 
     /**
-     * @param text
+     * @param text text
      * @return boolean
-     * @throws
      * @title test the words wether contains text
      * @description
      * @author BiJi'an
@@ -79,7 +72,6 @@ public class Words {
 
     /**
      * @return int
-     * @throws
      * @title the size of words
      * @description
      * @author BiJi'an

@@ -9,8 +9,8 @@ import com.kylinhunter.nlp.dic.commons.exception.internal.KIOException;
 import com.kylinhunter.nlp.dic.commons.exception.internal.KInternalException;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022/1/1
  **/
 public class UserDirUtils {
@@ -23,7 +23,6 @@ public class UserDirUtils {
 
     /**
      * @return java.io.File
-     * @throws
      * @title getUserDir
      * @description
      * @author BiJi'an
@@ -33,14 +32,20 @@ public class UserDirUtils {
         return USER_DIR;
     }
 
+    /*
+     * @description  getDir
+     * @date  2022/4/24 2:12
+     * @author  BiJi'an
+     * @Param child
+     * @return java.io.File
+     */
     public static File getDir(String child) {
         return getDir(child, true);
     }
 
     /**
-     * @param child
+     * @param child the child file
      * @return java.io.File
-     * @throws
      * @title getUserDir
      * @description
      * @author BiJi'an
@@ -65,9 +70,8 @@ public class UserDirUtils {
     }
 
     /**
-     * @param child
+     * @param child the child file
      * @return java.io.File
-     * @throws
      * @title getUserDir
      * @description
      * @author BiJi'an
@@ -89,7 +93,6 @@ public class UserDirUtils {
 
     /**
      * @return java.io.File
-     * @throws
      * @title getUserDirTmp
      * @description
      * @author BiJi'an
@@ -104,10 +107,9 @@ public class UserDirUtils {
     }
 
     /**
-     * @param child
-     * @param create
+     * @param child  the child file
+     * @param create whether to create file or dir
      * @return java.io.File
-     * @throws
      * @title getUserDirTmp
      * @description
      * @author BiJi'an
@@ -119,26 +121,24 @@ public class UserDirUtils {
     }
 
     public static File getTmpFile(String child) {
-        return getFile(USER_DIR_TMP + File.separator +  child, true);
+        return getFile(USER_DIR_TMP + File.separator + child, true);
     }
 
     /**
-     * @param child
+     * @param child the child file
      * @return java.io.File
-     * @throws
      * @title getUserDir
      * @description
      * @author BiJi'an
      * @updateTime 2022-01-01 01:57
      */
     public static File getTmpFile(String child, boolean createParent) {
-        return getFile(USER_DIR_TMP + File.separator +  child, createParent);
+        return getFile(USER_DIR_TMP + File.separator + child, createParent);
 
     }
 
     /**
      * @return java.io.File
-     * @throws
      * @title getExClassPath
      * @description
      * @author BiJi'an
@@ -151,7 +151,6 @@ public class UserDirUtils {
 
     /**
      * @return java.io.File
-     * @throws
      * @title getUserDirTmpJava
      * @description
      * @author BiJi'an
@@ -163,7 +162,6 @@ public class UserDirUtils {
 
     /**
      * @return java.io.File
-     * @throws
      * @title getUserDirTmpResource
      * @description
      * @author BiJi'an
@@ -174,9 +172,7 @@ public class UserDirUtils {
     }
 
     /**
-     * @param directory
-     * @return void
-     * @throws
+     * @param directory the dir
      * @title forceMkdir
      * @description
      * @author BiJi'an
@@ -191,9 +187,8 @@ public class UserDirUtils {
     }
 
     /**
-     * @param file
+     * @param file the file to delete
      * @return boolean
-     * @throws
      * @title deleteQuietly
      * @description
      * @author BiJi'an
@@ -201,7 +196,7 @@ public class UserDirUtils {
      */
     public static boolean deleteQuietly(final File file) {
 
-        if (file != null && file.getAbsolutePath().indexOf(PATH_OF_USER_DIR) >= 0) {
+        if (file != null && file.getAbsolutePath().contains(PATH_OF_USER_DIR)) {
             return FileUtils.deleteQuietly(file);
         }
         return false;

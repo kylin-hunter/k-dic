@@ -3,25 +3,23 @@ package com.kylinhunter.nlp.dic.core.dic.imp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kylinhunter.nlp.dic.commons.service.SimpleServiceFactory;
 import com.kylinhunter.nlp.dic.commons.util.CollectionUtil;
-import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzerType;
 import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Word;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
 import com.kylinhunter.nlp.dic.core.dic.Dic;
+import com.kylinhunter.nlp.dic.core.dic.component.DicSkipper;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.dictionary.Dictionary;
 import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
-import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroupType;
-import com.kylinhunter.nlp.dic.core.dictionary.component.FindSkipper;
+import com.kylinhunter.nlp.dic.core.dictionary.group.GroupType;
 import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
 import com.kylinhunter.nlp.dic.core.dic.bean.DicSearchResult;
 import com.kylinhunter.nlp.dic.core.dic.bean.MatchResult;
 import com.kylinhunter.nlp.dic.core.dic.option.MatchOption;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.MatchLevel;
-import com.kylinhunter.nlp.dic.core.dictionary.bean.FindContext;
+import com.kylinhunter.nlp.dic.core.dictionary.bean.MatchContext;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +29,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class DicImp implements Dic {
-    private static FindSkipper findSkipper = FindSkipper.getInstance();
+    private static DicSkipper dicSkipper = DicSkipper.getInstance();
     private final DictionaryGroup dictionaryGroup;
     private final WordAnalyzer analyzer;
 
@@ -43,23 +41,23 @@ public class DicImp implements Dic {
         char[] text = inputText.toCharArray();
         if (findLevel == FindLevel.HIGH) {
             return process(inputText, text, FindLevel.HIGH, secondaryWordsMatch,
-                    dictionaryGroup.getDic(DictionaryGroupType.HIGH_MIDDLE_LOW));
+                    dictionaryGroup.get(GroupType.HIGH_MIDDLE_LOW));
 
         } else if (findLevel == FindLevel.HIGH_MIDDLE) {
             List<MatchResult> resultHigh = process(inputText, text, FindLevel.HIGH, secondaryWordsMatch,
-                    dictionaryGroup.getDic(DictionaryGroupType.HIGH));
+                    dictionaryGroup.get(GroupType.HIGH));
             List<MatchResult> resultMiddle =
                     process(inputText, text, FindLevel.HIGH_MIDDLE, secondaryWordsMatch,
-                            dictionaryGroup.getDic(DictionaryGroupType.MIDDLE_LOW));
+                            dictionaryGroup.get(GroupType.MIDDLE_LOW));
             return CollectionUtil.merge(resultHigh, resultMiddle);
 
         } else if (findLevel == FindLevel.HIGH_MIDDLE_LOW) {
             List<MatchResult> resultHigh = process(inputText, text, FindLevel.HIGH, secondaryWordsMatch,
-                    dictionaryGroup.getDic(DictionaryGroupType.HIGH));
+                    dictionaryGroup.get(GroupType.HIGH));
             List<MatchResult> resultMiddle = process(inputText, text, FindLevel.HIGH_MIDDLE, secondaryWordsMatch,
-                    dictionaryGroup.getDic(DictionaryGroupType.MIDDLE));
+                    dictionaryGroup.get(GroupType.MIDDLE));
             List<MatchResult> resultLow = process(inputText, text, FindLevel.HIGH_MIDDLE_LOW, secondaryWordsMatch,
-                    dictionaryGroup.getDic(DictionaryGroupType.LOW));
+                    dictionaryGroup.get(GroupType.LOW));
             return CollectionUtil.merge(resultHigh, resultMiddle, resultLow);
         }
         return null;
@@ -77,17 +75,17 @@ public class DicImp implements Dic {
         }
 
         for (int i = 0; i < textChars.length; i++) {
-            if (findSkipper.isSkip(findLevel, textChars[i])) {
-                textChars[i] = FindSkipper.SPECIAL_CHAR;
+            if (dicSkipper.isSkip(findLevel, textChars[i])) {
+                textChars[i] = DicSkipper.SPECIAL_CHAR;
             }
         }
         int curLen = textChars.length;
         int start = 0;
         int curScanLen = 0;
         int scanMax = 0;
-        FindContext<WordNode> findContext = new FindContext<>();
+        MatchContext<WordNode> matchContext = new MatchContext<>();
         List<DicSearchResult> dicSearchResults = null; // 存储临时结果
-        findContext.findLevel = findLevel.getCode();
+        matchContext.findLevel = findLevel.getCode();
 
         int findNum = 0;
         int findMinScanLen = Integer.MAX_VALUE;
@@ -99,9 +97,9 @@ public class DicImp implements Dic {
             findNum = 0;
             findMinScanLen = Integer.MAX_VALUE;
             while (true) {
-                if (textChars[start] != FindSkipper.SPECIAL_CHAR) {
-                    dictionary.find(textChars, start, curScanLen, findContext);
-                    TrieNode<WordNode> node = findContext.node;
+                if (textChars[start] != DicSkipper.SPECIAL_CHAR) {
+                    dictionary.match(textChars, start, curScanLen, matchContext);
+                    TrieNode<WordNode> node = matchContext.node;
                     if (node != null) {
                         findNum++;
                         if (curScanLen < findMinScanLen) {
@@ -114,7 +112,7 @@ public class DicImp implements Dic {
                             dicSearchResults = new ArrayList<>();
                         }
                         DicSearchResult dicSearchResult = new DicSearchResult(
-                                oriText.substring(start, start + curScanLen), findContext.matchLevel,
+                                oriText.substring(start, start + curScanLen), matchContext.matchLevel,
                                 node.getValues(), secondaryWordsMatch);
                         dicSearchResults.add(dicSearchResult);
 

@@ -11,17 +11,15 @@ import java.io.File;
 import java.util.List;
 
 /**
- * @description  TODO
- * @author  bijian
- * @date: 2022/4/22 1:05
- * @version: 1.0
+ * @author bijian
+ * @version 1.0
+ * @description TODO
+ * @date 2022/4/22 1:05
  */
 @Slf4j
 public class LocalFileHelper {
 
     /**
-     * @return void
-     * @throws
      * @title writeDemo
      * @description
      * @author BiJi'an

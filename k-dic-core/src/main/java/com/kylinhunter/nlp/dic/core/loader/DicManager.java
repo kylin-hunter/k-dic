@@ -3,7 +3,6 @@ package com.kylinhunter.nlp.dic.core.loader;
 import com.kylinhunter.nlp.dic.core.config.Config;
 import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
 import com.kylinhunter.nlp.dic.core.config.LoadConfig;
-import com.kylinhunter.nlp.dic.core.dic.Dic;
 import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 import com.kylinhunter.nlp.dic.core.loader.constants.LoadSource;
 import com.kylinhunter.nlp.dic.core.loader.wrapper.DicWrapper;
@@ -12,13 +11,13 @@ import lombok.Data;
 /**
  * @author bijian
  * @version 1.0
- * @description TODO
+ * @description DicManager
  * @date 2022/4/22 2:36
  */
 @Data
 public class DicManager {
     protected static DicWrapper[] dics = new DicWrapper[DicType.values().length];
-    protected static Config config = ConfigHelper.load();
+    protected static Config config = ConfigHelper.get();
 
 
     /*

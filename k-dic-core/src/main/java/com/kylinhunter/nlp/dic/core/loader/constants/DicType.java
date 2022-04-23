@@ -3,30 +3,28 @@ package com.kylinhunter.nlp.dic.core.loader.constants;
 import lombok.Getter;
 
 /**
- * @description  DicType
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description DicType
  * @date 2022-01-01 15:10
  **/
 public enum DicType {
-    SENSITIVE(1, "敏感词典", "/config/dic/dic-sensitive.xlsx", true),
-    PINYIN(2, "拼音词典", "/config/dic/pinyin.txt", true),
-    COMPLETE(3, "补全词典", "/config/dic/complete.txt", true),
-    ASSOCIATE(4, "联想词典", "/config/dic/associate.txt", true),
-    SYNONYM(5, "同义词典", "/config/dic/synonym.txt", true),
-    PROFESSIONAL(6, "专业词典", "/config/dic/professional.txt", true),
-    CORRECTION(7, "纠错词典", "/config/dic/correction.txt", true);
+    SENSITIVE(1, "/config/dic/dic-sensitive.xlsx", true),
+    PINYIN(2, "/config/dic/pinyin.txt", true),
+    COMPLETE(3, "/config/dic/complete.txt", true),
+    ASSOCIATE(4, "/config/dic/associate.txt", true),
+    SYNONYM(5, "/config/dic/synonym.txt", true),
+    PROFESSIONAL(6, "/config/dic/professional.txt", true),
+    CORRECTION(7, "/config/dic/correction.txt", true);
 
-    private int code;
-    private String name;
+    private final int code;
 
     @Getter
-    private String path;
+    private final String path;
     @Getter
-    private boolean secondaryWordsMatch = true;
+    private final boolean secondaryWordsMatch;
 
-    DicType(int code, String name, String path, boolean secondaryWordsMatch) {
+    DicType(int code, String path, boolean secondaryWordsMatch) {
         this.code = code;
-        this.name = name;
         this.path = path;
         this.secondaryWordsMatch = secondaryWordsMatch;
     }

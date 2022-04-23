@@ -19,8 +19,9 @@ import lombok.NoArgsConstructor;
 public class Trie<T> {
     private static final int MAX_WORD_LENGTH = 200;
     public static final int FIRST_CHAR_INDEX_SLOT_NUM = 24000;
-    private TrieNode<T>[] firstCharIndex = new TrieNode[FIRST_CHAR_INDEX_SLOT_NUM];
-    private TrieStat trieStat = new TrieStat();
+    @SuppressWarnings("unchecked")
+    private final TrieNode<T>[] firstCharIndex = new TrieNode[FIRST_CHAR_INDEX_SLOT_NUM];
+    private final TrieStat trieStat = new TrieStat();
 
     public TrieNode<T>[] getFirstCharIndex() {
         return firstCharIndex;
@@ -29,9 +30,8 @@ public class Trie<T> {
     private int maxLength = 2;
 
     /**
-     * @param character
+     * @param character character
      * @return com.kylinhunter.nlp.Config.core.Config.single.trie.TrieNode<T>
-     * @throws
      * @title addRootNode
      * @description
      * @author BiJi'an
@@ -40,7 +40,7 @@ public class Trie<T> {
     private TrieNode<T> addRootNode(char character) {
         TrieNode<T> rootNode = getRootNode(character);
         if (rootNode == null) {
-            rootNode = new TrieNode<T>(character);
+            rootNode = new TrieNode<>(character);
             int index = rootNode.getCharacter() % FIRST_CHAR_INDEX_SLOT_NUM;
             TrieNode<T> existRootNode = firstCharIndex[index];
             if (existRootNode != null) {
@@ -52,9 +52,8 @@ public class Trie<T> {
     }
 
     /**
-     * @param character
+     * @param character character
      * @return com.kylinhunter.nlp.Config.core.Config.single.trie.TrieNode<T>
-     * @throws
      * @title getRootNode
      * @description
      * @author BiJi'an
@@ -70,15 +69,15 @@ public class Trie<T> {
     }
 
     /**
-     * @param item
-     * @param t
+     * @param item item
+     * @param t value
      * @return boolean
-     * @throws
      * @title put
      * @description
      * @author BiJi'an
      * @updateTime 2022-04-16 02:26
      */
+    @SuppressWarnings("UnusedReturnValue")
     public boolean put(String item, T t) {
         item = item.trim();
         int len = item.length();
@@ -87,8 +86,7 @@ public class Trie<T> {
         }
         TrieNode<T> node = addRootNode(item.charAt(0));
         for (int i = 1; i < len; i++) {
-            TrieNode<T> child = node.addChild(item.charAt(i));
-            node = child;
+            node = node.addChild(item.charAt(i));
         }
         this.addValue(node, t);
         if (node.isTerminal()) {
@@ -104,9 +102,7 @@ public class Trie<T> {
     }
 
     /**
-     * @param node
-     * @return void
-     * @throws
+     * @param node node
      * @title addValue
      * @description
      * @author BiJi'an
@@ -128,9 +124,7 @@ public class Trie<T> {
     }
 
     /**
-     * @param item
-     * @return void
-     * @throws
+     * @param item item
      * @title remove
      * @description
      * @author BiJi'an
@@ -147,9 +141,8 @@ public class Trie<T> {
     }
 
     /**
-     * @param item
+     * @param item item
      * @return boolean
-     * @throws
      * @title contains
      * @description
      * @author BiJi'an
@@ -157,16 +150,12 @@ public class Trie<T> {
      */
     public boolean contains(String item) {
         TrieNode<T> node = getNode(item);
-        if (node != null && node.isTerminal()) {
-            return true;
-        }
-        return false;
+        return node != null && node.isTerminal();
     }
 
     /**
-     * @param item
+     * @param item item
      * @return java.util.List<T>
-     * @throws
      * @title get
      * @description
      * @author BiJi'an
@@ -181,9 +170,8 @@ public class Trie<T> {
     }
 
     /**
-     * @param item
+     * @param item item
      * @return java.util.List<T>
-     * @throws
      * @title get
      * @description
      * @author BiJi'an
@@ -202,7 +190,6 @@ public class Trie<T> {
 
     /**
      * @return int
-     * @throws
      * @title size
      * @description
      * @author BiJi'an
@@ -214,7 +201,6 @@ public class Trie<T> {
 
     /**
      * @return int
-     * @throws
      * @title getMaxLength
      * @description
      * @author BiJi'an
@@ -225,9 +211,8 @@ public class Trie<T> {
     }
 
     /**
-     * @param item
+     * @param item item
      * @return com.kylinhunter.nlp.Config.core.Config.single.trie.TrieNode<T>
-     * @throws
      * @title getNode
      * @description
      * @author BiJi'an

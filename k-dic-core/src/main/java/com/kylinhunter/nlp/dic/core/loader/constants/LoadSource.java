@@ -10,17 +10,15 @@ import lombok.Getter;
  * @date 2022/4/23 0:47
  */
 public enum LoadSource implements EnumUtil.EnumCode {
-    LOCAL(1, "LOCAL"),
+    LOCAL(1),
 
-    DB(2, "DB");
+    DB(2);
 
     @Getter
-    private int code;
-    private String name;
+    private final int code;
 
-    LoadSource(int code, String name) {
+    LoadSource(int code) {
         this.code = code;
-        this.name = name;
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import com.kylinhunter.nlp.dic.core.config.DicConfig;
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 
@@ -33,7 +34,8 @@ public class LocalDicFileMonitor {
             if (exDicPath.exists()) {
                 log.info("monitor path:" + exDicPath.getAbsolutePath());
                 Map<String, DicType> fileToDicType =
-                        config.getDics().values().stream().collect(Collectors.toMap(e -> e.getExDic(), e -> e.getType()));
+                        config.getDics().values().stream().collect(Collectors.toMap(DicConfig::getExDic,
+                                DicConfig::getType));
                 long interval = TimeUnit.SECONDS.toMillis(10);
                 FileAlterationObserver observer = new FileAlterationObserver(exDicPath,
                         (pathname) -> fileToDicType.containsKey(pathname.getName()));

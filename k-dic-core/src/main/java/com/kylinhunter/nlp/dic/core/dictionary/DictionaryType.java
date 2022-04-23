@@ -1,7 +1,7 @@
 package com.kylinhunter.nlp.dic.core.dictionary;
 
-import com.kylinhunter.nlp.dic.commons.service.SimpleService;
-import com.kylinhunter.nlp.dic.commons.service.SimpleServiceFactory;
+import com.kylinhunter.nlp.dic.commons.service.KService;
+import com.kylinhunter.nlp.dic.commons.service.KServices;
 import com.kylinhunter.nlp.dic.core.dictionary.imp.DictionaryTrie;
 
 import lombok.Getter;
@@ -12,7 +12,8 @@ import lombok.Setter;
  * @author  BiJi'an
  * @date 2022/1/1
  **/
-public enum DictionaryType implements SimpleService<Dictionary> {
+@SuppressWarnings("ALL")
+public enum DictionaryType implements KService<Dictionary> {
     DEFAULT(DictionaryTrie.class),
     TRIE(DictionaryTrie.class);
 
@@ -24,7 +25,7 @@ public enum DictionaryType implements SimpleService<Dictionary> {
     int serviceId;
 
     DictionaryType(Class<? extends Dictionary> clazz) {
-        this.serviceId = SimpleServiceFactory.nextServiceId();
+        this.serviceId = KServices.nextServiceId();
         this.clazz = clazz;
 
     }

@@ -9,8 +9,8 @@ import com.kylinhunter.nlp.dic.commons.exception.internal.KParamException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description  a enum util
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description a enum util
  * @date 2022/1/1
  **/
 @Slf4j
@@ -18,10 +18,9 @@ public class EnumUtil {
     private static final Map<Class<?>, EnumCode[]> ENUM_DATAS = new HashMap<>();
 
     /**
-     * @param enumType
-     * @param code
+     * @param enumType enumType
+     * @param code     code
      * @return T
-     * @throws
      * @title get enum from code
      * @description
      * @author BiJi'an
@@ -32,16 +31,16 @@ public class EnumUtil {
     }
 
     /**
-     * @param enumType
-     * @param code
-     * @param throwIfFailed
+     * @param enumType      enumType
+     * @param code          code
+     * @param throwIfFailed throwIfFailed
      * @return T
-     * @throws
      * @title fromCode
      * @description
      * @author BiJi'an
      * @updateTime 2022/1/1 1:23
      */
+    @SuppressWarnings("unchecked")
     public static <T extends Enum<T>, V extends EnumCode> T fromCode(Class<V> enumType, int code,
                                                                      boolean throwIfFailed) {
         try {
@@ -72,10 +71,9 @@ public class EnumUtil {
     }
 
     /**
-     * @param enumType
-     * @param codes
+     * @param enumType enumType
+     * @param codes    codes
      * @return T[]
-     * @throws
      * @title fromCode
      * @description
      * @author BiJi'an
@@ -96,10 +94,8 @@ public class EnumUtil {
 
     }
 
-    public static interface EnumCode {
+    public interface EnumCode {
         int getCode();
     }
-
-
 
 }

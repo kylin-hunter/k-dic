@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022/1/1
  **/
 @Getter
@@ -21,9 +21,7 @@ public class TrieStat {
     public int maxLength;
 
     /**
-     * @param word
-     * @return void
-     * @throws
+     * @param word word
      * @title put
      * @description
      * @author BiJi'an
@@ -46,9 +44,7 @@ public class TrieStat {
     }
 
     /**
-     * @param word
-     * @return void
-     * @throws
+     * @param word word
      * @title remove
      * @description
      * @author BiJi'an
@@ -76,11 +72,10 @@ public class TrieStat {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n count:" + count + ",maxLength:" + maxLength + "\n");
-        wordNums.entrySet().forEach(e -> {
-            sb.append("word with length(" + e.getKey() + ")  :" + e.getValue() + "\n");
-        });
-        sb.append("word average length:" + (float) totalLength / count + "\n");
+        sb.append("\n count:").append(count).append(",maxLength:").append(maxLength).append("\n");
+        wordNums.forEach((key, value) -> sb.append("word with length(").append(key).append(")  :")
+                .append(value).append("\n"));
+        sb.append("word average length:").append((float) totalLength / count).append("\n");
         return sb.toString();
     }
 

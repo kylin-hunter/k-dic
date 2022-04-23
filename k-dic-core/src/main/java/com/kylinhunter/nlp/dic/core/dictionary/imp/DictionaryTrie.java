@@ -2,40 +2,30 @@
 package com.kylinhunter.nlp.dic.core.dictionary.imp;
 
 import com.kylinhunter.nlp.dic.core.dictionary.Dictionary;
-import com.kylinhunter.nlp.dic.core.dictionary.bean.FindContext;
-import com.kylinhunter.nlp.dic.core.dictionary.component.FindSkipper;
-import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
-import com.kylinhunter.nlp.dic.core.dictionary.constant.MatchLevel;
+import com.kylinhunter.nlp.dic.core.dictionary.bean.MatchContext;
+import com.kylinhunter.nlp.dic.core.dictionary.constant.DictionaryConst;
 import com.kylinhunter.nlp.dic.core.dictionary.trie.Trie;
 import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022/1/1
  **/
 @Slf4j
 public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {
 
-    private static final int MATCH_LEVEL_HIGH = MatchLevel.HIGH.getCode();
-    private static final int MATCH_LEVEL_MIDDLE = MatchLevel.MIDDLE.getCode();
-    private static final int MATCH_LEVEL_LOW = MatchLevel.LOW.getCode();
-
-    private static final int FIND_LEVEL_HIGH = FindLevel.HIGH.getCode();
-    private static final int FIND_LEVEL_MIDDLE = FindLevel.HIGH_MIDDLE.getCode();
-    private static final int FIND_LEVEL_LOW = FindLevel.HIGH_MIDDLE_LOW.getCode();
 
     @Override
-    public void find(String text, FindContext<T> dicResult) {
-        this.find(text.toCharArray(), 0, text.length(), dicResult);
+    public void match(String text, MatchContext<T> matchContext) {
+        this.match(text.toCharArray(), 0, text.length(), matchContext);
     }
 
     @Override
-    public void find(char[] word, int start, int length, FindContext<T> findContext) {
-        findContext.matchLevel = 0;
-        findContext.node = null;
+    public void match(char[] word, int start, int length, MatchContext<T> matchContext) {
+        matchContext.matchLevel = 0;
+        matchContext.node = null;
         if (start < 0 || length < 1) {
             return;
         }
@@ -43,84 +33,103 @@ public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {
         if (word == null || word.length < end) {
             return;
         }
-        TrieNode<T> node = getRootNode(word[start]);
+        TrieNode<T> resultNode = getRootNode(word[start]);
 
-        if (node == null) {
+        if (resultNode == null) {
             return;
         }
-        for (int i = 1; i < length; i++) {
-            char character = word[i + start];
-            TrieNode<T> child = node.getChild(character);
-            if (child == null) {
-                if (findContext.findLevel > FIND_LEVEL_HIGH) {
-                    int nextCharIndex = nextValidChar(word, start + i, end, findContext);
-                    if (nextCharIndex > 0) {
-                        character = word[nextCharIndex];
-                        child = node.getChild(character);
-                        if (child == null) {
-                            if (findContext.findLevel < FIND_LEVEL_LOW) {
-                                node = null;
-                                break;
+        int findLoc = start + 1;
+        while (findLoc < end) {
+            char character = word[findLoc];
+            TrieNode<T> child = resultNode.getChild(character);
+            if (child != null) {
+                resultNode = child;
+                findLoc++;
+            } else {
+                if (matchContext.findLevel <= DictionaryConst.FIND_LEVEL_HIGH) {
+                    resultNode = null;
+                    break;
+                } else {
+                    findLoc = nextValidChar(word, findLoc, end, matchContext);
+                    if (findLoc < 0) {
+                        resultNode = null;
+                        break;
+                    } else {
+                        character = word[findLoc];
+                        child = resultNode.getChild(character);
+                        if (child != null) {
+                            if (matchContext.matchLevel < DictionaryConst.MATCH_LEVEL_LOW) {
+                                matchContext.matchLevel = DictionaryConst.MATCH_LEVEL_MIDDLE;
                             }
-
-                            if (nextCharIndex + 1 < end) {
-                                character = word[nextCharIndex + 1];
-                                child = node.getChild(character);
-                            }
-                            if (child == null) {
-                                node = null;
-                                break;
-                            } else {
-                                findContext.matchLevel = MATCH_LEVEL_LOW;
-                            }
+                            resultNode = child;
+                            findLoc++;
 
                         } else {
-                            if (findContext.matchLevel < MATCH_LEVEL_LOW) {
-                                findContext.matchLevel = MATCH_LEVEL_MIDDLE;
+
+                            if (matchContext.findLevel != DictionaryConst.FIND_LEVEL_LOW) {
+                                resultNode = null;
+                                break;
                             }
+
+                            findLoc++;
+                            findLoc = nextValidChar(word, findLoc, end, matchContext);
+                            if (findLoc < 0) {
+                                resultNode = null;
+                                break;
+                            } else {
+
+                                character = word[findLoc];
+                                child = resultNode.getChild(character);
+
+                                if (child != null) {
+                                    matchContext.matchLevel = DictionaryConst.MATCH_LEVEL_LOW;
+                                    resultNode = child;
+                                    findLoc++;
+
+                                } else {
+                                    resultNode = null;
+                                    break;
+                                }
+                            }
+
+
                         }
-                    } else {
-                        node = null;
-                        break;
                     }
 
-                } else {
-                    node = null;
-                    break;
                 }
 
-            } else {
-                node = child;
             }
         }
 
-        if (node != null && node.isTerminal()) {
+        if (resultNode != null && resultNode.isTerminal()) {
 
-            if (findContext.matchLevel < MATCH_LEVEL_MIDDLE) {
-                findContext.matchLevel = MATCH_LEVEL_HIGH;
+            if (matchContext.matchLevel < DictionaryConst.MATCH_LEVEL_MIDDLE) {
+                matchContext.matchLevel = DictionaryConst.MATCH_LEVEL_HIGH;
             }
-            findContext.node = node;
+            matchContext.node = resultNode;
+        } else {
+            matchContext.matchLevel = 0;
         }
+
     }
 
     /**
-     * @param word
-     * @param start
-     * @param end
+     * @param word  word
+     * @param start start
+     * @param end   end
      * @return int
-     * @throws
      * @title nextValidChar
      * @description
      * @author BiJi'an
      * @updateTime 2022-04-16 03:04
      */
-    private int nextValidChar(char[] word, int start, int end, FindContext<T> findContext) {
+    private int nextValidChar(char[] word, int start, int end, MatchContext<T> matchContext) {
         int num = 0;
         while (start < end) {
-            if (word[start] == FindSkipper.SPECIAL_CHAR) {
+            if (word[start] == DictionaryConst.SPECIAL_CHAR) {
                 start++;
                 num++;
-                if (num > findContext.maxSkip) {
+                if (num > matchContext.maxSkip) {
                     break;
                 }
             } else {
