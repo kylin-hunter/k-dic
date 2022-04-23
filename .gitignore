@@ -6,9 +6,9 @@ target/
 output/
 build/
 .gradle/
-gradle/
-gradlew
-gradlew.bat
+#gradle/
+#gradlew
+#gradlew.bat
 # *.jar
 *.war
 *.zip
