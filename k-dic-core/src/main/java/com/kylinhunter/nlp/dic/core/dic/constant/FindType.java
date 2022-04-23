@@ -2,25 +2,22 @@ package com.kylinhunter.nlp.dic.core.dic.constant;
 
 
 import com.kylinhunter.nlp.dic.commons.util.EnumUtil;
-
 import lombok.Getter;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022-01-01 15:10
  **/
 public enum FindType implements EnumUtil.EnumCode {
-    FIRST_PREFIX(1, "FIRST_PREFIX"),
-    PREFIX(1, "PREFIX"),
-    FULL(2, "FULL");
+    FIRST_PREFIX(1),
+    PREFIX(2),
+    FULL(3);
     @Getter
-    private int code;
-    private String name;
+    private final int code;
 
-    FindType(int code, String name) {
+    FindType(int code) {
         this.code = code;
-        this.name = name;
     }
 
 }

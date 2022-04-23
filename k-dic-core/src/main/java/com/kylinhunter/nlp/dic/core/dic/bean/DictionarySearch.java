@@ -9,14 +9,14 @@ import com.kylinhunter.nlp.dic.core.dictionary.constant.MatchLevel;
 import lombok.Data;
 
 @Data
-public class DicSearchResult {
+public class DictionarySearch {
 
     private String hitWord;
     private MatchLevel level;
     private List<WordNode> wordNodes;
-    private boolean secondaryWordsMatch = false;
+    private boolean secondaryWordsMatch;
 
-    public DicSearchResult(String hitWord, int matchLevel, List<WordNode> wordNodes, boolean secondaryWordsMatch) {
+    public DictionarySearch(String hitWord, int matchLevel, List<WordNode> wordNodes, boolean secondaryWordsMatch) {
         this.hitWord = hitWord;
         this.level = EnumUtil.fromCode(MatchLevel.class, matchLevel);
         this.wordNodes = wordNodes;

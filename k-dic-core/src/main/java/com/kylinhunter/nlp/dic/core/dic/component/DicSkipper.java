@@ -1,6 +1,7 @@
 
 package com.kylinhunter.nlp.dic.core.dic.component;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
  **/
 @Slf4j
 public class DicSkipper {
-    private static DicSkipper singleton = new DicSkipper();
+    private static final DicSkipper singleton = new DicSkipper();
     public static final char SPECIAL_CHAR = DictionaryConst.SPECIAL_CHAR;
 
     private DicSkipper() {
@@ -33,8 +34,8 @@ public class DicSkipper {
         return singleton;
     }
 
-    private Set<Character> hiChars = new HashSet<>();
-    private Set<Character> defaultChars = new HashSet<>();
+    private final Set<Character> hiChars = new HashSet<>();
+    private final Set<Character> defaultChars = new HashSet<>();
 
     private static final String CONFIG_PATH = "/config/dic/dic_skipper.txt";
 
@@ -70,8 +71,6 @@ public class DicSkipper {
     }
 
     /**
-     * @return void
-     * @throws
      * @title processForFindLevelHigh
      * @description
      * @author BiJi'an
@@ -87,10 +86,12 @@ public class DicSkipper {
     }
 
     /**
-     * determine whether a character is a punctuation
-     *
-     * @param c
-     * @return
+     * @return boolean
+     * @description isSkip
+     * @date 2022/4/24 3:25
+     * @author BiJi'an
+     * @Param findLevel findLevel
+     * @Param c c
      */
     public boolean isSkip(FindLevel findLevel, char c) {
         if (findLevel == FindLevel.HIGH) {
@@ -101,23 +102,20 @@ public class DicSkipper {
     }
 
     /**
-     * @param c
+     * @param c c
      * @return boolean
-     * @throws
-     * @title isSkip
-     * @description
+     * @description isSkip
+     * @date 2022/4/24 3:27
      * @author BiJi'an
-     * @updateTime 2022/3/26 8:38 下午
      */
     public boolean isSkip(char c) {
         return defaultChars.contains(c);
     }
 
     /**
-     * @param findLevel
-     * @param c
+     * @param findLevel findLevel
+     * @param c         c
      * @return boolean
-     * @throws
      * @title remove
      * @description
      * @author BiJi'an

@@ -15,7 +15,7 @@ import com.kylinhunter.nlp.dic.core.dictionary.Dictionary;
 import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
 import com.kylinhunter.nlp.dic.core.dictionary.group.GroupType;
 import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
-import com.kylinhunter.nlp.dic.core.dic.bean.DicSearchResult;
+import com.kylinhunter.nlp.dic.core.dic.bean.DictionarySearch;
 import com.kylinhunter.nlp.dic.core.dic.bean.MatchResult;
 import com.kylinhunter.nlp.dic.core.dic.option.MatchOption;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.MatchLevel;
@@ -81,14 +81,14 @@ public class DicImp implements Dic {
         }
         int curLen = textChars.length;
         int start = 0;
-        int curScanLen = 0;
-        int scanMax = 0;
+        int curScanLen;
+        int scanMax;
         MatchContext<WordNode> matchContext = new MatchContext<>();
-        List<DicSearchResult> dicSearchResults = null; // 存储临时结果
+        List<DictionarySearch> dictionarySearches = null; // 存储临时结果
         matchContext.findLevel = findLevel.getCode();
 
-        int findNum = 0;
-        int findMinScanLen = Integer.MAX_VALUE;
+        int findNum;
+        int findMinScanLen;
 
         while (curLen > 0) {
 
@@ -105,16 +105,15 @@ public class DicImp implements Dic {
                         if (curScanLen < findMinScanLen) {
                             findMinScanLen = curScanLen;
                         }
-                        //                        System.out.println("find node:" + node.getValues().get(0)
-                        //                        .getKeyword());
+                        // System.out.println("find node:" + node.getValues().get(0)  .getKeyword());
 
-                        if (dicSearchResults == null) {
-                            dicSearchResults = new ArrayList<>();
+                        if (dictionarySearches == null) {
+                            dictionarySearches = new ArrayList<>();
                         }
-                        DicSearchResult dicSearchResult = new DicSearchResult(
+                        DictionarySearch dictionarySearch = new DictionarySearch(
                                 oriText.substring(start, start + curScanLen), matchContext.matchLevel,
                                 node.getValues(), secondaryWordsMatch);
-                        dicSearchResults.add(dicSearchResult);
+                        dictionarySearches.add(dictionarySearch);
 
                     }
 
@@ -130,7 +129,7 @@ public class DicImp implements Dic {
                             break;
                         }
 
-                    } else if (findNum >= 2) { // 找到多个词头相同的词头，结束
+                    } else { // 找到多个词头相同的词头，结束
                         break;
                     }
                 }
@@ -147,21 +146,21 @@ public class DicImp implements Dic {
             }
 
         }
-        return mergeData(oriText, dicSearchResults);
+        return mergeData(oriText, dictionarySearches);
     }
 
-    public List<MatchResult> mergeData(String oriText, List<DicSearchResult> dicSearchResults) {
-        if (dicSearchResults != null && dicSearchResults.size() > 0) {
+    public List<MatchResult> mergeData(String oriText, List<DictionarySearch> dictionarySearches) {
+        if (dictionarySearches != null && dictionarySearches.size() > 0) {
             List<MatchResult> matchResults = new ArrayList<>();
             Words oriSplitWords = analyzer.analyze(oriText);
 
-            for (DicSearchResult dicSearchResult : dicSearchResults) {
+            for (DictionarySearch dictionarySearch : dictionarySearches) {
                 //                System.out.println("dicSearchResult:" + dicSearchResult);
-                List<WordNode> wordNodes = dicSearchResult.getWordNodes();
+                List<WordNode> wordNodes = dictionarySearch.getWordNodes();
                 if (wordNodes != null && wordNodes.size() > 0) {
                     for (WordNode wordNode : wordNodes) { // 某一个词可能对应多个分类
                         MatchResult matchResult =
-                                tryGetFindResult(oriText, dicSearchResult, wordNode, oriSplitWords);
+                                tryGetFindResult(oriText, dictionarySearch, wordNode, oriSplitWords);
                         if (matchResult != null) {
                             matchResults.add(matchResult);
                         }
@@ -176,12 +175,12 @@ public class DicImp implements Dic {
 
     }
 
-    private MatchResult tryGetFindResult(String oriText, DicSearchResult dicSearchResult, WordNode wordNode,
+    private MatchResult tryGetFindResult(String oriText, DictionarySearch dictionarySearch, WordNode wordNode,
                                          Words oriTextSplitWords) {
 
-        MatchLevel matchLevel = dicSearchResult.getLevel();
+        MatchLevel matchLevel = dictionarySearch.getLevel();
         MatchResult matchResult = new MatchResult(wordNode.getType(), wordNode.getClassId(), matchLevel.getCode());
-        matchResult.setWord(dicSearchResult.getHitWord());
+        matchResult.setWord(dictionarySearch.getHitWord());
         matchResult.setWordNode(wordNode);
 
         if (matchLevel == MatchLevel.HIGH) { // 高度匹配
@@ -194,7 +193,7 @@ public class DicImp implements Dic {
                 }
             }
         }
-        if (dicSearchResult.isSecondaryWordsMatch()) {
+        if (dictionarySearch.isSecondaryWordsMatch()) {
             if (!wordNode.hasSecondaryWords()) { // 无关联词可以直接返回了
                 return matchResult;
             } else { // 有关联词的时候，要求关联词也都要在输入的切词里面
