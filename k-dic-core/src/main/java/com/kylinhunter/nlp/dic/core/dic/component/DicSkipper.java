@@ -1,17 +1,16 @@
 
 package com.kylinhunter.nlp.dic.core.dic.component;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.kylinhunter.nlp.dic.core.dictionary.constant.DictionaryConst;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.kylinhunter.nlp.dic.commons.io.file.FileUtil;
 import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
+import com.kylinhunter.nlp.dic.commons.io.file.FileUtil;
+import com.kylinhunter.nlp.dic.core.dictionary.constant.DictionaryConst;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 
 import lombok.extern.slf4j.Slf4j;

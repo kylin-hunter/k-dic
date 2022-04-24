@@ -1,5 +1,6 @@
 package com.kylinhunter.nlp.dic.commons.service;
 
+import java.lang.reflect.Constructor;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
@@ -7,8 +8,8 @@ import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description  a simpler service factory
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description a simpler service factory
  * @date 2022/1/1
  **/
 @Slf4j
@@ -78,7 +79,7 @@ public class KServices {
 
     /**
      * @param serviceId serviceId
-     * @param clazz clazz
+     * @param clazz     clazz
      * @return T
      * @title set a service
      * @description
@@ -108,7 +109,7 @@ public class KServices {
      * @updateTime 2022-01-01 01:11
      */
     @SuppressWarnings("unchecked")
-    public static <T, R extends T> R create(KService<T> kService) {
+    public static <T, R extends T> R create(KService<T> kService, Class<?>... param) {
         try {
             Class<? extends T> clazz = kService.getClazz();
             if (clazz == null) {

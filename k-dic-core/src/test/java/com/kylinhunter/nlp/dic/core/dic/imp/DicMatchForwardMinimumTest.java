@@ -1,8 +1,9 @@
 package com.kylinhunter.nlp.dic.core.dic.imp;
 
-import com.kylinhunter.nlp.dic.core.dic.Dic;
+import com.kylinhunter.nlp.dic.core.dic.DicMatch;
 import com.kylinhunter.nlp.dic.core.dic.bean.MatchResult;
 import com.kylinhunter.nlp.dic.core.dic.option.MatchOptions;
+import com.kylinhunter.nlp.dic.core.loader.Dic;
 import com.kylinhunter.nlp.dic.core.loader.DicManager;
 import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 import org.junit.jupiter.api.Assertions;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-class DicImpTest {
+class DicMatchForwardMinimumTest {
 
     @BeforeAll
     static void init() {

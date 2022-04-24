@@ -3,9 +3,11 @@ package com.kylinhunter.nlp.dic.core.loader.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kylinhunter.nlp.dic.core.dic.DicMatch;
+import com.kylinhunter.nlp.dic.core.dic.DicMatchType;
 import com.kylinhunter.nlp.dic.core.dic.component.DicSkipper;
 import com.kylinhunter.nlp.dic.core.loader.DicManager;
-import com.kylinhunter.nlp.dic.core.loader.wrapper.DicWrapper;
+
 import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,8 +17,6 @@ import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
 import com.kylinhunter.nlp.dic.core.config.Config;
 import com.kylinhunter.nlp.dic.core.config.DicConfig;
 import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
-import com.kylinhunter.nlp.dic.core.dic.Dic;
-import com.kylinhunter.nlp.dic.core.dic.imp.DicImp;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
@@ -24,6 +24,7 @@ import com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.loader.DicLoader;
 import com.kylinhunter.nlp.dic.core.loader.bean.DicData;
 import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
+import com.kylinhunter.nlp.dic.core.loader.Dic;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,7 +38,6 @@ public abstract class AbstractDicLoader implements DicLoader {
 
     protected DicSkipper dicSkipper = DicSkipper.getInstance();
     protected Config config = ConfigHelper.get();
-
 
     /**
      * @param dicType  dicType
@@ -71,7 +71,8 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @author BiJi'an
      * @updateTime 2022/3/26 5:48 下午
      */
-    private void addDicData(DictionaryGroup dictionaryGroup, DicData dicData, WordAnalyzer analyzer, int maxKeywordLen) {
+    private void addDicData(DictionaryGroup dictionaryGroup, DicData dicData, WordAnalyzer analyzer,
+                            int maxKeywordLen) {
         String words = dicData.getWords();
         if (!StringUtils.isEmpty(words)) {
             WordNode wordNode = new WordNode();
@@ -79,11 +80,9 @@ public abstract class AbstractDicLoader implements DicLoader {
             wordNode.setClassId(dicData.getClassId());
             wordNode.setHitMode(HitMode.valueOf(dicData.getHitMode().toUpperCase()));
 
-
             String relationWordsOri = dicData.getRelationWords();
             String[] relationWordsOriSplit = StringUtils.split(relationWordsOri, ' ');
             wordNode.setRelationWords(relationWordsOriSplit);
-
 
             if (!StringUtils.isEmpty(words) && words.length() > 0 && words.length() <= maxKeywordLen) {
                 wordNode.setKeyword(words);
@@ -141,43 +140,44 @@ public abstract class AbstractDicLoader implements DicLoader {
 
     /**
      * @param dicType dicType
-     * @return com.kylinhunter.nlp.Config.core.Config.Dic
+     * @return com.kylinhunter.nlp.Config.core.Config.DicMatch
      * @title load
      * @description
      * @author BiJi'an
      * @updateTime 2022-01-01 23:36
      */
     @Override
-    public Dic load(DicType dicType) {
+    public DicMatch load(DicType dicType) {
         DicConfig dicConfig = config.getDics().get(dicType);
         List<DicData> dicDatas = loadDicData(dicType, dicConfig);
-        return createDic(dicType, dicDatas, dicConfig);
+        return createDicMatch(dicType, dicDatas, dicConfig);
 
     }
 
     @Override
     public void reload(DicType dicType) {
-        DicWrapper dicWrapper = DicManager.getDicWrapper(dicType);
+        Dic dicWrapper = DicManager.get(dicType, false);
         if (dicWrapper != null) {
-            Dic dic = this.load(dicType);
-            dicWrapper.setDic(dic);
+            DicMatch dicMatch = this.load(dicType);
+            dicWrapper.setDicMatch(dicMatch);
         }
     }
 
     /**
      * @param dicType  dicType
      * @param dicDatas dicDatas
-     * @return com.kylinhunter.nlp.Config.core.Config.Dic
+     * @return com.kylinhunter.nlp.Config.core.Config.DicMatch
      * @title createDic
      * @description
      * @author BiJi'an
      * @updateTime 2022-01-01 23:41
      */
-    private Dic createDic(DicType dicType, List<DicData> dicDatas, DicConfig dicConfig) {
+    private DicMatch createDicMatch(DicType dicType, List<DicData> dicDatas, DicConfig dicConfig) {
         WordAnalyzer analyzer = KServices.get(config.getWordAnalyzer());
         DictionaryGroup dictionaryGroup = createDictionaryGroup(dicType, dicDatas, dicConfig);
-        Dic dic = new DicImp(dictionaryGroup, analyzer);
+        DicMatch dicMatch = KServices.create(DicMatchType.DEFAULT);
+        dicMatch.init(dictionaryGroup, analyzer);
         log.info("createDic success,dicData'size={}", dicDatas.size());
-        return dic;
+        return dicMatch;
     }
 }

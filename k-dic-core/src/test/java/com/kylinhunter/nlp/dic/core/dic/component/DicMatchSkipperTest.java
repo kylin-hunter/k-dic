@@ -3,7 +3,7 @@ package com.kylinhunter.nlp.dic.core.dic.component;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class DicSkipperTest {
+class DicMatchSkipperTest {
 
     @Test
     public void test() {

@@ -7,7 +7,7 @@ import com.kylinhunter.nlp.dic.commons.util.CollectionUtil;
 import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Word;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
-import com.kylinhunter.nlp.dic.core.dic.Dic;
+import com.kylinhunter.nlp.dic.core.dic.DicMatch;
 import com.kylinhunter.nlp.dic.core.dic.component.DicSkipper;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode;
@@ -28,11 +28,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class DicImp implements Dic {
+public class DicMatchForwardMinimum implements DicMatch {
     private static DicSkipper dicSkipper = DicSkipper.getInstance();
-    private final DictionaryGroup dictionaryGroup;
-    private final WordAnalyzer analyzer;
+    private DictionaryGroup dictionaryGroup;
+    private WordAnalyzer analyzer;
 
+    @Override
+    public DicMatch init(DictionaryGroup dictionaryGroup, WordAnalyzer wordAnalyzer) {
+        this.dictionaryGroup = dictionaryGroup;
+        this.analyzer = wordAnalyzer;
+        return this;
+    }
 
     @Override
     public List<MatchResult> match(String inputText, MatchOption matchOption) {

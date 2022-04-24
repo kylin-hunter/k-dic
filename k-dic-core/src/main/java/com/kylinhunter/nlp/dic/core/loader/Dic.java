@@ -1,9 +1,11 @@
-package com.kylinhunter.nlp.dic.core.loader.wrapper;
+package com.kylinhunter.nlp.dic.core.loader;
 
-import com.kylinhunter.nlp.dic.core.dic.Dic;
+import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
+import com.kylinhunter.nlp.dic.core.dic.DicMatch;
 import com.kylinhunter.nlp.dic.core.dic.bean.MatchResult;
 import com.kylinhunter.nlp.dic.core.dic.option.MatchOption;
 import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -17,18 +19,23 @@ import java.util.List;
  */
 @AllArgsConstructor
 @Data
-public class DicWrapper implements Dic {
-    private Dic dic;
+public class Dic  implements DicMatch{
+    private DicMatch dicMatch;
 
-    @Override
     public List<MatchResult> match(String inputText, MatchOption matchOption) {
-        return dic.match(inputText, matchOption);
+        return dicMatch.match(inputText, matchOption);
     }
 
     @Override
     public DictionaryGroup getDictionaryGroup() {
-        return dic.getDictionaryGroup();
+        return dicMatch.getDictionaryGroup();
     }
+
+    @Override
+    public DicMatch init(DictionaryGroup dictionaryGroup, WordAnalyzer wordAnalyzer) {
+        return null;
+    }
+
 }
 
 
