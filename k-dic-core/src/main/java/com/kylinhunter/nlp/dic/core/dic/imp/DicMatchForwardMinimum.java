@@ -8,9 +8,9 @@ import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Word;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
 import com.kylinhunter.nlp.dic.core.dic.DicMatch;
+import com.kylinhunter.nlp.dic.core.dic.bean.MatchWordNode;
 import com.kylinhunter.nlp.dic.core.dic.component.DicSkipper;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
-import com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.dictionary.Dictionary;
 import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
 import com.kylinhunter.nlp.dic.core.dictionary.group.GroupType;
@@ -71,13 +71,9 @@ public class DicMatchForwardMinimum implements DicMatch {
     }
 
     public List<MatchResult> process(String oriText, char[] textChars, FindLevel findLevel, boolean secondaryWordsMatch
-            , Dictionary<WordNode> dictionary) {
+            , Dictionary<MatchWordNode> dictionary) {
         if (dictionary.size() <= 0) {
             return null;
-        }
-        int defaultMaxLenth = dictionary.getMaxLength();
-        if (findLevel != FindLevel.HIGH) {
-            defaultMaxLenth = dictionary.getMaxLength() + 4;
         }
 
         for (int i = 0; i < textChars.length; i++) {
@@ -89,9 +85,17 @@ public class DicMatchForwardMinimum implements DicMatch {
         int start = 0;
         int curScanLen;
         int scanMax;
-        MatchContext<WordNode> matchContext = new MatchContext<>();
+        MatchContext<MatchWordNode> matchContext = new MatchContext<>();
         List<DictionarySearch> dictionarySearches = null; // 存储临时结果
         matchContext.findLevel = findLevel.getCode();
+
+        int defaultMaxLenth = dictionary.getMaxLength();
+        if (findLevel == FindLevel.HIGH_MIDDLE) {
+            defaultMaxLenth = defaultMaxLenth + dictionary.getSkipMaxLen();
+        } else if (findLevel == FindLevel.HIGH_MIDDLE_LOW) {
+            defaultMaxLenth = defaultMaxLenth + dictionary.getSkipMaxLen() * 2 + 1;
+
+        }
 
         int findNum;
         int findMinScanLen;
@@ -105,13 +109,13 @@ public class DicMatchForwardMinimum implements DicMatch {
             while (true) {
                 if (textChars[start] != DicSkipper.SPECIAL_CHAR) {
                     dictionary.match(textChars, start, curScanLen, matchContext);
-                    TrieNode<WordNode> node = matchContext.node;
+                    TrieNode<MatchWordNode> node = matchContext.node;
                     if (node != null) {
                         findNum++;
                         if (curScanLen < findMinScanLen) {
                             findMinScanLen = curScanLen;
                         }
-                        // System.out.println("find node:" + node.getValues().get(0)  .getKeyword());
+                        //  System.out.println("find node:" + node.getValues().get(0).getKeyword());
 
                         if (dictionarySearches == null) {
                             dictionarySearches = new ArrayList<>();
@@ -161,10 +165,10 @@ public class DicMatchForwardMinimum implements DicMatch {
             Words oriSplitWords = analyzer.analyze(oriText);
 
             for (DictionarySearch dictionarySearch : dictionarySearches) {
-                //                System.out.println("dicSearchResult:" + dicSearchResult);
-                List<WordNode> wordNodes = dictionarySearch.getWordNodes();
+                //                System.out.println("dictionarySearch:" + dictionarySearch);
+                List<MatchWordNode> wordNodes = dictionarySearch.getWordNodes();
                 if (wordNodes != null && wordNodes.size() > 0) {
-                    for (WordNode wordNode : wordNodes) { // 某一个词可能对应多个分类
+                    for (MatchWordNode wordNode : wordNodes) { // 某一个词可能对应多个分类
                         MatchResult matchResult =
                                 tryGetFindResult(oriText, dictionarySearch, wordNode, oriSplitWords);
                         if (matchResult != null) {
@@ -181,13 +185,13 @@ public class DicMatchForwardMinimum implements DicMatch {
 
     }
 
-    private MatchResult tryGetFindResult(String oriText, DictionarySearch dictionarySearch, WordNode wordNode,
+    private MatchResult tryGetFindResult(String oriText, DictionarySearch dictionarySearch, MatchWordNode wordNode,
                                          Words oriTextSplitWords) {
 
         MatchLevel matchLevel = dictionarySearch.getLevel();
         MatchResult matchResult = new MatchResult(wordNode.getType(), wordNode.getClassId(), matchLevel.getCode());
         matchResult.setWord(dictionarySearch.getHitWord());
-        matchResult.setWordNode(wordNode);
+        matchResult.setMatchWordNode(wordNode);
 
         if (matchLevel == MatchLevel.HIGH) { // 高度匹配
             Words keywordSplit = wordNode.getKeywordSplit();

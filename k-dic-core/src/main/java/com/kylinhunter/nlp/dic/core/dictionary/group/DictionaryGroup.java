@@ -3,9 +3,11 @@ package com.kylinhunter.nlp.dic.core.dictionary.group;
 import com.kylinhunter.nlp.dic.commons.service.KServices;
 import com.kylinhunter.nlp.dic.core.config.Config;
 import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
+import com.kylinhunter.nlp.dic.core.config.DicConfig;
 import com.kylinhunter.nlp.dic.core.dictionary.Dictionary;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -16,12 +18,17 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2022/1/1
  **/
 @Slf4j
-public class DictionaryGroup {
+public class DictionaryGroup<T> {
     private final Config config = ConfigHelper.get();
     private final Dictionary<?>[] datas = new Dictionary[GroupType.values().length];
     @Getter
     @Setter
     private boolean secondaryWordsMatch = true;
+    private DicConfig dicConfig;
+
+    public DictionaryGroup(DicConfig dicConfig) {
+        this.dicConfig = dicConfig;
+    }
 
     /**
      * @title put
@@ -56,16 +63,17 @@ public class DictionaryGroup {
      * @date  2022/4/24 1:45
      * @author  BiJi'an
      * @Param groupType
-     * @return com.kylinhunter.nlp.dic.core.dictionary.Dictionary<WordNode>
+     * @return com.kylinhunter.nlp.dic.core.dictionary.Dictionary<MatchWordNode>
      */
     @SuppressWarnings({"unchecked"})
     public <T> Dictionary<T> get(GroupType groupType) {
         Dictionary<T> dictionary = (Dictionary<T>) datas[groupType.ordinal()];
         if (dictionary == null) {
-            synchronized (DictionaryGroup.class) {
+            synchronized(DictionaryGroup.class) {
                 dictionary = (Dictionary<T>) datas[groupType.ordinal()];
                 if (dictionary == null) {
                     dictionary = KServices.create(config.getDictionaryType());
+                    dictionary.setSkipMaxLen(dicConfig.getSkipMaxLen());
                     datas[groupType.ordinal()] = dictionary;
                 }
             }

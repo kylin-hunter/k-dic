@@ -1,26 +1,22 @@
 package com.kylinhunter.nlp.dic.core.loader.common;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.kylinhunter.nlp.dic.core.dic.DicMatch;
 import com.kylinhunter.nlp.dic.core.dic.DicMatchType;
+import com.kylinhunter.nlp.dic.core.dic.bean.MatchWordNode;
 import com.kylinhunter.nlp.dic.core.dic.component.DicSkipper;
+import com.kylinhunter.nlp.dic.core.dic.component.MatchWordNodeConvertor;
 import com.kylinhunter.nlp.dic.core.loader.DicManager;
-
-import org.apache.commons.lang3.CharUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import com.kylinhunter.nlp.dic.commons.service.KServices;
 import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
-import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
 import com.kylinhunter.nlp.dic.core.config.Config;
 import com.kylinhunter.nlp.dic.core.config.DicConfig;
 import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
-import com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.loader.DicLoader;
 import com.kylinhunter.nlp.dic.core.loader.bean.DicData;
 import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
@@ -52,7 +48,7 @@ public abstract class AbstractDicLoader implements DicLoader {
                                                  DicConfig dicConfig) {
         DictionaryGroup dictionaryGroup = null;
         if (dicDatas != null && dicDatas.size() > 0) {
-            dictionaryGroup = new DictionaryGroup();
+            dictionaryGroup = new DictionaryGroup(config.getDics().get(dicType));
             WordAnalyzer analyzer = KServices.get(config.getWordAnalyzer());
             for (DicData dicData : dicDatas) {
                 addDicData(dictionaryGroup, dicData, analyzer, dicConfig.getWordMaxLen());
@@ -73,59 +69,15 @@ public abstract class AbstractDicLoader implements DicLoader {
      */
     private void addDicData(DictionaryGroup dictionaryGroup, DicData dicData, WordAnalyzer analyzer,
                             int maxKeywordLen) {
-        String words = dicData.getWords();
-        if (!StringUtils.isEmpty(words)) {
-            WordNode wordNode = new WordNode();
-            wordNode.setType(dicData.getType());
-            wordNode.setClassId(dicData.getClassId());
-            wordNode.setHitMode(HitMode.valueOf(dicData.getHitMode().toUpperCase()));
 
-            String relationWordsOri = dicData.getRelationWords();
-            String[] relationWordsOriSplit = StringUtils.split(relationWordsOri, ' ');
-            wordNode.setRelationWords(relationWordsOriSplit);
-
-            if (!StringUtils.isEmpty(words) && words.length() > 0 && words.length() <= maxKeywordLen) {
-                wordNode.setKeyword(words);
-                wordNode.setKeywordSplit(analyzer.analyze(words));
-
-                String secondaryWords = dicData.getSecondaryWords();
-                if (!StringUtils.isEmpty(secondaryWords)) {
-
-                    List<String> secondaryWordsList = new ArrayList<>();
-                    List<Words> secondaryWordsSplitList = new ArrayList<>();
-
-                    for (String secondaryWord : StringUtils.split(secondaryWords, ' ')) {
-                        if (!StringUtils.isEmpty(secondaryWord) && secondaryWord.length() > 1
-                                && secondaryWord.length() <= maxKeywordLen) {
-                            secondaryWordsList.add(secondaryWord);
-                            secondaryWordsSplitList.add(analyzer.analyze(secondaryWord));
-                        }
-
-                    }
-                    if (secondaryWordsList.size() > 0) {
-                        wordNode.setSecondaryWords(secondaryWordsList.toArray(new String[0]));
-                        wordNode.setSecondaryWordsSplit(secondaryWordsSplitList.toArray(new Words[0]));
-                    }
-                }
-
-                dictionaryGroup.put(wordNode);
-
-                if (HitMode.HIGH == wordNode.getHitMode()) {
-                    for (int i = 0; i < words.length(); i++) {
-                        if (words.charAt(i) != ' ' && !CharUtils.isAsciiAlphanumeric(words.charAt(i))) {
-                            if (dicSkipper.remove(FindLevel.HIGH, words.charAt(i))) {
-                                log.error("remove FindLevel.HIGH char skip:" + words.charAt(i));
-                            }
-                        }
-                    }
-                }
-            }
-
-        } else {
-            if (!StringUtils.isEmpty(words)) {
-                log.warn("invalid word:" + dicData);
+        MatchWordNode matchWordNode = DicDataHelper.convert(dicData, analyzer, maxKeywordLen);
+        if (matchWordNode != null) {
+            dictionaryGroup.put(matchWordNode);
+            if (HitMode.HIGH == matchWordNode.getHitMode()) {
+                DicSkipper.getInstance().remove(FindLevel.HIGH, matchWordNode.getKeyword());
             }
         }
+
     }
 
     /**

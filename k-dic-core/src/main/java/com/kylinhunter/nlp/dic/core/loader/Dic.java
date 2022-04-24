@@ -19,21 +19,11 @@ import java.util.List;
  */
 @AllArgsConstructor
 @Data
-public class Dic  implements DicMatch{
+public class Dic {
     private DicMatch dicMatch;
 
     public List<MatchResult> match(String inputText, MatchOption matchOption) {
         return dicMatch.match(inputText, matchOption);
-    }
-
-    @Override
-    public DictionaryGroup getDictionaryGroup() {
-        return dicMatch.getDictionaryGroup();
-    }
-
-    @Override
-    public DicMatch init(DictionaryGroup dictionaryGroup, WordAnalyzer wordAnalyzer) {
-        return null;
     }
 
 }

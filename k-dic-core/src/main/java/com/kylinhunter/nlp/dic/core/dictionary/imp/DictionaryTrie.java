@@ -6,6 +6,9 @@ import com.kylinhunter.nlp.dic.core.dictionary.bean.MatchContext;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.DictionaryConst;
 import com.kylinhunter.nlp.dic.core.dictionary.trie.Trie;
 import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
+
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -14,8 +17,11 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2022/1/1
  **/
 @Slf4j
+@Getter
+@Setter
 public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {
 
+    private int skipMaxLen = 2;
 
     @Override
     public void match(String text, MatchContext<T> matchContext) {
@@ -92,7 +98,6 @@ public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {
                                 }
                             }
 
-
                         }
                     }
 
@@ -129,7 +134,7 @@ public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {
             if (word[start] == DictionaryConst.SPECIAL_CHAR) {
                 start++;
                 num++;
-                if (num > matchContext.maxSkip) {
+                if (num > skipMaxLen) {
                     break;
                 }
             } else {

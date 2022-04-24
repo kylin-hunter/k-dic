@@ -5,16 +5,16 @@ import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 import lombok.Data;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022-01-01 23:54
  **/
 @Data
 public class DicConfig {
     private DicType type;
     private int wordMaxLen;
+    private int skipMaxLen;
     private boolean defaultDicEnabled;
     private String exDic;
-
 
 }

@@ -18,7 +18,7 @@ public class MatchResult {
     private int matchLevel;
     private String word;
     private String[] sencondaryWords;
-    private WordNode wordNode;
+    private WordNode matchWordNode;
 
     public MatchResult(int type, int classId, int matchLevel) {
         this.type = type;

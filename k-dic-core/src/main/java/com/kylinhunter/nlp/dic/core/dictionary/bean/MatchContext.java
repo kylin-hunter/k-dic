@@ -9,13 +9,10 @@ import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
  **/
 public class MatchContext<T> {
 
-
     /**
      * @see com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel
      */
     public int findLevel = 1;
-
-    public int maxSkip = 2;
 
     /**
      * @see com.kylinhunter.nlp.dic.core.dictionary.constant.MatchLevel

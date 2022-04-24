@@ -11,6 +11,10 @@ import com.kylinhunter.nlp.dic.core.dictionary.bean.MatchContext;
  **/
 public interface Dictionary<T> {
 
+    int getSkipMaxLen();
+
+    void setSkipMaxLen(int skipMaxLen);
+
     int getMaxLength();
 
     int size();

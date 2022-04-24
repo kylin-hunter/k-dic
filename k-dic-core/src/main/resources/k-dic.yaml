@@ -21,4 +21,6 @@ dics:
     exDic: dic-sensitive-ex.xlsx
     # 词典最大词长度
     wordMaxLen: 10
+    # 模糊的最大长度
+    skipMaxLen: 2
 

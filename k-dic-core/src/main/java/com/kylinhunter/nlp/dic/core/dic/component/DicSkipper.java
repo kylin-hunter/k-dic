@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
@@ -127,6 +128,27 @@ public class DicSkipper {
             return defaultChars.remove(c);
 
         }
+    }
+
+    /**
+     * @param findLevel findLevel
+     * @param words     words
+     * @return boolean
+     * @title remove
+     * @description
+     * @author BiJi'an
+     * @updateTime 2022-04-15 11:00
+     */
+    public boolean remove(FindLevel findLevel, String words) {
+        for (int i = 0; i < words.length(); i++) {
+            if (words.charAt(i) != ' ' && !CharUtils.isAsciiAlphanumeric(words.charAt(i))) {
+                if (this.remove(findLevel, words.charAt(i))) {
+                    log.error("remove FindLevel.HIGH char skip:" + words.charAt(i));
+                }
+            }
+        }
+        return false;
+
     }
 
 }
