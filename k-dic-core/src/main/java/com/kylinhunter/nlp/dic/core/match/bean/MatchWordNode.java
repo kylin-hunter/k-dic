@@ -1,4 +1,4 @@
-package com.kylinhunter.nlp.dic.core.dic.bean;
+package com.kylinhunter.nlp.dic.core.match.bean;
 
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode;
@@ -9,20 +9,20 @@ import lombok.ToString;
 
 @Data
 @EqualsAndHashCode(of = {"type", "classId"}, callSuper = true)
-@ToString(of = {"type", "classId", "secondaryWords", "relationWords"}, callSuper = true)
+@ToString(of = {"type", "classId", "assistWords", "relationWords"}, callSuper = true)
 public class MatchWordNode extends WordNode {
     private int type;
     private int classId;
 
     private Words keywordSplit;
 
-    private String[] secondaryWords;
-    private Words[] secondaryWordsSplit;
+    private String[] assistWords;
+    private Words[] assistWordsSplit;
 
     private String[] relationWords;
 
     public boolean hasSecondaryWords() {
-        return (secondaryWords != null && secondaryWords.length > 0);
+        return (assistWords != null && assistWords.length > 0);
     }
 
 }

@@ -7,7 +7,9 @@ import com.kylinhunter.nlp.dic.core.dictionary.constant.DictionaryConst;
 import com.kylinhunter.nlp.dic.core.dictionary.trie.Trie;
 import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,8 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {
-
     private int skipMaxLen = 2;
 
     @Override
@@ -56,7 +59,7 @@ public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {
                     resultNode = null;
                     break;
                 } else {
-                    findLoc = nextValidChar(word, findLoc, end, matchContext);
+                    findLoc = nextValidChar(word, findLoc, end);
                     if (findLoc < 0) {
                         resultNode = null;
                         break;
@@ -78,7 +81,7 @@ public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {
                             }
 
                             findLoc++;
-                            findLoc = nextValidChar(word, findLoc, end, matchContext);
+                            findLoc = nextValidChar(word, findLoc, end);
                             if (findLoc < 0) {
                                 resultNode = null;
                                 break;
@@ -106,12 +109,14 @@ public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {
             }
         }
 
-        if (resultNode != null && resultNode.isTerminal()) {
-
+        if (resultNode != null) {
             if (matchContext.matchLevel < DictionaryConst.MATCH_LEVEL_MIDDLE) {
                 matchContext.matchLevel = DictionaryConst.MATCH_LEVEL_HIGH;
             }
             matchContext.node = resultNode;
+            if (!resultNode.isTerminal()) {
+                matchContext.matchLevel = 0;
+            }
         } else {
             matchContext.matchLevel = 0;
         }
@@ -128,7 +133,7 @@ public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {
      * @author BiJi'an
      * @updateTime 2022-04-16 03:04
      */
-    private int nextValidChar(char[] word, int start, int end, MatchContext<T> matchContext) {
+    private int nextValidChar(char[] word, int start, int end) {
         int num = 0;
         while (start < end) {
             if (word[start] == DictionaryConst.SPECIAL_CHAR) {

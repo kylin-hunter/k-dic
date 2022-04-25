@@ -1,4 +1,4 @@
-package com.kylinhunter.nlp.dic.core.dic.constant;
+package com.kylinhunter.nlp.dic.core.match.constant;
 
 
 import com.kylinhunter.nlp.dic.commons.util.EnumUtil;

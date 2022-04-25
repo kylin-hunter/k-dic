@@ -1,8 +1,8 @@
 package com.kylinhunter.nlp.dic.core.loader.common;
 
 import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
-import com.kylinhunter.nlp.dic.core.dic.bean.MatchWordNode;
-import com.kylinhunter.nlp.dic.core.dic.component.MatchWordNodeConvertor;
+import com.kylinhunter.nlp.dic.core.match.bean.MatchWordNode;
+import com.kylinhunter.nlp.dic.core.match.component.MatchWordNodeConvertor;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 import com.kylinhunter.nlp.dic.core.loader.bean.DicData;
 
@@ -15,9 +15,9 @@ public class DicDataHelper {
     public static MatchWordNode convert(DicData dicData, WordAnalyzer analyzer, int maxKeywordLen) {
         HitMode hitMode = HitMode.valueOf(dicData.getHitMode().toUpperCase());
         String words = dicData.getWords();
-        String secondaryWords = dicData.getSecondaryWords();
+        String assistWords = dicData.getAssistWords();
         String relationWords = dicData.getRelationWords();
-        MatchWordNode matchWordNode = MatchWordNodeConvertor.convert(hitMode, words, secondaryWords, relationWords,
+        MatchWordNode matchWordNode = MatchWordNodeConvertor.convert(hitMode, words, assistWords, relationWords,
                 analyzer, maxKeywordLen);
         if (matchWordNode != null) {
             matchWordNode.setType(dicData.getType());

@@ -23,4 +23,6 @@ dics:
     wordMaxLen: 10
     # 模糊的最大长度
     skipMaxLen: 2
+    # 是否开启辅助词的精确匹配
+    assistMatch: true
 

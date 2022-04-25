@@ -100,25 +100,4 @@ public class KServices {
         }
     }
 
-    /**
-     * @param kService kService
-     * @return T
-     * @title create
-     * @description
-     * @author BiJi'an
-     * @updateTime 2022-01-01 01:11
-     */
-    @SuppressWarnings("unchecked")
-    public static <T, R extends T> R create(KService<T> kService, Class<?>... param) {
-        try {
-            Class<? extends T> clazz = kService.getClazz();
-            if (clazz == null) {
-                throw new KInitException("clazz can't be null");
-            }
-            return (R) clazz.newInstance();
-        } catch (Exception e) {
-            throw new KInitException(" create service error", e);
-        }
-    }
-
 }

@@ -3,7 +3,7 @@ package com.kylinhunter.nlp.dic.core.config;
 import java.util.Map;
 
 import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzerType;
-import com.kylinhunter.nlp.dic.core.dic.DicMatchType;
+import com.kylinhunter.nlp.dic.core.match.DicMatchType;
 import com.kylinhunter.nlp.dic.core.dictionary.DictionaryType;
 import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 

@@ -5,7 +5,7 @@ import com.alibaba.excel.read.listener.PageReadListener;
 import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
 import com.kylinhunter.nlp.dic.core.config.DicConfig;
 import com.kylinhunter.nlp.dic.core.config.LoadConfigLocal;
-import com.kylinhunter.nlp.dic.core.dic.DicMatch;
+import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.loader.bean.DicData;
 import com.kylinhunter.nlp.dic.core.loader.common.AbstractDicLoader;
 import com.kylinhunter.nlp.dic.core.loader.constants.DicType;

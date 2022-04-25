@@ -13,8 +13,6 @@ public interface Dictionary<T> {
 
     int getSkipMaxLen();
 
-    void setSkipMaxLen(int skipMaxLen);
-
     int getMaxLength();
 
     int size();

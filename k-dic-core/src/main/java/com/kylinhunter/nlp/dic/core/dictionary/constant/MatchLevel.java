@@ -10,9 +10,14 @@ import lombok.Getter;
  * @date 2022-01-01 15:10
  **/
 public enum MatchLevel implements EnumUtil.EnumCode {
+    NONE(0),
+
     HIGH(1),
+
     MIDDLE(2),
+
     LOW(3);
+
     @Getter
     private final int code;
 

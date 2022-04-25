@@ -1,5 +1,5 @@
 
-package com.kylinhunter.nlp.dic.core.dic.component;
+package com.kylinhunter.nlp.dic.core.match.component;
 
 import java.io.InputStream;
 import java.util.HashSet;

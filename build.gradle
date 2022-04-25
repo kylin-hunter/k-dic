@@ -73,6 +73,7 @@ subprojects {
         testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
         testImplementation(rootProject.dep['jmockit'])
 
+        testImplementation(rootProject.dep['jmockit'])
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.3'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.3'
 
@@ -80,11 +81,13 @@ subprojects {
     }
 
     test {
+
+        useJUnitPlatform()
         testLogging {
             outputs.upToDateWhen {false}
             showStandardStreams = true
         }
-        useJUnitPlatform()
+
     }
 
     task taskChangeActiveProfile {

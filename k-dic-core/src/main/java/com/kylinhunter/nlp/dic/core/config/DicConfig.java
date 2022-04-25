@@ -3,6 +3,8 @@ package com.kylinhunter.nlp.dic.core.config;
 import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author BiJi'an
@@ -12,6 +14,7 @@ import lombok.Data;
 @Data
 public class DicConfig {
     private DicType type;
+    private boolean assistMatch = true;
     private int wordMaxLen;
     private int skipMaxLen;
     private boolean defaultDicEnabled;

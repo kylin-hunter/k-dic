@@ -1,7 +1,7 @@
-package com.kylinhunter.nlp.dic.core.dic.option;
+package com.kylinhunter.nlp.dic.core.match.option;
 
 
-import com.kylinhunter.nlp.dic.core.dic.constant.FindType;
+import com.kylinhunter.nlp.dic.core.match.constant.FindType;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 
 import lombok.AllArgsConstructor;

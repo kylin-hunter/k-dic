@@ -3,7 +3,6 @@ package com.kylinhunter.nlp.dic.core.loader;
 import com.kylinhunter.nlp.dic.core.config.Config;
 import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
 import com.kylinhunter.nlp.dic.core.config.LoadConfig;
-import com.kylinhunter.nlp.dic.core.dic.DicMatch;
 import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 import com.kylinhunter.nlp.dic.core.loader.constants.LoadSource;
 

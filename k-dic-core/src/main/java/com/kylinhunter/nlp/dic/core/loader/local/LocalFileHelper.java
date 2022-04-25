@@ -35,7 +35,7 @@ public class LocalFileHelper {
                     for (int i = 0; i < 10; i++) {
                         DicData dicData = new DicData();
                         dicData.setWords("words" + i);
-                        dicData.setSecondaryWords("secondaryWords" + i);
+                        dicData.setAssistWords("assistWords" + i);
                         dicData.setRelationWords("relationWords" + i);
                         dicData.setHitMode(HitMode.HIGH.name());
                         dicData.setType(1);

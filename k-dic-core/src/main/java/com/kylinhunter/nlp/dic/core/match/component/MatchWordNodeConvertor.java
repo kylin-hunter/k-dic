@@ -1,4 +1,4 @@
-package com.kylinhunter.nlp.dic.core.dic.component;
+package com.kylinhunter.nlp.dic.core.match.component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
-import com.kylinhunter.nlp.dic.core.dic.bean.MatchWordNode;
+import com.kylinhunter.nlp.dic.core.match.bean.MatchWordNode;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 
 /**
@@ -16,7 +16,6 @@ import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
  * @create 2022-04-24 23:49
  **/
 public class MatchWordNodeConvertor {
-
 
     /**
      * @param analyzer      analyzer
@@ -27,33 +26,35 @@ public class MatchWordNodeConvertor {
      * @author BiJi'an
      * @updateTime 2022-04-24 23:55
      */
-    public static MatchWordNode convert(HitMode hitMode, String words, String secondaryWords, String relationWords,
+    public static MatchWordNode convert(HitMode hitMode, String words, String assistWords, String relationWords,
                                         WordAnalyzer analyzer,
                                         int maxKeywordLen) {
         if (!StringUtils.isEmpty(words)) {
             MatchWordNode matchWordNode = new MatchWordNode();
             matchWordNode.setHitMode(hitMode);
+            words = words.trim();
 
-            if (!StringUtils.isEmpty(words) && words.length() > 0 && words.length() <= maxKeywordLen) {
+            if (words.length() > 0 && words.length() <= maxKeywordLen) {
                 matchWordNode.setKeyword(words);
                 matchWordNode.setKeywordSplit(analyzer.analyze(words));
 
-                if (!StringUtils.isEmpty(secondaryWords)) {
+                if (!StringUtils.isEmpty(assistWords)) {
+                    assistWords = assistWords.trim();
 
-                    List<String> secondaryWordsList = new ArrayList<>();
-                    List<Words> secondaryWordsSplitList = new ArrayList<>();
+                    List<String> assistWordsList = new ArrayList<>();
+                    List<Words> assistWordsSplitList = new ArrayList<>();
 
-                    for (String secondaryWord : StringUtils.split(secondaryWords, ',')) {
-                        if (!StringUtils.isEmpty(secondaryWord) && secondaryWord.length() > 1
-                                && secondaryWord.length() <= maxKeywordLen) {
-                            secondaryWordsList.add(secondaryWord);
-                            secondaryWordsSplitList.add(analyzer.analyze(secondaryWord));
+                    for (String assistWord : StringUtils.split(assistWords, ',')) {
+                        if (!StringUtils.isEmpty(assistWord) && assistWord.length() > 0
+                                && assistWord.length() <= maxKeywordLen) {
+                            assistWordsList.add(assistWord);
+                            assistWordsSplitList.add(analyzer.analyze(assistWord));
                         }
 
                     }
-                    if (secondaryWordsList.size() > 0) {
-                        matchWordNode.setSecondaryWords(secondaryWordsList.toArray(new String[0]));
-                        matchWordNode.setSecondaryWordsSplit(secondaryWordsSplitList.toArray(new Words[0]));
+                    if (assistWordsList.size() > 0) {
+                        matchWordNode.setAssistWords(assistWordsList.toArray(new String[0]));
+                        matchWordNode.setAssistWordsSplit(assistWordsSplitList.toArray(new Words[0]));
                     }
                 }
 

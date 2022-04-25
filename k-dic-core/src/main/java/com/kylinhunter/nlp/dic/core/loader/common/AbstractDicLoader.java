@@ -2,11 +2,11 @@ package com.kylinhunter.nlp.dic.core.loader.common;
 
 import java.util.List;
 
-import com.kylinhunter.nlp.dic.core.dic.DicMatch;
-import com.kylinhunter.nlp.dic.core.dic.DicMatchType;
-import com.kylinhunter.nlp.dic.core.dic.bean.MatchWordNode;
-import com.kylinhunter.nlp.dic.core.dic.component.DicSkipper;
-import com.kylinhunter.nlp.dic.core.dic.component.MatchWordNodeConvertor;
+import com.kylinhunter.nlp.dic.core.match.DicMatch;
+import com.kylinhunter.nlp.dic.core.match.DicMatchCreator;
+import com.kylinhunter.nlp.dic.core.match.DicMatchType;
+import com.kylinhunter.nlp.dic.core.match.bean.MatchWordNode;
+import com.kylinhunter.nlp.dic.core.match.component.DicSkipper;
 import com.kylinhunter.nlp.dic.core.loader.DicManager;
 
 import com.kylinhunter.nlp.dic.commons.service.KServices;
@@ -32,7 +32,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class AbstractDicLoader implements DicLoader {
 
-    protected DicSkipper dicSkipper = DicSkipper.getInstance();
     protected Config config = ConfigHelper.get();
 
     /**
@@ -44,16 +43,15 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @author BiJi'an
      * @updateTime 2022-01-01 23:04
      */
-    public DictionaryGroup createDictionaryGroup(DicType dicType, List<DicData> dicDatas,
-                                                 DicConfig dicConfig) {
-        DictionaryGroup dictionaryGroup = null;
+    public DictionaryGroup<MatchWordNode> createDictionaryGroup(DicType dicType, List<DicData> dicDatas,
+                                                                DicConfig dicConfig) {
+        DictionaryGroup<MatchWordNode> dictionaryGroup = null;
         if (dicDatas != null && dicDatas.size() > 0) {
-            dictionaryGroup = new DictionaryGroup(config.getDics().get(dicType));
+            dictionaryGroup = new DictionaryGroup<>(config.getDics().get(dicType));
             WordAnalyzer analyzer = KServices.get(config.getWordAnalyzer());
             for (DicData dicData : dicDatas) {
                 addDicData(dictionaryGroup, dicData, analyzer, dicConfig.getWordMaxLen());
             }
-            dictionaryGroup.setSecondaryWordsMatch(dicType.isSecondaryWordsMatch());
         }
 
         return dictionaryGroup;
@@ -67,7 +65,7 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @author BiJi'an
      * @updateTime 2022/3/26 5:48 下午
      */
-    private void addDicData(DictionaryGroup dictionaryGroup, DicData dicData, WordAnalyzer analyzer,
+    private void addDicData(DictionaryGroup<MatchWordNode> dictionaryGroup, DicData dicData, WordAnalyzer analyzer,
                             int maxKeywordLen) {
 
         MatchWordNode matchWordNode = DicDataHelper.convert(dicData, analyzer, maxKeywordLen);
@@ -125,10 +123,8 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @updateTime 2022-01-01 23:41
      */
     private DicMatch createDicMatch(DicType dicType, List<DicData> dicDatas, DicConfig dicConfig) {
-        WordAnalyzer analyzer = KServices.get(config.getWordAnalyzer());
-        DictionaryGroup dictionaryGroup = createDictionaryGroup(dicType, dicDatas, dicConfig);
-        DicMatch dicMatch = KServices.create(DicMatchType.DEFAULT);
-        dicMatch.init(dictionaryGroup, analyzer);
+        DictionaryGroup<MatchWordNode> dictionaryGroup = createDictionaryGroup(dicType, dicDatas, dicConfig);
+        DicMatch dicMatch = DicMatchCreator.create(DicMatchType.DEFAULT, dictionaryGroup);
         log.info("createDic success,dicData'size={}", dicDatas.size());
         return dicMatch;
     }

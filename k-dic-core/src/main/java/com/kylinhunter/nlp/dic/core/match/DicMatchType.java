@@ -1,8 +1,8 @@
-package com.kylinhunter.nlp.dic.core.dic;
+package com.kylinhunter.nlp.dic.core.match;
 
 import com.kylinhunter.nlp.dic.commons.service.KService;
 import com.kylinhunter.nlp.dic.commons.service.KServices;
-import com.kylinhunter.nlp.dic.core.dic.imp.DicMatchForwardMinimum;
+import com.kylinhunter.nlp.dic.core.match.imp.DicMatchForwardMinimum;
 
 import lombok.Getter;
 import lombok.Setter;

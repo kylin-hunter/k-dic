@@ -21,12 +21,12 @@ public enum DicType {
     @Getter
     private final String path;
     @Getter
-    private final boolean secondaryWordsMatch;
+    private final boolean assistMatch;
 
-    DicType(int code, String path, boolean secondaryWordsMatch) {
+    DicType(int code, String path, boolean assistMatch) {
         this.code = code;
         this.path = path;
-        this.secondaryWordsMatch = secondaryWordsMatch;
+        this.assistMatch = assistMatch;
     }
 
     public int getCode() {

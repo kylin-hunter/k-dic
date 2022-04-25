@@ -21,4 +21,6 @@ public class MatchContext<T> {
 
     public TrieNode<T> node;
 
+    private boolean isTerminal = false;
+
 }

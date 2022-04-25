@@ -1,4 +1,4 @@
-package com.kylinhunter.nlp.dic.core.dic.bean;
+package com.kylinhunter.nlp.dic.core.match.bean;
 
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode;
 
@@ -17,7 +17,7 @@ public class MatchResult {
     private int classId;
     private int matchLevel;
     private String word;
-    private String[] sencondaryWords;
+    private String[] assistWords;
     private WordNode matchWordNode;
 
     public MatchResult(int type, int classId, int matchLevel) {

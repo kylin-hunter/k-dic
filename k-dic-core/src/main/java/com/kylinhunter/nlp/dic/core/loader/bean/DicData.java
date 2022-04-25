@@ -18,7 +18,7 @@ public class DicData implements Serializable {
     @ExcelProperty("主词")
     private String words;
     @ExcelProperty("辅助词")
-    private String secondaryWords;
+    private String assistWords;
     @ExcelProperty("目标词")
     private String relationWords;
     @ExcelProperty("命中类型")

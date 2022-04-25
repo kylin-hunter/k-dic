@@ -1,6 +1,6 @@
 package com.kylinhunter.nlp.dic.core.loader;
 
-import com.kylinhunter.nlp.dic.core.dic.DicMatch;
+import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 
 public interface DicLoader {

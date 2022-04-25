@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @description 
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
  **/
 @NoArgsConstructor
 @Getter
+@Setter
 public class Trie<T> {
     private static final int MAX_WORD_LENGTH = 200;
     public static final int FIRST_CHAR_INDEX_SLOT_NUM = 24000;

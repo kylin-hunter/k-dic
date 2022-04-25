@@ -40,7 +40,7 @@ public class DictionaryTrieTest {
 
     @Test
     public void test1() {
-        DictionaryTrie<Long> dictionaryTrie = KServices.create(DictionaryType.TRIE);
+        DictionaryTrie<Long> dictionaryTrie = new DictionaryTrie();
         init(dictionaryTrie);
         MatchContext<Long> matchContext = new MatchContext<>();
         matchContext.findLevel = FindLevel.HIGH.getCode();
@@ -73,7 +73,7 @@ public class DictionaryTrieTest {
 
     @Test
     public void test2() {
-        DictionaryTrie<Long> dictionaryTrie = KServices.create(DictionaryType.TRIE);
+        DictionaryTrie<Long> dictionaryTrie = new DictionaryTrie();
         init(dictionaryTrie);
         MatchContext<Long> matchContext = new MatchContext<>();
         matchContext.findLevel = FindLevel.HIGH_MIDDLE.getCode();
@@ -107,7 +107,7 @@ public class DictionaryTrieTest {
 
     @Test
     public void test3() {
-        DictionaryTrie<Long> dictionaryTrie = KServices.create(DictionaryType.TRIE);
+        DictionaryTrie<Long> dictionaryTrie = new DictionaryTrie();
         init(dictionaryTrie);
         MatchContext<Long> matchContext = new MatchContext<>();
 
