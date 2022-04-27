@@ -1,8 +1,8 @@
 package com.kylinhunter.nlp.dic.core.loader;
 
+import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.match.bean.MatchResult;
-import com.kylinhunter.nlp.dic.core.match.option.MatchOption;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,8 +20,8 @@ import java.util.List;
 public class Dic {
     private DicMatch dicMatch;
 
-    public List<MatchResult> match(String inputText, MatchOption matchOption) {
-        return dicMatch.match(inputText, matchOption);
+    public List<MatchResult> match(String inputText, FindLevel findLevel) {
+        return dicMatch.match(inputText, findLevel);
     }
 
 }

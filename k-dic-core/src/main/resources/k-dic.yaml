@@ -25,4 +25,6 @@ dics:
     skipMaxLen: 2
     # 是否开启辅助词的精确匹配
     assistMatch: true
+    # 前缀匹配最大匹配个数
+    prefixMatchMaxNum: 10
 

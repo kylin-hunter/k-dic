@@ -3,8 +3,6 @@ package com.kylinhunter.nlp.dic.core.dictionary.trie;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class TrieTest {
 
     @Test
@@ -20,8 +18,8 @@ class TrieTest {
         trie.put("罗小杰", 1);
         trie.put("中华人民共和国", 1);
         trie.put("中华", 1);
-        TrieHelper.showConfilicMessage(trie);
-        TrieHelper.show(trie);
+        TrieStatHelper.showConfilicMessage(trie);
+        TrieStatHelper.show(trie);
         Assertions.assertEquals(false, trie.contains("毕"));
         Assertions.assertEquals(true, trie.contains("毕庄"));
         Assertions.assertEquals(true, trie.contains("毕继安"));
@@ -29,7 +27,7 @@ class TrieTest {
 
         trie.remove("罗小培");
         Assertions.assertEquals(false, trie.contains("罗小培"));
-        TrieHelper.showConfilicMessage(trie);
-        TrieHelper.show(trie);
+        TrieStatHelper.showConfilicMessage(trie);
+        TrieStatHelper.show(trie);
     }
 }

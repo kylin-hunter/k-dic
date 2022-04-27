@@ -92,8 +92,6 @@ public class ConfigHelper {
             }
             configLoad.setLoadSource(LoadSource.LOCAL);
         }
-
-
         config.getDics().forEach((k, v) -> v.setType(k));
     }
 }

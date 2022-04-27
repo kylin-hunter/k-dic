@@ -17,6 +17,9 @@ public class MatchResult {
     private int classId;
     private int matchLevel;
     private String word;
+    private String matchWord;
+    private int start;
+    private int end;
     private String[] assistWords;
     private WordNode matchWordNode;
 
@@ -26,4 +29,8 @@ public class MatchResult {
         this.matchLevel = matchLevel;
     }
 
+    public void setMatchWordNode(WordNode matchWordNode) {
+        this.matchWordNode = matchWordNode;
+        this.matchWord = matchWordNode.getKeyword();
+    }
 }

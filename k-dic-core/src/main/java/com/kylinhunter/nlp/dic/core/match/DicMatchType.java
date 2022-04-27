@@ -2,7 +2,7 @@ package com.kylinhunter.nlp.dic.core.match;
 
 import com.kylinhunter.nlp.dic.commons.service.KService;
 import com.kylinhunter.nlp.dic.commons.service.KServices;
-import com.kylinhunter.nlp.dic.core.match.imp.DicMatchForwardMinimum;
+import com.kylinhunter.nlp.dic.core.match.imp.DicMatchFull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +14,8 @@ import lombok.Setter;
  **/
 public enum DicMatchType implements KService<DicMatch> {
 
-    DEFAULT(DicMatchForwardMinimum.class),
-    FORWARD_MINIMUM(DicMatchForwardMinimum.class);
+    DEFAULT(DicMatchFull.class),
+    FULL(DicMatchFull.class);
     @Getter
     @Setter
     Class<? extends DicMatch> clazz;

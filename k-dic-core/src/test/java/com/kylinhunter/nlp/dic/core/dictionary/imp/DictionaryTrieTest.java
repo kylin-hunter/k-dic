@@ -5,13 +5,10 @@ import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.MatchLevel;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.kylinhunter.nlp.dic.commons.service.KServices;
-import com.kylinhunter.nlp.dic.core.dictionary.DictionaryType;
 import com.kylinhunter.nlp.dic.core.dictionary.bean.MatchContext;
-import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieHelper;
+import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieStatHelper;
 
 public class DictionaryTrieTest {
 
@@ -33,9 +30,9 @@ public class DictionaryTrieTest {
         dictionaryTrie.put("中华人民共和国", 8L);
         dictionaryTrie.put("中华", 9L);
         dictionaryTrie.put("毕继安", 10L);
-        TrieHelper.showStatistics(dictionaryTrie);
-        TrieHelper.showConfilicMessage(dictionaryTrie);
-        TrieHelper.show(dictionaryTrie);
+        TrieStatHelper.showStatistics(dictionaryTrie);
+        TrieStatHelper.showConfilicMessage(dictionaryTrie);
+        TrieStatHelper.show(dictionaryTrie);
     }
 
     @Test

@@ -18,7 +18,6 @@ import lombok.Data;
 public class Config {
     private WordAnalyzerType wordAnalyzer = WordAnalyzerType.DEFAULT;
     private DictionaryType dictionaryType = DictionaryType.DEFAULT;
-    private DicMatchType dicMatchType=DicMatchType.DEFAULT;
     private LoadConfig load;
     private Map<DicType, DicConfig> dics;
 

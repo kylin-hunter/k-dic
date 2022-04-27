@@ -151,4 +151,14 @@ public class DicSkipper {
 
     }
 
+    public char[] replaceSkipChar(String text, FindLevel findLevel) {
+        char[] textChars = text.toCharArray();
+        for (int i = 0; i < textChars.length; i++) {
+            if (this.isSkip(findLevel, textChars[i])) {
+                textChars[i] = DicSkipper.SPECIAL_CHAR;
+            }
+        }
+        return textChars;
+    }
+
 }
