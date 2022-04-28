@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
-import com.kylinhunter.nlp.dic.core.match.bean.MatchWordNode;
+import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 
 /**
@@ -15,28 +15,28 @@ import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
  * @description
  * @create 2022-04-24 23:49
  **/
-public class MatchWordNodeConvertor {
+public class WordNodeConvertor {
 
     /**
      * @param analyzer      analyzer
      * @param maxKeywordLen maxKeywordLen
-     * @return com.kylinhunter.nlp.dic.core.dictionary.group.bean.MatchWordNode
+     * @return com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode
      * @title convert
      * @description
      * @author BiJi'an
      * @updateTime 2022-04-24 23:55
      */
-    public static MatchWordNode convert(HitMode hitMode, String words, String assistWords, String relationWords,
-                                        WordAnalyzer analyzer,
-                                        int maxKeywordLen) {
+    public static WordNode convert(HitMode hitMode, String words, String assistWords, String relationWords,
+                                   WordAnalyzer analyzer,
+                                   int maxKeywordLen) {
         if (!StringUtils.isEmpty(words)) {
-            MatchWordNode matchWordNode = new MatchWordNode();
-            matchWordNode.setHitMode(hitMode);
+            WordNode wordNode = new WordNode();
+            wordNode.setHitMode(hitMode);
             words = words.trim();
 
             if (words.length() > 0 && words.length() <= maxKeywordLen) {
-                matchWordNode.setKeyword(words);
-                matchWordNode.setKeywordSplit(analyzer.analyze(words));
+                wordNode.setKeyword(words);
+                wordNode.setKeywordSplit(analyzer.analyze(words));
 
                 if (!StringUtils.isEmpty(assistWords)) {
                     assistWords = assistWords.trim();
@@ -53,15 +53,15 @@ public class MatchWordNodeConvertor {
 
                     }
                     if (assistWordsList.size() > 0) {
-                        matchWordNode.setAssistWords(assistWordsList.toArray(new String[0]));
-                        matchWordNode.setAssistWordsSplit(assistWordsSplitList.toArray(new Words[0]));
+                        wordNode.setAssistWords(assistWordsList.toArray(new String[0]));
+                        wordNode.setAssistWordsSplit(assistWordsSplitList.toArray(new Words[0]));
                     }
                 }
 
                 String[] relationWordsSplit = StringUtils.split(relationWords, ',');
-                matchWordNode.setRelationWords(relationWordsSplit);
+                wordNode.setRelationWords(relationWordsSplit);
 
-                return matchWordNode;
+                return wordNode;
             }
 
         }

@@ -98,4 +98,15 @@ public class TrieNode<T> {
         return childNode;
     }
 
+    @Override
+    public String toString() {
+        return "TrieNode{" +
+                "character=" + character +
+                ", terminal=" + terminal +
+                ", sibling=" + sibling +
+                ", childrenChar=" + Arrays.toString(childrenChar) +
+                ", children=" + children.length +
+                ", values=" + values +
+                '}';
+    }
 }

@@ -26,7 +26,7 @@ public interface Dictionary<T> {
     T getValue(String item);
 
     /**
-     * judge a part of text if a word or not
+     * judge a part of text if a hitWord or not
      *
      * @param text   the text for judge
      * @param start  the start postion of text

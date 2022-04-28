@@ -3,7 +3,7 @@ package com.kylinhunter.nlp.dic.core.analyzer;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
 
 /**
- * @description  word analyzer
+ * @description  hitWord analyzer
  * @author  BiJi'an
  * @date 2022/1/1
  **/

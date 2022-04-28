@@ -4,8 +4,7 @@ import java.util.List;
 
 import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.match.DicMatchCreator;
-import com.kylinhunter.nlp.dic.core.match.DicMatchType;
-import com.kylinhunter.nlp.dic.core.match.bean.MatchWordNode;
+import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.match.component.DicSkipper;
 import com.kylinhunter.nlp.dic.core.loader.DicManager;
 
@@ -43,9 +42,9 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @author BiJi'an
      * @updateTime 2022-01-01 23:04
      */
-    public DictionaryGroup<MatchWordNode> createDictionaryGroup(DicType dicType, List<DicData> dicDatas,
-                                                                DicConfig dicConfig) {
-        DictionaryGroup<MatchWordNode> dictionaryGroup = null;
+    public DictionaryGroup<WordNode> createDictionaryGroup(DicType dicType, List<DicData> dicDatas,
+                                                           DicConfig dicConfig) {
+        DictionaryGroup<WordNode> dictionaryGroup = null;
         if (dicDatas != null && dicDatas.size() > 0) {
             dictionaryGroup = new DictionaryGroup<>(config.getDics().get(dicType));
             WordAnalyzer analyzer = KServices.get(config.getWordAnalyzer());
@@ -65,14 +64,14 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @author BiJi'an
      * @updateTime 2022/3/26 5:48 下午
      */
-    private void addDicData(DictionaryGroup<MatchWordNode> dictionaryGroup, DicData dicData, WordAnalyzer analyzer,
+    private void addDicData(DictionaryGroup<WordNode> dictionaryGroup, DicData dicData, WordAnalyzer analyzer,
                             int maxKeywordLen) {
 
-        MatchWordNode matchWordNode = DicDataHelper.convert(dicData, analyzer, maxKeywordLen);
-        if (matchWordNode != null) {
-            dictionaryGroup.put(matchWordNode);
-            if (HitMode.HIGH == matchWordNode.getHitMode()) {
-                DicSkipper.getInstance().remove(FindLevel.HIGH, matchWordNode.getKeyword());
+        WordNode wordNode = DicDataHelper.convert(dicData, analyzer, maxKeywordLen);
+        if (wordNode != null) {
+            dictionaryGroup.put(wordNode);
+            if (HitMode.HIGH == wordNode.getHitMode()) {
+                DicSkipper.getInstance().remove(FindLevel.HIGH, wordNode.getKeyword());
             }
         }
 
@@ -123,8 +122,8 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @updateTime 2022-01-01 23:41
      */
     private DicMatch createDicMatch(DicType dicType, List<DicData> dicDatas, DicConfig dicConfig) {
-        DictionaryGroup<MatchWordNode> dictionaryGroup = createDictionaryGroup(dicType, dicDatas, dicConfig);
-        DicMatch dicMatch = DicMatchCreator.create(DicMatchType.DEFAULT, dictionaryGroup);
+        DictionaryGroup<WordNode> dictionaryGroup = createDictionaryGroup(dicType, dicDatas, dicConfig);
+        DicMatch dicMatch = DicMatchCreator.create(dicType.getDicMatchType(), dictionaryGroup);
         log.info("createDic success,dicData'size={}", dicDatas.size());
         return dicMatch;
     }

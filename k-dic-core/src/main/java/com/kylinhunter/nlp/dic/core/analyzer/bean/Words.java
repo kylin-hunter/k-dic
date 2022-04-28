@@ -18,8 +18,8 @@ public class Words {
     private List<Word> words = new ArrayList<>();
 
     /**
-     * @param word word
-     * @title add a word
+     * @param word hitWord
+     * @title add a hitWord
      * @description
      * @author BiJi'an
      * @updateTime 2022/1/1 11:22 下午
@@ -29,7 +29,7 @@ public class Words {
     }
 
     /***
-     * @title add a word
+     * @title add a hitWord
      * @description
      * @author BiJi'an
      * @param text text

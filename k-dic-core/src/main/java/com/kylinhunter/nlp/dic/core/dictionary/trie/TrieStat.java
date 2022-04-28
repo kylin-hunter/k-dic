@@ -21,7 +21,7 @@ public class TrieStat {
     public int maxLength;
 
     /**
-     * @param word word
+     * @param word hitWord
      * @title put
      * @description
      * @author BiJi'an
@@ -44,7 +44,7 @@ public class TrieStat {
     }
 
     /**
-     * @param word word
+     * @param word hitWord
      * @title remove
      * @description
      * @author BiJi'an
@@ -73,9 +73,9 @@ public class TrieStat {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n count:").append(count).append(",maxLength:").append(maxLength).append("\n");
-        wordNums.forEach((key, value) -> sb.append("word with length(").append(key).append(")  :")
+        wordNums.forEach((key, value) -> sb.append("hitWord with length(").append(key).append(")  :")
                 .append(value).append("\n"));
-        sb.append("word average length:").append((float) totalLength / count).append("\n");
+        sb.append("hitWord average length:").append((float) totalLength / count).append("\n");
         return sb.toString();
     }
 

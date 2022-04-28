@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @description  a word
+ * @description  a hitWord
  * @author  BiJi'an
  * @date 2022/1/1
  **/

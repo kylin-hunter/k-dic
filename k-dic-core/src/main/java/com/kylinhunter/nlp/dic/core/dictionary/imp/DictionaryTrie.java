@@ -124,7 +124,7 @@ public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {
     }
 
     /**
-     * @param word  word
+     * @param word  hitWord
      * @param start start
      * @param end   end
      * @return int

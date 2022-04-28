@@ -1,27 +1,27 @@
 package com.kylinhunter.nlp.dic.core.match.imp;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import com.kylinhunter.nlp.dic.commons.service.KServices;
 import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzerType;
 import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
 import com.kylinhunter.nlp.dic.core.config.DicConfig;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
+import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
+import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
+import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.match.DicMatchCreator;
 import com.kylinhunter.nlp.dic.core.match.DicMatchType;
 import com.kylinhunter.nlp.dic.core.match.bean.MatchResult;
-import com.kylinhunter.nlp.dic.core.match.component.MatchWordNodeConvertor;
-import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
-import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
-import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.kylinhunter.nlp.dic.core.match.component.WordNodeConvertor;
 
 class DicMatchFullTest {
 
@@ -34,24 +34,18 @@ class DicMatchFullTest {
 
         DictionaryGroup dictionaryGroup = new DictionaryGroup(dicConfig);
 
-        dictionaryGroup.put(MatchWordNodeConvertor.convert(HitMode.HIGH, "北京", "", "", analyzer, 10));
-        dictionaryGroup.put(MatchWordNodeConvertor.convert(HitMode.HIGH, "北京海淀", "", "", analyzer, 10));
-        dictionaryGroup.put(MatchWordNodeConvertor.convert(HitMode.HIGH, "河北", "廊坊,张家口", "", analyzer, 10));
+        dictionaryGroup.put(WordNodeConvertor.convert(HitMode.HIGH, "北京", "", "", analyzer, 10));
+        dictionaryGroup.put(WordNodeConvertor.convert(HitMode.HIGH, "北京海淀", "", "", analyzer, 10));
+        dictionaryGroup.put(WordNodeConvertor.convert(HitMode.HIGH, "河北", "廊坊,张家口", "", analyzer, 10));
 
-        dictionaryGroup.put(MatchWordNodeConvertor.convert(HitMode.MIDDLE, "乌鲁木齐", "", "", analyzer, 10));
-        dictionaryGroup.put(MatchWordNodeConvertor.convert(HitMode.MIDDLE, "呼和浩特", "新疆", "", analyzer, 10));
+        dictionaryGroup.put(WordNodeConvertor.convert(HitMode.MIDDLE, "乌鲁木齐", "", "", analyzer, 10));
+        dictionaryGroup.put(WordNodeConvertor.convert(HitMode.MIDDLE, "呼和浩特", "新疆", "", analyzer, 10));
 
-        dictionaryGroup.put(MatchWordNodeConvertor.convert(HitMode.LOW, "上海", "", "", analyzer, 10));
-        dictionaryGroup.put(MatchWordNodeConvertor.convert(HitMode.LOW, "山西", "大同府,阎王寨", "", analyzer, 10));
+        dictionaryGroup.put(WordNodeConvertor.convert(HitMode.LOW, "上海", "", "", analyzer, 10));
+        dictionaryGroup.put(WordNodeConvertor.convert(HitMode.LOW, "山西", "大同府,阎王寨", "", analyzer, 10));
 
         dicMatch = DicMatchCreator.create(DicMatchType.FULL, dictionaryGroup);
 
-    }
-
-    List<String> toStringList(List<MatchResult> matchResults) {
-        return matchResults.stream()
-                .map(e -> e.getMatchLevel() + ":" + e.getStart() + ":" + e.getEnd() + ":" + e.getWord() + ":" + e
-                        .getMatchWord() + ":" + Arrays.toString(e.getAssistWords())).collect(Collectors.toList());
     }
 
     @Test
@@ -66,10 +60,7 @@ class DicMatchFullTest {
                 + "山西和山**西和山**1**西大同府和阎王寨";
 
         List<MatchResult> matchResults = dicMatch.match(text, FindLevel.HIGH);
-        List<String> matchResultsArr = toStringList(matchResults);
-        System.out.println("=====high\n");
-        matchResultsArr.forEach(System.out::println);
-
+        List<String> resultString = toResultString(matchResults);
         Assertions.assertArrayEquals(new String[] {
                         "1:0:2:北京:北京:null",
                         "1:15:17:北京:北京:null",
@@ -80,12 +71,10 @@ class DicMatchFullTest {
                         "1:103:105:上海:上海:null",
                         "1:118:120:山西:山西:[大同府, 阎王寨]"
                 },
-                matchResultsArr.toArray());
+                resultString.toArray());
 
         matchResults = dicMatch.match(text, FindLevel.HIGH_MIDDLE);
-        matchResultsArr = toStringList(matchResults);
-        System.out.println("=====middle\n");
-        matchResultsArr.forEach(System.out::println);
+        resultString = toResultString(matchResults);
 
         Assertions.assertArrayEquals(new String[] {
                         "1:0:2:北京:北京:null",
@@ -101,13 +90,10 @@ class DicMatchFullTest {
                         "1:118:120:山西:山西:[大同府, 阎王寨]",
                         "2:121:125:山**西:山西:[大同府, 阎王寨]"
                 },
-                matchResultsArr.toArray());
+                resultString.toArray());
 
         matchResults = dicMatch.match(text, FindLevel.HIGH_MIDDLE_LOW);
-        matchResultsArr = toStringList(matchResults);
-        System.out.println("=====middle\n");
-        matchResultsArr.forEach(System.out::println);
-
+        resultString = toResultString(matchResults);
         Assertions.assertArrayEquals(new String[] {
                         "1:0:2:北京:北京:null",
                         "1:15:17:北京:北京:null",
@@ -124,8 +110,27 @@ class DicMatchFullTest {
                         "2:121:125:山**西:山西:[大同府, 阎王寨]",
                         "3:126:133:山**1**西:山西:[大同府, 阎王寨]"
                 },
-                matchResultsArr.toArray());
+                resultString.toArray());
+
+        matchResults = dicMatch.match("hello", FindLevel.HIGH_MIDDLE_LOW);
+        resultString = toResultString(matchResults);
+        Assertions.assertEquals(null, resultString);
 
     }
 
+    public static List<String> toResultString(List<MatchResult> matchResults) {
+        System.out.println("print result:");
+        if (matchResults == null) {
+            System.out.println("null");
+
+            return null;
+        }
+
+        List<String> matchResultsArr = matchResults.stream()
+                .map(e -> e.getMatchLevel() + ":" + e.getStart() + ":" + e.getEnd() + ":" + e.getHitWord() + ":" + e
+                        .getMatchWord() + ":" + Arrays.toString(e.getAssistWords())).collect(Collectors.toList());
+
+        matchResultsArr.forEach(System.out::println);
+        return matchResultsArr;
+    }
 }

@@ -1,7 +1,7 @@
 package com.kylinhunter.nlp.dic.core.analyzer;
 
 /**
- * @description  a reserved abtract class for word analyzer
+ * @description  a reserved abtract class for hitWord analyzer
  * @author  BiJi'an
  * @date 2022/1/1
  **/

@@ -1,7 +1,5 @@
 package com.kylinhunter.nlp.dic.core.match.bean;
 
-import java.util.List;
-
 import com.kylinhunter.nlp.dic.commons.util.EnumUtil;
 import com.kylinhunter.nlp.dic.core.dictionary.bean.MatchContext;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.MatchLevel;
@@ -12,12 +10,11 @@ import lombok.Data;
 @Data
 public class DictionarySearch {
 
-    private String hitWord;
+    private MatchLevel level;
     private int start;
     private int end;
-    private MatchLevel level;
-    private TrieNode<MatchWordNode> node;
-    private List<MatchWordNode> wordNodes;
+    private String hitWord;
+    private TrieNode<WordNode> node;
 
     public DictionarySearch(String text, int start, int len, MatchContext matchContext) {
 
@@ -26,7 +23,14 @@ public class DictionarySearch {
         this.hitWord = text.substring(start, start + len);
         this.level = EnumUtil.fromCode(MatchLevel.class, matchContext.matchLevel);
         this.node = matchContext.node;
-        this.wordNodes = node.getValues();
     }
 
+    public DictionarySearch(String text, int start, int len, TrieNode<WordNode> node) {
+
+        this.start = start;
+        this.end = start + len;
+        this.hitWord = text.substring(start, start + len);
+        this.level = MatchLevel.NONE;
+        this.node = node;
+    }
 }

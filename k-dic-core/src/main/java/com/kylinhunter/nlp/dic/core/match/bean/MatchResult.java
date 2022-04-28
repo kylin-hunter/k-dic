@@ -1,6 +1,7 @@
 package com.kylinhunter.nlp.dic.core.match.bean;
 
-import com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode;
+import com.kylinhunter.nlp.dic.core.dictionary.constant.MatchLevel;
+import com.kylinhunter.nlp.dic.core.dictionary.group.bean.DictionaryNode;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,12 +17,13 @@ public class MatchResult {
     private int type;
     private int classId;
     private int matchLevel;
-    private String word;
+    private String hitWord;
     private String matchWord;
     private int start;
     private int end;
     private String[] assistWords;
-    private WordNode matchWordNode;
+    private WordNode wordNode;
+
 
     public MatchResult(int type, int classId, int matchLevel) {
         this.type = type;
@@ -29,8 +31,14 @@ public class MatchResult {
         this.matchLevel = matchLevel;
     }
 
-    public void setMatchWordNode(WordNode matchWordNode) {
-        this.matchWordNode = matchWordNode;
-        this.matchWord = matchWordNode.getKeyword();
+    public MatchResult(int type, int classId, MatchLevel matchLevel) {
+        this.type = type;
+        this.classId = classId;
+        this.matchLevel = matchLevel.getCode();
+    }
+
+    public void setWordNode(WordNode wordNode) {
+        this.wordNode = wordNode;
+        this.matchWord = wordNode.getKeyword();
     }
 }

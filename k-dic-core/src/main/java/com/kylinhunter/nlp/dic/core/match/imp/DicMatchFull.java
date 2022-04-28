@@ -14,7 +14,7 @@ import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
 import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.match.bean.DictionarySearch;
 import com.kylinhunter.nlp.dic.core.match.bean.MatchResult;
-import com.kylinhunter.nlp.dic.core.match.bean.MatchWordNode;
+import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.match.component.DicMatchHelper;
 import com.kylinhunter.nlp.dic.core.match.component.DicSkipper;
 
@@ -25,18 +25,18 @@ import lombok.Setter;
 @Setter
 public class DicMatchFull extends AbstractDicMatch implements DicMatch {
 
-    public DicMatchFull(DictionaryGroup<MatchWordNode> dictionaryGroup) {
+    public DicMatchFull(DictionaryGroup<WordNode> dictionaryGroup) {
         super(dictionaryGroup);
     }
 
-    public List<MatchResult> process(String text, FindLevel findLevel, Dictionary<MatchWordNode> dictionary) {
+    public List<MatchResult> process(String text, FindLevel findLevel, Dictionary<WordNode> dictionary) {
         if (dictionary.size() <= 0 || text == null || text.length() < 1) {
             return null;
         }
         char[] textChars = this.dicSkipper.replaceSkipChar(text, findLevel);
 
-        List<DictionarySearch> dictionarySearches = null; // 存储临时结果
-        MatchContext<MatchWordNode> matchContext = new MatchContext(findLevel);
+        List<DictionarySearch> dictionarySearches = null; // tmp save
+        MatchContext<WordNode> matchContext = new MatchContext(findLevel);
 
         int curLen = textChars.length;
         int start = 0;
@@ -52,10 +52,10 @@ public class DicMatchFull extends AbstractDicMatch implements DicMatch {
             matchMinLen = Integer.MAX_VALUE;
             while (true) {
                 if (textChars[start] == DicSkipper.SPECIAL_CHAR) {
-                    break; // 加快速度 跳过 非法字符
+                    break; // skip fast
                 }
                 dictionary.match(textChars, start, curScanLen, matchContext);
-                TrieNode<MatchWordNode> node = matchContext.node;
+                TrieNode<WordNode> node = matchContext.node;
                 if (node != null && node.isTerminal()) {
                     matchNum++;
                     if (curScanLen < matchMinLen) {
@@ -65,11 +65,11 @@ public class DicMatchFull extends AbstractDicMatch implements DicMatch {
                     dictionarySearches = DicMatchHelper.add(dictionarySearches, text, start, curScanLen, matchContext);
                 }
                 if (matchNum > 0) {
-                    if (matchNum == 1) { // 找到一个词头
-                        if (curScanLen > matchMinLen + 1) { // 最多在扫描两个字符,找不到退出
+                    if (matchNum == 1) { // find one
+                        if (curScanLen > matchMinLen + 1) { // scan two chars
                             break;
                         }
-                    } else { // 找到多个词头相同的词头，结束
+                    } else { // find more than one
                         break;
                     }
                 }
@@ -96,15 +96,12 @@ public class DicMatchFull extends AbstractDicMatch implements DicMatch {
             for (DictionarySearch dictionarySearch : dictionarySearches) {
                 //                System.out.println("dictionarySearch:" + dictionarySearch);
 
-                TrieNode<MatchWordNode> node = dictionarySearch.getNode();
+                TrieNode<WordNode> node = dictionarySearch.getNode();
 
-                List<MatchWordNode> wordNodes = dictionarySearch.getWordNodes();
+                List<WordNode> wordNodes = node.getValues();
                 if (wordNodes != null && wordNodes.size() > 0) {
-                    for (MatchWordNode wordNode : wordNodes) { // 某一个词可能对应多个分类
-
-                        MatchResult matchResult =
-                                tryGetFindResultFull(oriText, dictionarySearch, wordNode, oriSplitWords);
-
+                    for (WordNode wordNode : wordNodes) {
+                        MatchResult matchResult = tryGetMatchResult(oriText, dictionarySearch, wordNode, oriSplitWords);
                         if (matchResult != null) {
                             matchResults.add(matchResult);
                         }
@@ -120,10 +117,10 @@ public class DicMatchFull extends AbstractDicMatch implements DicMatch {
     }
 
     /**
-     * @param oriText
+     * @param text
      * @param dictionarySearch
      * @param wordNode
-     * @param oriTextSplitWords
+     * @param textWords
      * @return com.kylinhunter.nlp.dic.core.match.bean.MatchResult
      * @throws
      * @title tryGetFindResultFull
@@ -131,8 +128,8 @@ public class DicMatchFull extends AbstractDicMatch implements DicMatch {
      * @author BiJi'an
      * @updateTime 2022-04-27 02:44
      */
-    private MatchResult tryGetFindResultFull(String oriText, DictionarySearch dictionarySearch, MatchWordNode wordNode,
-                                             Words oriTextSplitWords) {
+    private MatchResult tryGetMatchResult(String text, DictionarySearch dictionarySearch, WordNode wordNode,
+                                          Words textWords) {
 
         MatchLevel matchLevel = dictionarySearch.getLevel();
         if (matchLevel == MatchLevel.NONE) {
@@ -140,20 +137,20 @@ public class DicMatchFull extends AbstractDicMatch implements DicMatch {
         }
         MatchResult matchResult = DicMatchHelper.toMatchResult(dictionarySearch, wordNode);
 
-        if (matchLevel == MatchLevel.HIGH) { // 高度匹配
+        if (matchLevel == MatchLevel.HIGH) {
             Words keywordSplit = wordNode.getKeywordSplit();
-            if (keywordSplit != null) { // 包括切词全在才可命中
+            if (keywordSplit != null) {
                 for (Word word : keywordSplit.getWords()) {
-                    if (!oriTextSplitWords.contains(word.getText())) {
+                    if (!textWords.contains(word.getText())) {
                         return null;
                     }
                 }
             }
         }
         if (this.assistMatch) {
-            if (wordNode.hasSecondaryWords()) { // 有关联词的时候，要求关联词也都要在输入的切词里面
+            if (wordNode.hasAssistWords()) {
                 for (String subWord : wordNode.getAssistWords()) {
-                    if (!oriText.contains(subWord)) {
+                    if (!text.contains(subWord)) {
                         return null;
                     }
                 }

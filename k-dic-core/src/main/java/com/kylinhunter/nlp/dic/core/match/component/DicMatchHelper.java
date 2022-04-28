@@ -8,9 +8,10 @@ import com.kylinhunter.nlp.dic.core.dictionary.Dictionary;
 import com.kylinhunter.nlp.dic.core.dictionary.bean.MatchContext;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.MatchLevel;
+import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
 import com.kylinhunter.nlp.dic.core.match.bean.DictionarySearch;
 import com.kylinhunter.nlp.dic.core.match.bean.MatchResult;
-import com.kylinhunter.nlp.dic.core.match.bean.MatchWordNode;
+import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 
 /**
  * @author BiJi'an
@@ -29,13 +30,13 @@ public class DicMatchHelper {
      * @author BiJi'an
      * @updateTime 2022-04-27 02:44
      */
-    public static MatchResult toMatchResult(DictionarySearch dictionarySearch, MatchWordNode wordNode) {
+    public static MatchResult toMatchResult(DictionarySearch dictionarySearch, WordNode wordNode) {
         MatchLevel matchLevel = dictionarySearch.getLevel();
         MatchResult matchResult = new MatchResult(wordNode.getType(), wordNode.getClassId(), matchLevel.getCode());
-        matchResult.setWord(dictionarySearch.getHitWord());
-        matchResult.setMatchWordNode(wordNode);
+        matchResult.setHitWord(dictionarySearch.getHitWord());
         matchResult.setStart(dictionarySearch.getStart());
         matchResult.setEnd(dictionarySearch.getEnd());
+        matchResult.setWordNode(wordNode);
         return matchResult;
     }
 
@@ -49,7 +50,7 @@ public class DicMatchHelper {
      * @author BiJi'an
      * @updateTime 2022-04-28 03:00
      */
-    public static int getDefaultMaxScanLen(Dictionary<MatchWordNode> dictionary, FindLevel findLevel) {
+    public static int getDefaultMaxScanLen(Dictionary<WordNode> dictionary, FindLevel findLevel) {
         int maxLength = dictionary.getMaxLength();
         if (findLevel == FindLevel.HIGH) {
             return maxLength;
@@ -81,6 +82,17 @@ public class DicMatchHelper {
             datas = Lists.newArrayList();
         }
         datas.add(new DictionarySearch(text, start, len, matchContext));
+        return datas;
+
+    }
+
+    public static List<DictionarySearch> add(List<DictionarySearch> datas, String text, int start, int len,
+                                             TrieNode<WordNode> distNode) {
+
+        if (datas == null) {
+            datas = Lists.newArrayList();
+        }
+        datas.add(new DictionarySearch(text, start, len, distNode));
         return datas;
 
     }

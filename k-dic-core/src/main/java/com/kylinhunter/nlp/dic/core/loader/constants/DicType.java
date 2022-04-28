@@ -10,16 +10,17 @@ import lombok.Getter;
  * @date 2022-01-01 15:10
  **/
 public enum DicType {
-    SENSITIVE(1, DicMatchType.DEFAULT, "/config/dic/dic-sensitive.xlsx", true),
-    PINYIN(2, DicMatchType.DEFAULT, "/config/dic/pinyin.txt", true),
-    COMPLETE(3, DicMatchType.DEFAULT, "/config/dic/complete.txt", true),
-    ASSOCIATE(4, DicMatchType.DEFAULT, "/config/dic/associate.txt", true),
-    SYNONYM(5, DicMatchType.DEFAULT, "/config/dic/synonym.txt", true),
-    PROFESSIONAL(6, DicMatchType.DEFAULT, "/config/dic/professional.txt", true),
-    CORRECTION(7, DicMatchType.DEFAULT, "/config/dic/correction.txt", true);
+    SENSITIVE(1, DicMatchType.FULL, "/config/dic/dic-sensitive.xlsx", true),
+    PINYIN(2, DicMatchType.FULL, "/config/dic/pinyin.txt", true),
+    COMPLETE(3, DicMatchType.FULL, "/config/dic/complete.txt", true),
+    ASSOCIATE(4, DicMatchType.FULL, "/config/dic/associate.txt", true),
+    SYNONYM(5, DicMatchType.FULL, "/config/dic/synonym.txt", true),
+    PROFESSIONAL(6, DicMatchType.FULL, "/config/dic/professional.txt", true),
+    CORRECTION(7, DicMatchType.FULL, "/config/dic/correction.txt", true);
 
     private final int code;
 
+    @Getter
     private DicMatchType dicMatchType;
     @Getter
     private final String path;

@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @description  all word analyzers
+ * @description  all hitWord analyzers
  * @author  BiJi'an
  * @date 2022-04-08 00:08
  **/

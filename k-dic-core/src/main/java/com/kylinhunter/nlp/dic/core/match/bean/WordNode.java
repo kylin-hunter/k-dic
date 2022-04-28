@@ -1,7 +1,7 @@
 package com.kylinhunter.nlp.dic.core.match.bean;
 
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
-import com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode;
+import com.kylinhunter.nlp.dic.core.dictionary.group.bean.DictionaryNode;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +10,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(of = {"type", "classId"}, callSuper = true)
 @ToString(of = {"type", "classId", "assistWords", "relationWords"}, callSuper = true)
-public class MatchWordNode extends WordNode {
+public class WordNode extends DictionaryNode {
     private int type;
     private int classId;
 
@@ -21,7 +21,7 @@ public class MatchWordNode extends WordNode {
 
     private String[] relationWords;
 
-    public boolean hasSecondaryWords() {
+    public boolean hasAssistWords() {
         return (assistWords != null && assistWords.length > 0);
     }
 

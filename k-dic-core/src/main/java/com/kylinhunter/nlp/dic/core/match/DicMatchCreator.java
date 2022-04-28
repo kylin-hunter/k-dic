@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 
 import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
 import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
-import com.kylinhunter.nlp.dic.core.match.bean.MatchWordNode;
+import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 
 /**
  * @author BiJi'an
@@ -13,7 +13,7 @@ import com.kylinhunter.nlp.dic.core.match.bean.MatchWordNode;
  **/
 public class DicMatchCreator {
 
-    public static DicMatch create(DicMatchType dicMatchType, DictionaryGroup<MatchWordNode> dictionaryGroup) {
+    public static DicMatch create(DicMatchType dicMatchType, DictionaryGroup<WordNode> dictionaryGroup) {
         try {
             Constructor<? extends DicMatch> constructor = dicMatchType.getClazz().getConstructor(DictionaryGroup.class);
             return constructor.newInstance(dictionaryGroup);

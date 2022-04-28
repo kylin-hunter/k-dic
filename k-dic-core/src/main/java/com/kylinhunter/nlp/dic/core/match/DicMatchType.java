@@ -3,19 +3,19 @@ package com.kylinhunter.nlp.dic.core.match;
 import com.kylinhunter.nlp.dic.commons.service.KService;
 import com.kylinhunter.nlp.dic.commons.service.KServices;
 import com.kylinhunter.nlp.dic.core.match.imp.DicMatchFull;
+import com.kylinhunter.nlp.dic.core.match.imp.DicMatchPrefix;
 
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * @author BiJi'an
- * @description all word analyzers
+ * @description all hitWord analyzers
  * @date 2022-04-08 00:08
  **/
 public enum DicMatchType implements KService<DicMatch> {
-
-    DEFAULT(DicMatchFull.class),
-    FULL(DicMatchFull.class);
+    FULL(DicMatchFull.class),
+    PREFIX(DicMatchPrefix.class);
     @Getter
     @Setter
     Class<? extends DicMatch> clazz;
