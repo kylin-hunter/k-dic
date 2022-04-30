@@ -22,13 +22,11 @@ public abstract class AbstractDicMatch implements DicMatch {
     protected DicSkipper dicSkipper = DicSkipper.getInstance();
     protected DictionaryGroup<WordNode> dictionaryGroup;
     protected WordAnalyzer analyzer;
-    protected boolean assistMatch;
-    protected int prefixMatchMaxNum;
+    protected boolean assistMatchEnabled;
 
     public AbstractDicMatch(DictionaryGroup<WordNode> dictionaryGroup) {
         this.dictionaryGroup = dictionaryGroup;
-        this.assistMatch = dictionaryGroup.getDicConfig().isAssistMatch();
-        this.prefixMatchMaxNum = dictionaryGroup.getDicConfig().getPrefixMatchMaxNum();
+        this.assistMatchEnabled = dictionaryGroup.getDicConfig().isAssistMatchEnabled();
         this.analyzer = KServices.get(dictionaryGroup.getConfig().getWordAnalyzer());
     }
 

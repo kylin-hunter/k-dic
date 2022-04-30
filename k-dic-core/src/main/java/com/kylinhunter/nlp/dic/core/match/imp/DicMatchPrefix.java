@@ -46,10 +46,9 @@ public class DicMatchPrefix extends AbstractDicMatch implements DicMatch {
                 scanMax = curLen < defaultMaxScanLen ? curLen : defaultMaxScanLen;
                 curScanLen = scanMax;
                 while (curScanLen > 0) {
-                    System.out.println("end:" + end + ",curLen:" + curLen + ",curScanLen:" + curScanLen);
-                    System.out
-                            .println("try:" + (end - curScanLen) + ":" + end + ">" + text
-                                    .substring(end - curScanLen, end));
+                    //System.out.println(findLevel + ",end:" + end + ",curLen:" + curLen + ",curScanLen:"
+                    //       + curScanLen + ",try:" + (end - curScanLen) + ":" + end + ">" + text
+                    //       .substring(end - curScanLen, end));
                     dictionary.match(textChars, end - curScanLen, curScanLen, matchContext);
                     TrieNode<WordNode> node = matchContext.node;
                     if (node != null) {

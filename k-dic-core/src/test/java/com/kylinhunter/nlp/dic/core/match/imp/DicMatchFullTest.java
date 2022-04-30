@@ -1,10 +1,6 @@
 package com.kylinhunter.nlp.dic.core.match.imp;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,13 +11,14 @@ import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzerType;
 import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
 import com.kylinhunter.nlp.dic.core.config.DicConfig;
+import com.kylinhunter.nlp.dic.core.dic.constants.DicType;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
-import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
 import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.match.DicMatchCreator;
 import com.kylinhunter.nlp.dic.core.match.DicMatchType;
+import com.kylinhunter.nlp.dic.core.match.TestDicMatchHelper;
 import com.kylinhunter.nlp.dic.core.match.bean.MatchResult;
 import com.kylinhunter.nlp.dic.core.match.component.WordNodeConvertor;
 
@@ -62,7 +59,7 @@ class DicMatchFullTest {
     void processHigh() {
 
         List<MatchResult> matchResults = dicMatch.match(text, FindLevel.HIGH);
-        List<String> resultString = printResult(text, FindLevel.HIGH, matchResults);
+        List<String> resultString = TestDicMatchHelper.printResult(text, FindLevel.HIGH, matchResults);
         Assertions.assertArrayEquals(new String[] {
                         "1:0:2:北京:北京:null",
                         "1:15:17:北京:北京:null",
@@ -81,7 +78,7 @@ class DicMatchFullTest {
     void processHighMiddle() {
 
         List<MatchResult> matchResults = dicMatch.match(text, FindLevel.HIGH_MIDDLE);
-        List<String> resultString = printResult(text, FindLevel.HIGH_MIDDLE, matchResults);
+        List<String> resultString = TestDicMatchHelper.printResult(text, FindLevel.HIGH_MIDDLE, matchResults);
 
         Assertions.assertArrayEquals(new String[] {
                         "1:0:2:北京:北京:null",
@@ -105,7 +102,7 @@ class DicMatchFullTest {
     void processHighMiddleLow() {
 
         List<MatchResult> matchResults = dicMatch.match(text, FindLevel.HIGH_MIDDLE_LOW);
-        List<String> resultString = printResult(text, FindLevel.HIGH_MIDDLE_LOW, matchResults);
+        List<String> resultString = TestDicMatchHelper.printResult(text, FindLevel.HIGH_MIDDLE_LOW, matchResults);
         Assertions.assertArrayEquals(new String[] {
                         "1:0:2:北京:北京:null",
                         "1:15:17:北京:北京:null",
@@ -130,54 +127,9 @@ class DicMatchFullTest {
     void processNull() {
 
         List<MatchResult> matchResults = dicMatch.match("hello", FindLevel.HIGH_MIDDLE_LOW);
-        printResult("hello", FindLevel.HIGH_MIDDLE_LOW, matchResults);
+        TestDicMatchHelper.printResult("hello", FindLevel.HIGH_MIDDLE_LOW, matchResults);
         Assertions.assertNull(matchResults);
 
     }
 
-    public static List<String> printResult(String text, FindLevel findLevel, List<MatchResult> matchResults) {
-        List<String> matchResultsArr = null;
-        if (text != null) {
-            System.out.println("print[" + findLevel + ":] text:" + text.substring(0, Math.min(10, text.length())));
-            if (matchResults != null) {
-                System.out.println("print[" + findLevel + ":] result:=>");
-                Collections.sort(matchResults, new Comparator<MatchResult>() {
-                    @Override
-                    public int compare(MatchResult o1, MatchResult o2) {
-                        if (o1.getStart() < o2.getStart()) {
-                            return -1;
-                        } else if (o1.getStart() > o2.getStart()) {
-                            return 1;
-                        } else {
-                            if (o1.getEnd() < o2.getEnd()) {
-                                return -1;
-                            } else if (o1.getEnd() > o2.getEnd()) {
-                                return 1;
-                            } else {
-                                return o1.getHitWord().compareTo(o2.getHitWord());
-                            }
-                        }
-                    }
-                });
-
-                matchResultsArr = matchResults.stream()
-                        .map(e -> e.getMatchLevel() + ":" + e.getStart() + ":" + e.getEnd() + ":"
-                                + e.getHitWord() + ":" + e.getMatchWord() + ":" + Arrays.toString(e.getAssistWords()))
-                        .collect(Collectors.toList());
-
-                matchResultsArr.forEach(System.out::println);
-
-            } else {
-                System.out.println("print[" + findLevel + ":] result:" + null);
-
-            }
-        } else {
-            System.out.println("print[" + findLevel + ":] text:" + null);
-        }
-
-        System.out.println("*********************************\n");
-
-        return matchResultsArr;
-
-    }
 }

@@ -54,6 +54,9 @@ public class DicMatchFull extends AbstractDicMatch implements DicMatch {
                 if (textChars[start] == DicSkipper.SPECIAL_CHAR) {
                     break; // skip fast
                 }
+                //System.out.println(findLevel + "start:" + start + ",curScanLen:" + curScanLen + ":"
+                //        + text.substring(start, start + curScanLen));
+
                 dictionary.match(textChars, start, curScanLen, matchContext);
                 TrieNode<WordNode> node = matchContext.node;
                 if (node != null && node.isTerminal()) {
@@ -144,7 +147,7 @@ public class DicMatchFull extends AbstractDicMatch implements DicMatch {
                 }
             }
         }
-        if (this.assistMatch) {
+        if (this.assistMatchEnabled) {
             if (wordNode.hasAssistWords()) {
                 for (String subWord : wordNode.getAssistWords()) {
                     if (!text.contains(subWord)) {

@@ -1,4 +1,4 @@
-package com.kylinhunter.nlp.dic.core.loader.constants;
+package com.kylinhunter.nlp.dic.core.dic.constants;
 
 import com.kylinhunter.nlp.dic.commons.util.EnumUtil;
 import lombok.Getter;

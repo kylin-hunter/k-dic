@@ -1,24 +1,32 @@
-package com.kylinhunter.nlp.dic.core.loader;
-
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.read.listener.PageReadListener;
-import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
-import com.kylinhunter.nlp.dic.core.config.DicConfig;
-import com.kylinhunter.nlp.dic.core.config.LoadConfigLocal;
-import com.kylinhunter.nlp.dic.core.match.DicMatch;
-import com.kylinhunter.nlp.dic.core.loader.bean.DicData;
-import com.kylinhunter.nlp.dic.core.loader.common.AbstractDicLoader;
-import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
-import com.kylinhunter.nlp.dic.core.loader.monitor.LocalDicFileMonitor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
+package com.kylinhunter.nlp.dic.core.dic;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.io.IOUtils;
+
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.read.listener.PageReadListener;
+import com.alibaba.excel.read.metadata.ReadSheet;
+import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
+import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
+import com.kylinhunter.nlp.dic.core.config.DicConfig;
+import com.kylinhunter.nlp.dic.core.config.LoadConfigLocal;
+import com.kylinhunter.nlp.dic.core.dic.bean.DicData;
+import com.kylinhunter.nlp.dic.core.dic.common.AbstractDicLoader;
+import com.kylinhunter.nlp.dic.core.dic.constants.DicType;
+import com.kylinhunter.nlp.dic.core.dic.monitor.LocalDicFileMonitor;
+import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
+import com.kylinhunter.nlp.dic.core.match.DicMatch;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author BiJi'an
@@ -39,7 +47,6 @@ public class LocalDicLoader extends AbstractDicLoader {
     public static LocalDicLoader getInstance() {
         return singleton;
     }
-
 
     public DicMatch get(DicType dicType) {
         return singleton.load(dicType);
@@ -76,13 +83,12 @@ public class LocalDicLoader extends AbstractDicLoader {
         String path = dicType.getPath();
 
         try {
-            List<DicData> dicDatas = new ArrayList<>();
             InputStream input = ResourceHelper.getInputStreamInClassPath(path);
-            EasyExcel.read(input, DicData.class, new PageReadListener<DicData>(dicDatas::addAll)).sheet().doRead();
+            List<DicData> dicDatas = this.readExcel(input);
             log.info("load loadDefaultDicData,size={}", dicDatas.size());
             return dicDatas;
         } catch (Exception e) {
-            throw new RuntimeException("loadDefaultDicData error,for:" + path, e);
+            throw new KInitException("loadDefaultDicData error,for:" + path, e);
         } finally {
             IOUtils.closeQuietly(in);
         }
@@ -104,15 +110,46 @@ public class LocalDicLoader extends AbstractDicLoader {
                 return null;
             }
 
-            List<DicData> dicDatas = new ArrayList<>();
-            EasyExcel.read(file, DicData.class, new PageReadListener<DicData>(dicDatas::addAll)).sheet().doRead();
+            List<DicData> dicDatas = readExcel(file);
             log.info("load loadExDicData,size={}", dicDatas.size());
             return dicDatas;
 
         } catch (Exception e) {
-            throw new RuntimeException("loadExDicData error", e);
+            throw new KInitException("loadExDicData error", e);
         }
     }
 
+    private List<DicData> readExcel(File file) {
+        try {
+            try (InputStream inputStream = new FileInputStream(file)) {
+                return readExcel(inputStream);
+            }
+        } catch (IOException e) {
+            throw new KInitException("readExcel error", e);
+        }
+    }
+
+    private List<DicData> readExcel(InputStream inputStream) {
+        List<DicData> dicDatas = new ArrayList<>();
+        ExcelReader excelReader = EasyExcel.read(inputStream).build();
+        ReadSheet readSheet1 = EasyExcel.readSheet(0).head(DicData.class)
+                .registerReadListener(new PageReadListener<DicData>(e -> {
+                    dicDatas.addAll(e);
+                    e.forEach(e1 -> e1.setHitMode(HitMode.HIGH));
+                })).build();
+        ReadSheet readSheet2 = EasyExcel.readSheet(1).head(DicData.class)
+                .registerReadListener(new PageReadListener<DicData>(e -> {
+                    dicDatas.addAll(e);
+                    e.forEach(e1 -> e1.setHitMode(HitMode.MIDDLE));
+                })).build();
+        ReadSheet readSheet3 = EasyExcel.readSheet(2).head(DicData.class)
+                .registerReadListener(new PageReadListener<DicData>(e -> {
+                    dicDatas.addAll(e);
+                    e.forEach(e1 -> e1.setHitMode(HitMode.LOW));
+                })).build();
+        excelReader.read(readSheet1, readSheet2, readSheet3);
+        excelReader.finish();
+        return dicDatas;
+    }
 
 }

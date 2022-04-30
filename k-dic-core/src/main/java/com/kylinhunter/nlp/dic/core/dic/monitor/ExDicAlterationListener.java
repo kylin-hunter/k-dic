@@ -1,4 +1,4 @@
-package com.kylinhunter.nlp.dic.core.loader.monitor;
+package com.kylinhunter.nlp.dic.core.dic.monitor;
 
 import java.io.File;
 import java.util.Map;
@@ -6,8 +6,8 @@ import java.util.Map;
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 
-import com.kylinhunter.nlp.dic.core.loader.LocalDicLoader;
-import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
+import com.kylinhunter.nlp.dic.core.dic.LocalDicLoader;
+import com.kylinhunter.nlp.dic.core.dic.constants.DicType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,5 @@
 # 词典加载方式
 load:
-
   #本地磁盘加载方式
   local:
     # 扩展词典的本地存储目录，3种写法
@@ -18,13 +17,11 @@ dics:
     # 是否开启默认词典
     defaultDicEnabled: true
     # 扩展词典的名字，配合 local.exDicDir 使用，等价于 new File(local.exDicDir,dics.SENSITIVE.exDic);
-    exDic: dic-sensitive-ex.xlsx
+    exDic: k-dic-sensitive-ex.xlsx
     # 词典最大词长度
     wordMaxLen: 10
     # 模糊的最大长度
     skipMaxLen: 2
-    # 是否开启辅助词的精确匹配
-    assistMatch: true
-    # 前缀匹配最大匹配个数
-    prefixMatchMaxNum: 10
+    # 是否开启辅助词的精确匹配模式，主词命中的情况下，需要配合辅助词同时命中，才可以认为是命中。
+    assistMatchEnabled: true
 

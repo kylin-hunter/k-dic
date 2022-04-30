@@ -1,6 +1,6 @@
-package com.kylinhunter.nlp.dic.core.loader;
+package com.kylinhunter.nlp.dic.core.dic;
 
-import com.kylinhunter.nlp.dic.core.loader.local.LocalFileHelper;
+import com.kylinhunter.nlp.dic.core.dic.local.LocalFileHelper;
 
 class TestLocalFileHelper {
 

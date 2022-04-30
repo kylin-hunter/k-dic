@@ -1,6 +1,6 @@
 package com.kylinhunter.nlp.dic.core.config;
 
-import com.kylinhunter.nlp.dic.core.loader.constants.LoadSource;
+import com.kylinhunter.nlp.dic.core.dic.constants.LoadSource;
 import lombok.Data;
 
 /**

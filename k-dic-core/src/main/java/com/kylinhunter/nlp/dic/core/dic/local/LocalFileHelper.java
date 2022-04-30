@@ -1,10 +1,10 @@
-package com.kylinhunter.nlp.dic.core.loader.local;
+package com.kylinhunter.nlp.dic.core.dic.local;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.util.ListUtils;
 import com.kylinhunter.nlp.dic.commons.io.file.UserDirUtils;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
-import com.kylinhunter.nlp.dic.core.loader.bean.DicData;
+import com.kylinhunter.nlp.dic.core.dic.bean.DicData;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -37,7 +37,7 @@ public class LocalFileHelper {
                         dicData.setWords("words" + i);
                         dicData.setAssistWords("assistWords" + i);
                         dicData.setRelationWords("relationWords" + i);
-                        dicData.setHitMode(HitMode.HIGH.name());
+                        dicData.setHitMode(HitMode.HIGH);
                         dicData.setType(1);
                         dicData.setClassId(1);
                         list.add(dicData);

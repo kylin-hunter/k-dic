@@ -1,4 +1,4 @@
-package com.kylinhunter.nlp.dic.core.loader.common;
+package com.kylinhunter.nlp.dic.core.dic.common;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.match.DicMatchCreator;
 import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.match.component.DicSkipper;
-import com.kylinhunter.nlp.dic.core.loader.DicManager;
+import com.kylinhunter.nlp.dic.core.dic.DicManager;
 
 import com.kylinhunter.nlp.dic.commons.service.KServices;
 import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
@@ -16,10 +16,10 @@ import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
-import com.kylinhunter.nlp.dic.core.loader.DicLoader;
-import com.kylinhunter.nlp.dic.core.loader.bean.DicData;
-import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
-import com.kylinhunter.nlp.dic.core.loader.Dic;
+import com.kylinhunter.nlp.dic.core.dic.DicLoader;
+import com.kylinhunter.nlp.dic.core.dic.bean.DicData;
+import com.kylinhunter.nlp.dic.core.dic.constants.DicType;
+import com.kylinhunter.nlp.dic.core.dic.Dic;
 
 import lombok.extern.slf4j.Slf4j;
 

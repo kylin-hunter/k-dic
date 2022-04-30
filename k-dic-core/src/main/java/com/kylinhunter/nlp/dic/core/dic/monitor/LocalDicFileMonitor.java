@@ -1,4 +1,4 @@
-package com.kylinhunter.nlp.dic.core.loader.monitor;
+package com.kylinhunter.nlp.dic.core.dic.monitor;
 
 import java.io.File;
 import java.util.Map;
@@ -12,7 +12,7 @@ import org.apache.commons.io.monitor.FileAlterationObserver;
 import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
 import com.kylinhunter.nlp.dic.core.config.Config;
 import com.kylinhunter.nlp.dic.core.config.LoadConfigLocal;
-import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
+import com.kylinhunter.nlp.dic.core.dic.constants.DicType;
 
 import lombok.extern.slf4j.Slf4j;
 

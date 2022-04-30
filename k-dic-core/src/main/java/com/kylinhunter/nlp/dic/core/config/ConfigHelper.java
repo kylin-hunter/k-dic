@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.kylinhunter.nlp.dic.core.loader.constants.LoadSource;
+import com.kylinhunter.nlp.dic.core.dic.constants.LoadSource;
 import org.apache.commons.io.FileUtils;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;

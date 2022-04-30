@@ -1,10 +1,10 @@
-package com.kylinhunter.nlp.dic.core.loader;
+package com.kylinhunter.nlp.dic.core.dic;
 
 import com.kylinhunter.nlp.dic.core.config.Config;
 import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
 import com.kylinhunter.nlp.dic.core.config.LoadConfig;
-import com.kylinhunter.nlp.dic.core.loader.constants.DicType;
-import com.kylinhunter.nlp.dic.core.loader.constants.LoadSource;
+import com.kylinhunter.nlp.dic.core.dic.constants.DicType;
+import com.kylinhunter.nlp.dic.core.dic.constants.LoadSource;
 
 import lombok.Data;
 
