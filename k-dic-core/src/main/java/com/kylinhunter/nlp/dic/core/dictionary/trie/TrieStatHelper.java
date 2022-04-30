@@ -19,7 +19,7 @@ public class TrieStatHelper {
      * @title showStatistics
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-16 02:01
+     * @updateTime 2022-01-16 02:01
      */
     public static <T> void showStatistics(Trie<T> trie) {
         log.info(trie.getTrieStat().toString());
@@ -31,7 +31,7 @@ public class TrieStatHelper {
      * @title showConfilicMessage
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-16 02:01
+     * @updateTime 2022-01-16 02:01
      */
     public static <T> void showConfilicMessage(Trie<T> trie) {
         StringBuilder sb = new StringBuilder();
@@ -76,7 +76,7 @@ public class TrieStatHelper {
      * @title show
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-16 02:06
+     * @updateTime 2022-01-16 02:06
      */
     public static <T> void show(Trie<T> trie, char character) {
         StringBuilder sb = new StringBuilder();
@@ -89,7 +89,7 @@ public class TrieStatHelper {
      * @title show
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-16 02:07
+     * @updateTime 2022-01-16 02:07
      */
     public static <T> void show(Trie<T> trie) {
         StringBuilder sb = new StringBuilder();
@@ -107,7 +107,7 @@ public class TrieStatHelper {
      * @title show
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-16 02:07
+     * @updateTime 2022-01-16 02:07
      */
     private static <T> void show(StringBuilder sb, TrieNode<T> node, String indent) {
         if (node.isTerminal()) {

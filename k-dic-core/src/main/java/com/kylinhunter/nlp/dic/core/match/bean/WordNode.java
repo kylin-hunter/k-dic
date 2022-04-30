@@ -13,13 +13,13 @@ import lombok.ToString;
 public class WordNode extends DictionaryNode {
     private int type;
     private int classId;
+    private String[] assistWords;
+    private String[] relationWords;
 
     private Words keywordSplit;
-
-    private String[] assistWords;
     private Words[] assistWordsSplit;
 
-    private String[] relationWords;
+
 
     public boolean hasAssistWords() {
         return (assistWords != null && assistWords.length > 0);

@@ -16,7 +16,7 @@ import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 /**
  * @author BiJi'an
  * @description
- * @create 2022-04-28 01:28
+ * @create 2022-01-28 01:28
  **/
 public class DicMatchHelper {
 
@@ -28,7 +28,7 @@ public class DicMatchHelper {
      * @title toMatchResult
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-27 02:44
+     * @updateTime 2022-01-27 02:44
      */
     public static MatchResult toMatchResult(DictionarySearch dictionarySearch, WordNode wordNode) {
         MatchLevel matchLevel = dictionarySearch.getLevel();
@@ -48,7 +48,7 @@ public class DicMatchHelper {
      * @title getDefaultMaxScanLen
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-28 03:00
+     * @updateTime 2022-01-28 03:00
      */
     public static int getDefaultMaxScanLen(Dictionary<WordNode> dictionary, FindLevel findLevel) {
         int maxLength = dictionary.getMaxLength();
@@ -73,7 +73,7 @@ public class DicMatchHelper {
      * @title add
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-28 03:07
+     * @updateTime 2022-01-28 03:07
      */
     public static List<DictionarySearch> add(List<DictionarySearch> datas, String text, int start, int len,
                                              MatchContext matchContext) {

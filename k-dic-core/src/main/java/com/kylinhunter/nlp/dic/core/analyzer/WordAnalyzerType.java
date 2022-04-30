@@ -11,7 +11,7 @@ import lombok.Setter;
 /**
  * @description  all hitWord analyzers
  * @author  BiJi'an
- * @date 2022-04-08 00:08
+ * @date 2022-01-08 00:08
  **/
 public enum WordAnalyzerType implements KService<WordAnalyzer> {
 

@@ -35,36 +35,50 @@ public class DicMatchPrefix extends AbstractDicMatch implements DicMatch {
         List<DictionarySearch> dictionarySearches = null; // tmp save
         MatchContext<WordNode> matchContext = new MatchContext(findLevel);
         int curLen = textChars.length;
-        int start = textChars.length;
+        int end = textChars.length;
         int defaultMaxScanLen = DicMatchHelper.getDefaultMaxScanLen(dictionary, findLevel);
-        int scanMax = curLen < defaultMaxScanLen ? curLen : defaultMaxScanLen;
-        int curScanLen = scanMax;
-        //        System.out.println("start:" + start + ",curLen:" + curLen + ",curScanLen:" + curScanLen);
+        int scanMax;
+        int curScanLen;
+        int matchNum = 0;
 
-        while (true) {
-            if (textChars[start - 1] == DicSkipper.SPECIAL_CHAR) {
-                break; // skip fast
-            }
-            System.out.println(start - curScanLen + ":" + start);
-            System.out.println(text.substring(start - curScanLen, start));
-            dictionary.match(textChars, start - curScanLen, curScanLen, matchContext);
-            TrieNode<WordNode> node = matchContext.node;
-            if (node != null) {
-                //                System.out.println("find node" + node.getCharacter());
-                List<TrieNode<WordNode>> distNodes = TrieHelper.prefix(node, 10);
-                for (TrieNode<WordNode> distNode : distNodes) {
-                    dictionarySearches = DicMatchHelper.add(dictionarySearches, text, start - curScanLen, curScanLen,
-                            distNode);
-                    for (WordNode wordNode : distNode.getValues()) {
-                        System.out.println(wordNode.getKeyword());
+        while (curLen > 0) {
+            if (textChars[end - 1] != DicSkipper.SPECIAL_CHAR) {
+                scanMax = curLen < defaultMaxScanLen ? curLen : defaultMaxScanLen;
+                curScanLen = scanMax;
+                while (curScanLen > 0) {
+                    System.out.println("end:" + end + ",curLen:" + curLen + ",curScanLen:" + curScanLen);
+                    System.out
+                            .println("try:" + (end - curScanLen) + ":" + end + ">" + text
+                                    .substring(end - curScanLen, end));
+                    dictionary.match(textChars, end - curScanLen, curScanLen, matchContext);
+                    TrieNode<WordNode> node = matchContext.node;
+                    if (node != null) {
+                        matchNum++;
+                        //System.out.println("find node" + node.getCharacter());
+                        List<TrieNode<WordNode>> distNodes = TrieHelper.prefix(node, 10);
+                        for (TrieNode<WordNode> distNode : distNodes) {
+                            dictionarySearches =
+                                    DicMatchHelper.add(dictionarySearches, text, end - curScanLen, curScanLen,
+                                            distNode);
+                            //for (WordNode wordNode : distNode.getValues()) {
+                            // System.out.println(wordNode.getKeyword());
+                            // }
+                        }
+                        break;
                     }
+
+                    curScanLen--;
                 }
                 break;
+            } else {
+
+                if (findLevel == FindLevel.HIGH) {
+                    break;
+                }
+                end--;
+                curLen -= 1;
             }
-            if (curScanLen <= 1) {
-                break;
-            }
-            curScanLen--;
+
         }
 
         return merge(text, dictionarySearches);
@@ -107,7 +121,7 @@ public class DicMatchPrefix extends AbstractDicMatch implements DicMatch {
      * @title tryGetMatchResult
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-27 02:44
+     * @updateTime 2022-01-27 02:44
      */
     private MatchResult tryGetMatchResult(String oriText, DictionarySearch dictionarySearch, WordNode wordNode) {
 

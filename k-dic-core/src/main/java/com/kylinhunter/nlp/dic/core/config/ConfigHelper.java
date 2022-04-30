@@ -27,7 +27,7 @@ public class ConfigHelper {
      * @title load
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-21 00:22
+     * @updateTime 2022-01-21 00:22
      */
     public static Config get() {
         try {
@@ -51,7 +51,7 @@ public class ConfigHelper {
 
     /*
      * @description  init
-     * @date  2022/4/23 22:32
+     * @date  2022/1/23 22:32
      * @author  BiJi'an
      * @Param
      * @return com.kylinhunter.nlp.dic.core.config.Config
@@ -74,7 +74,7 @@ public class ConfigHelper {
      * @title loadAfter
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-21 00:22
+     * @updateTime 2022-01-21 00:22
      */
 
     public static void loadAfter(Config config) {

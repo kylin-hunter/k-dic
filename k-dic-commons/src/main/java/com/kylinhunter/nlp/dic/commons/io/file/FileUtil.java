@@ -22,7 +22,7 @@ public class FileUtil {
      * @title correctPath
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-21 00:52
+     * @updateTime 2022-01-21 00:52
      */
     public static File correctPath(String path) {
         if (!StringUtils.isEmpty(path)) {

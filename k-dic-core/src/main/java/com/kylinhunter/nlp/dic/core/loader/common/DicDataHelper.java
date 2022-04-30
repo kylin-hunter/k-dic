@@ -9,7 +9,7 @@ import com.kylinhunter.nlp.dic.core.loader.bean.DicData;
 /**
  * @description
  * @author BiJi'an
- * @create 2022-04-25 01:19
+ * @create 2022-01-25 01:19
  **/
 public class DicDataHelper {
     public static WordNode convert(DicData dicData, WordAnalyzer analyzer, int maxKeywordLen) {

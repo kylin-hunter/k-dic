@@ -62,7 +62,7 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @title add
      * @description
      * @author BiJi'an
-     * @updateTime 2022/3/26 5:48 下午
+     * @updateTime 2022/1/26 5:48 下午
      */
     private void addDicData(DictionaryGroup<WordNode> dictionaryGroup, DicData dicData, WordAnalyzer analyzer,
                             int maxKeywordLen) {

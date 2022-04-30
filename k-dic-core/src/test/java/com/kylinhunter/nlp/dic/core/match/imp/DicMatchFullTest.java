@@ -1,6 +1,8 @@
 package com.kylinhunter.nlp.dic.core.match.imp;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,19 +50,19 @@ class DicMatchFullTest {
 
     }
 
-    @Test
-    void processFull() {
+    String text = "北京和北**京和北**1**京"
+            + "北京海淀和北**京海淀和北**1**京海淀"
+            + "河北和河**北和河**1**北和廊坊和张家口"
+            + "乌鲁木齐和乌鲁**木齐和乌鲁**1**木齐"
+            + "呼和浩特和呼和**浩特和呼和**1**浩特和新疆"
+            + "上海和上**海和上**1**海"
+            + "山西和山**西和山**1**西大同府和阎王寨";
 
-        String text = "北京和北**京和北**1**京"
-                + "北京海淀和北**京海淀和北**1**京海淀"
-                + "河北和河**北和河**1**北和廊坊和张家口"
-                + "乌鲁木齐和乌鲁**木齐和乌鲁**1**木齐"
-                + "呼和浩特和呼和**浩特和呼和**1**浩特和新疆"
-                + "上海和上**海和上**1**海"
-                + "山西和山**西和山**1**西大同府和阎王寨";
+    @Test
+    void processHigh() {
 
         List<MatchResult> matchResults = dicMatch.match(text, FindLevel.HIGH);
-        List<String> resultString = toResultString(matchResults);
+        List<String> resultString = printResult(text, FindLevel.HIGH, matchResults);
         Assertions.assertArrayEquals(new String[] {
                         "1:0:2:北京:北京:null",
                         "1:15:17:北京:北京:null",
@@ -73,8 +75,13 @@ class DicMatchFullTest {
                 },
                 resultString.toArray());
 
-        matchResults = dicMatch.match(text, FindLevel.HIGH_MIDDLE);
-        resultString = toResultString(matchResults);
+    }
+
+    @Test
+    void processHighMiddle() {
+
+        List<MatchResult> matchResults = dicMatch.match(text, FindLevel.HIGH_MIDDLE);
+        List<String> resultString = printResult(text, FindLevel.HIGH_MIDDLE, matchResults);
 
         Assertions.assertArrayEquals(new String[] {
                         "1:0:2:北京:北京:null",
@@ -92,8 +99,13 @@ class DicMatchFullTest {
                 },
                 resultString.toArray());
 
-        matchResults = dicMatch.match(text, FindLevel.HIGH_MIDDLE_LOW);
-        resultString = toResultString(matchResults);
+    }
+
+    @Test
+    void processHighMiddleLow() {
+
+        List<MatchResult> matchResults = dicMatch.match(text, FindLevel.HIGH_MIDDLE_LOW);
+        List<String> resultString = printResult(text, FindLevel.HIGH_MIDDLE_LOW, matchResults);
         Assertions.assertArrayEquals(new String[] {
                         "1:0:2:北京:北京:null",
                         "1:15:17:北京:北京:null",
@@ -112,25 +124,60 @@ class DicMatchFullTest {
                 },
                 resultString.toArray());
 
-        matchResults = dicMatch.match("hello", FindLevel.HIGH_MIDDLE_LOW);
-        resultString = toResultString(matchResults);
-        Assertions.assertEquals(null, resultString);
+    }
+
+    @Test
+    void processNull() {
+
+        List<MatchResult> matchResults = dicMatch.match("hello", FindLevel.HIGH_MIDDLE_LOW);
+        printResult("hello", FindLevel.HIGH_MIDDLE_LOW, matchResults);
+        Assertions.assertNull(matchResults);
 
     }
 
-    public static List<String> toResultString(List<MatchResult> matchResults) {
-        System.out.println("print result:");
-        if (matchResults == null) {
-            System.out.println("null");
+    public static List<String> printResult(String text, FindLevel findLevel, List<MatchResult> matchResults) {
+        List<String> matchResultsArr = null;
+        if (text != null) {
+            System.out.println("print[" + findLevel + ":] text:" + text.substring(0, Math.min(10, text.length())));
+            if (matchResults != null) {
+                System.out.println("print[" + findLevel + ":] result:=>");
+                Collections.sort(matchResults, new Comparator<MatchResult>() {
+                    @Override
+                    public int compare(MatchResult o1, MatchResult o2) {
+                        if (o1.getStart() < o2.getStart()) {
+                            return -1;
+                        } else if (o1.getStart() > o2.getStart()) {
+                            return 1;
+                        } else {
+                            if (o1.getEnd() < o2.getEnd()) {
+                                return -1;
+                            } else if (o1.getEnd() > o2.getEnd()) {
+                                return 1;
+                            } else {
+                                return o1.getHitWord().compareTo(o2.getHitWord());
+                            }
+                        }
+                    }
+                });
 
-            return null;
+                matchResultsArr = matchResults.stream()
+                        .map(e -> e.getMatchLevel() + ":" + e.getStart() + ":" + e.getEnd() + ":"
+                                + e.getHitWord() + ":" + e.getMatchWord() + ":" + Arrays.toString(e.getAssistWords()))
+                        .collect(Collectors.toList());
+
+                matchResultsArr.forEach(System.out::println);
+
+            } else {
+                System.out.println("print[" + findLevel + ":] result:" + null);
+
+            }
+        } else {
+            System.out.println("print[" + findLevel + ":] text:" + null);
         }
 
-        List<String> matchResultsArr = matchResults.stream()
-                .map(e -> e.getMatchLevel() + ":" + e.getStart() + ":" + e.getEnd() + ":" + e.getHitWord() + ":" + e
-                        .getMatchWord() + ":" + Arrays.toString(e.getAssistWords())).collect(Collectors.toList());
+        System.out.println("*********************************\n");
 
-        matchResultsArr.forEach(System.out::println);
         return matchResultsArr;
+
     }
 }

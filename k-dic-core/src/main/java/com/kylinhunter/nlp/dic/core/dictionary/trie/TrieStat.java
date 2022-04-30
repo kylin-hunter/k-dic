@@ -25,7 +25,7 @@ public class TrieStat {
      * @title put
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-16 02:13
+     * @updateTime 2022-01-16 02:13
      */
     public void put(String word) {
         int wordLen = word.length();
@@ -48,7 +48,7 @@ public class TrieStat {
      * @title remove
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-16 02:13
+     * @updateTime 2022-01-16 02:13
      */
     public void remove(String word) {
         int wordLen = word.length();

@@ -12,7 +12,7 @@ import lombok.Data;
  * @author bijian
  * @version 1.0
  * @description DicManager
- * @date 2022/4/22 2:36
+ * @date 2022/1/22 2:36
  */
 @Data
 public class DicManager {
@@ -21,7 +21,7 @@ public class DicManager {
 
     /*
      * @description  getDicWrapper
-     * @date  2022/4/23 1:12
+     * @date  2022/1/23 1:12
      * @author  BiJi'an
      * @Param dicType
      * @return com.kylinhunter.nlp.dic.core.loader.Dic
@@ -32,7 +32,7 @@ public class DicManager {
 
     /*
      * @description  get
-     * @date  2022/4/23 0:43
+     * @date  2022/1/23 0:43
      * @author  BiJi'an
      * @Param dicType
      * @Param loadIfNull

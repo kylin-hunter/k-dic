@@ -11,7 +11,7 @@ import lombok.Setter;
 /**
  * @author BiJi'an
  * @description all hitWord analyzers
- * @date 2022-04-08 00:08
+ * @date 2022-01-08 00:08
  **/
 public enum DicMatchType implements KService<DicMatch> {
     FULL(DicMatchFull.class),

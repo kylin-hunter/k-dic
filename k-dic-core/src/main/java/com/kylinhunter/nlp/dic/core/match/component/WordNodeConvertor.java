@@ -13,7 +13,7 @@ import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 /**
  * @author BiJi'an
  * @description
- * @create 2022-04-24 23:49
+ * @create 2022-01-24 23:49
  **/
 public class WordNodeConvertor {
 
@@ -24,7 +24,7 @@ public class WordNodeConvertor {
      * @title convert
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-24 23:55
+     * @updateTime 2022-01-24 23:55
      */
     public static WordNode convert(HitMode hitMode, String words, String assistWords, String relationWords,
                                    WordAnalyzer analyzer,

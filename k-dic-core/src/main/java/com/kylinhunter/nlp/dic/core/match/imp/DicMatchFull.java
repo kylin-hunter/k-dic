@@ -50,7 +50,7 @@ public class DicMatchFull extends AbstractDicMatch implements DicMatch {
             scanMax = curLen < defaultMaxScanLen ? curLen : defaultMaxScanLen;
             matchNum = 0;
             matchMinLen = Integer.MAX_VALUE;
-            while (true) {
+            while (curScanLen <= scanMax) {
                 if (textChars[start] == DicSkipper.SPECIAL_CHAR) {
                     break; // skip fast
                 }
@@ -72,9 +72,6 @@ public class DicMatchFull extends AbstractDicMatch implements DicMatch {
                     } else { // find more than one
                         break;
                     }
-                }
-                if (curScanLen == scanMax) {
-                    break;
                 }
                 curScanLen++;
             }
@@ -126,7 +123,7 @@ public class DicMatchFull extends AbstractDicMatch implements DicMatch {
      * @title tryGetFindResultFull
      * @description
      * @author BiJi'an
-     * @updateTime 2022-04-27 02:44
+     * @updateTime 2022-01-27 02:44
      */
     private MatchResult tryGetMatchResult(String text, DictionarySearch dictionarySearch, WordNode wordNode,
                                           Words textWords) {

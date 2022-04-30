@@ -4,7 +4,7 @@ package com.kylinhunter.nlp.dic.core.dictionary.constant;
  * @author bijian
  * @version 1.0
  * @description TODO
- * @date 2022/4/23 22:21
+ * @date 2022/1/23 22:21
  */
 public class DictionaryConst {
     public static final char SPECIAL_CHAR = '\u0000';

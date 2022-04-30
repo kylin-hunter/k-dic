@@ -13,7 +13,7 @@ public interface WordAnalyzer {
      * @description 
      * @author BiJi'an 
      * @param text text
-     * @updateTime 2022-04-15 02:04
+     * @updateTime 2022-01-15 02:04
      * @return com.kylinhunter.nlp.Config.core.analyzer.bean.Words
      */
     Words analyze(String text);
