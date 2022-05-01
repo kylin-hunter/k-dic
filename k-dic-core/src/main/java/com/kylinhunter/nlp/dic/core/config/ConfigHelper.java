@@ -1,17 +1,15 @@
 package com.kylinhunter.nlp.dic.core.config;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
-import com.kylinhunter.nlp.dic.core.dic.constants.LoadSource;
-import org.apache.commons.io.FileUtils;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
 import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
 import com.kylinhunter.nlp.dic.commons.io.file.FileUtil;
+import com.kylinhunter.nlp.dic.core.dic.constants.LoadSource;
 
 /**
  * @author BiJi'an
@@ -32,7 +30,7 @@ public class ConfigHelper {
     public static Config get() {
         try {
             if (config == null) {
-                synchronized (ConfigHelper.class) {
+                synchronized(ConfigHelper.class) {
                     if (config == null) {
                         config = init();
                     }
@@ -41,7 +39,6 @@ public class ConfigHelper {
             } else {
                 return config;
             }
-
 
         } catch (Exception e) {
             throw new KInitException("init dic config error", e);
@@ -78,20 +75,24 @@ public class ConfigHelper {
      */
 
     public static void loadAfter(Config config) {
-        LoadConfig configLoad = config.getLoad();
-        LoadConfigLocal loadConfigLocal = config.getLoad().getLocal();
-        if (loadConfigLocal != null) {
-            File exDicDir = FileUtil.correctPath(loadConfigLocal.getExDicDir());
-            loadConfigLocal.setExDicDir(exDicDir.getAbsolutePath());
-            if (!exDicDir.isDirectory()) {
-                try {
-                    FileUtils.forceMkdir(exDicDir);
-                } catch (IOException e) {
-                    throw new KInitException("mkdir error" + exDicDir, e);
-                }
+        LoadConfig loadConfig = config.getLoad();
+        LoadConfigLocal loadConfigLocal = loadConfig.getLocal();
+        if (loadConfigLocal != null && loadConfig.getSource() == LoadSource.LOCAL) {
+            File dicPath = FileUtil.correctPath(loadConfigLocal.getDicPath());
+            if (dicPath == null) {
+                throw new KInitException("dicPath not dir:" + loadConfigLocal.getDicPath());
             }
-            configLoad.setLoadSource(LoadSource.LOCAL);
+            if (!dicPath.exists()) {
+                throw new KInitException("dicPath  no exist:" + dicPath);
+            } else if (dicPath.isFile()) {
+                throw new KInitException("dicPath  can't be a file :" + dicPath);
+            }
+            loadConfigLocal.setDicPath(dicPath.getAbsolutePath());
+
         }
-        config.getDics().forEach((k, v) -> v.setType(k));
+        config.getDics().forEach((dicType, dicConfig) -> {
+            dicConfig.setType(dicType);
+            dicConfig.setDicMatchType(dicType.getDicMatchType());
+        });
     }
 }

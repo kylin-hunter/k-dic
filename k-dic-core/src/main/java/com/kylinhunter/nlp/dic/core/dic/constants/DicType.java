@@ -10,9 +10,9 @@ import lombok.Getter;
  * @date 2022-01-01 15:10
  **/
 public enum DicType {
-    SENSITIVE(1, DicMatchType.FULL, "/config/dic/k-dic-sensitive.xlsx"),
-    PINYIN(2, DicMatchType.FULL, "/config/dic/pinyin.txt"),
-    COMPLETE(3, DicMatchType.FULL, "/config/dic/complete.txt"),
+    SENSITIVE(1, DicMatchType.FULL, "/k-dic-default/k-dic-sensitive-default.xlsx"),
+    COMPLETE(2, DicMatchType.PREFIX, "/k-dic-default/k-dic-complete-default.xlsx"),
+    PINYIN(3, DicMatchType.FULL, "/config/dic/pinyin.txt"),
     ASSOCIATE(4, DicMatchType.FULL, "/config/dic/associate.txt"),
     SYNONYM(5, DicMatchType.FULL, "/config/dic/synonym.txt"),
     PROFESSIONAL(6, DicMatchType.FULL, "/config/dic/professional.txt"),

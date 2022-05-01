@@ -14,10 +14,10 @@ import lombok.Data;
 public class DicConfig {
     private DicType type;
     private DicMatchType dicMatchType;
-    private boolean assistMatchEnabled = true;
+    private boolean assistMatchEnabled = false;
     private int wordMaxLen = 10;
     private int skipMaxLen = 2;
-    private boolean defaultDicEnabled;
-    private String exDic;
+    private boolean defaultDicEnabled = false;
+    private String dic;
 
 }

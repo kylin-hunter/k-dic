@@ -105,7 +105,7 @@ public class LocalDicLoader extends AbstractDicLoader {
     protected List<DicData> loadExDicData(DicConfig dicConfig) {
         try {
             LoadConfigLocal loadConfigLocal = config.getLoad().getLocal();
-            File file = new File(loadConfigLocal.getExDicDir(), dicConfig.getExDic());
+            File file = new File(loadConfigLocal.getDicPath(), dicConfig.getDic());
             if (!file.exists()) {
                 return null;
             }

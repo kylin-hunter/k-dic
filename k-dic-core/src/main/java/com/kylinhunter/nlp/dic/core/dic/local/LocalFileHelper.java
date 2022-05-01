@@ -1,14 +1,19 @@
 package com.kylinhunter.nlp.dic.core.dic.local;
 
+import java.io.File;
+import java.io.InputStream;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.util.ListUtils;
+import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
+import com.kylinhunter.nlp.dic.commons.io.file.FileUtil;
 import com.kylinhunter.nlp.dic.commons.io.file.UserDirUtils;
-import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 import com.kylinhunter.nlp.dic.core.dic.bean.DicData;
-import lombok.extern.slf4j.Slf4j;
+import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 
-import java.io.File;
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author bijian
@@ -45,6 +50,28 @@ public class LocalFileHelper {
                     return list;
                 });
 
+    }
+
+    public static void test() {
+        InputStream in = ResourceHelper.getInputStreamInClassPath("dict/main2012.dic");
+        AtomicInteger num1 = new AtomicInteger(0);
+        AtomicInteger num2 = new AtomicInteger(0);
+        FileUtil.process(in, "UTF-8", (e) -> {
+//            System.out.println(e);
+            num1.incrementAndGet();
+        });
+
+        in = ResourceHelper.getInputStreamInClassPath("dict/main_dic_2020.dic");
+        FileUtil.process(in, "UTF-8", (e) -> {
+//            System.out.println(e);
+            num2.incrementAndGet();
+        });
+        System.out.println(num1 + ":" + num2);
+
+    }
+
+    public static void main(String[] args) {
+        LocalFileHelper.test();
     }
 
 }

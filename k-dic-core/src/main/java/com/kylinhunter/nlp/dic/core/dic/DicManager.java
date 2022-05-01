@@ -45,7 +45,7 @@ public class DicManager {
                 dic = dics[dicType.ordinal()];
                 if (dic == null) {
                     LoadConfig loadConfig = config.getLoad();
-                    if (loadConfig.getLoadSource() == LoadSource.LOCAL) {
+                    if (loadConfig.getSource() == LoadSource.LOCAL) {
                         dic = new Dic(LocalDicLoader.getInstance().load(dicType));
                     } else {
                         dic = new Dic(DBDicLoader.getInstance().load(dicType));

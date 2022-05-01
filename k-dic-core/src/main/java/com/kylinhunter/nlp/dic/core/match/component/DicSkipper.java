@@ -37,7 +37,7 @@ public class DicSkipper {
     private final Set<Character> hiChars = new HashSet<>();
     private final Set<Character> defaultChars = new HashSet<>();
 
-    private static final String CONFIG_PATH = "/config/dic/dic_skipper.txt";
+    private static final String CONFIG_PATH = "/k-dic-default/dic_skipper.txt";
 
     public void init() {
 

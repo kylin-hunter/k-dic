@@ -11,5 +11,5 @@ import lombok.Data;
 @Data
 public class LoadConfig {
     private LoadConfigLocal local;
-    private LoadSource loadSource;
+    private LoadSource source;
 }

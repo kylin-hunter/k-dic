@@ -11,7 +11,7 @@ import lombok.Data;
  **/
 @Data
 public class LoadConfigLocal {
-    private String exDicDir;
+    private String dicPath;
     private File exDicDirPath;
     private boolean autoScan;
 

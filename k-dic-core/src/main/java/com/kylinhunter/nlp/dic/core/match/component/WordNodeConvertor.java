@@ -7,8 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
-import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
+import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 
 /**
  * @author BiJi'an

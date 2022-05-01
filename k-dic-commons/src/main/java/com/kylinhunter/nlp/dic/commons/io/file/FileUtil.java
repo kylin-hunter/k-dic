@@ -1,15 +1,20 @@
 package com.kylinhunter.nlp.dic.commons.io.file;
 
-import com.kylinhunter.nlp.dic.commons.exception.internal.KIOException;
-import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import org.apache.commons.io.Charsets;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.*;
+import com.kylinhunter.nlp.dic.commons.exception.internal.KIOException;
+import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022/1/1
  **/
 public class FileUtil {
@@ -31,19 +36,17 @@ public class FileUtil {
                 File file = ResourceHelper.getFileInClassPath(path);
                 if (file != null) {
                     return file;
-                } else {
-                    return new File(path);
                 }
             } else {
                 return new File(path.replace(USER_DIR_TAG, UserDirUtils.get().getAbsolutePath()));
             }
         }
-        return new File(path);
+        return null;
     }
 
     /**
-     * @param file  a file
-     * @param encoding the encoding of the file
+     * @param file      a file
+     * @param encoding  the encoding of the file
      * @param processor a processor to process the file
      * @title process
      * @description
@@ -61,8 +64,8 @@ public class FileUtil {
     }
 
     /**
-     * @param input  the input stream
-     * @param encoding the encoding
+     * @param input     the input stream
+     * @param encoding  the encoding
      * @param processor the processor
      * @title process
      * @description
