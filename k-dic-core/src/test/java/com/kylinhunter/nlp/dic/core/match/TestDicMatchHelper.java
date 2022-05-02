@@ -15,7 +15,15 @@ import com.kylinhunter.nlp.dic.core.match.bean.MatchResult;
  * @create 2022-05-01 05:42
  **/
 public class TestDicMatchHelper {
-    public static List<String> printResult(String text, FindLevel findLevel, List<MatchResult> matchResults) {
+    public static String[] toStringArr(String text, FindLevel findLevel, List<MatchResult> matchResults) {
+        List<String> result = toString(text, findLevel, matchResults);
+        if (result != null) {
+            return result.toArray(new String[0]);
+        }
+        return null;
+    }
+
+    public static List<String> toString(String text, FindLevel findLevel, List<MatchResult> matchResults) {
         System.out.println("************ print start *********************");
         List<String> matchResultsArr = null;
         if (text != null) {

@@ -17,7 +17,7 @@ import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.match.DicMatchCreator;
-import com.kylinhunter.nlp.dic.core.match.DicMatchType;
+import com.kylinhunter.nlp.dic.core.match.TestCaseDicMatchPrefix;
 import com.kylinhunter.nlp.dic.core.match.TestDicMatchHelper;
 import com.kylinhunter.nlp.dic.core.match.bean.MatchResult;
 import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
@@ -54,211 +54,150 @@ class DicMatchPrefixTest {
     void processF1Char() {
 
         String text = "北";
-        String[] expect = new String[] {
-                "0:0:1:北京:北京:null",
-                "0:0:1:北京人:北京人:null",
-                "0:0:1:北京地铁:北京地铁:null",
-                "0:0:1:北京欢乐一家亲:北京欢乐一家亲:null",
-                "0:0:1:北京欢乐大世界:北京欢乐大世界:null",
-                "0:0:1:北京欢乐谷:北京欢乐谷:null",
-                "0:0:1:北京欢迎你:北京欢迎你:null",
-                "0:0:1:北京欢迎您:北京欢迎您:null",
-                "0:0:1:北京海淀:北京海淀:null"
-        };
-
         FindLevel findLevel = FindLevel.HIGH;
-        List<MatchResult> matchResults = dicMatch.match(text, findLevel);
-        List<String> resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
 
         text = "北**";
 
         findLevel = FindLevel.HIGH;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertEquals(null, resultString);
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
 
-        expect = new String[] {
-                "0:0:1:北京欢乐大世界:北京欢乐大世界:null",
-                "0:0:1:北京欢乐谷:北京欢乐谷:null",
-        };
         findLevel = FindLevel.HIGH_MIDDLE;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
 
         text = "北**1**";
         findLevel = FindLevel.HIGH;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertEquals(null, resultString);
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertEquals(null, resultString);
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertEquals(null, resultString);
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
     }
 
     @Test
     void processF2Char() {
 
         String text = "北京";
-        String[] expect = new String[] {
-                "0:0:2:北京:北京:null",
-                "0:0:2:北京人:北京人:null",
-                "0:0:2:北京地铁:北京地铁:null",
-                "0:0:2:北京欢乐一家亲:北京欢乐一家亲:null",
-                "0:0:2:北京欢乐大世界:北京欢乐大世界:null",
-                "0:0:2:北京欢乐谷:北京欢乐谷:null",
-                "0:0:2:北京欢迎你:北京欢迎你:null",
-                "0:0:2:北京欢迎您:北京欢迎您:null",
-                "0:0:2:北京海淀:北京海淀:null"
-        };
+
 
         FindLevel findLevel = FindLevel.HIGH;
-        List<MatchResult> matchResults = dicMatch.match(text, findLevel);
-        List<String> resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
 
         text = "北**京";
 
         findLevel = FindLevel.HIGH;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertEquals(null, resultString);
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
 
-        expect = new String[] {
-                "0:0:4:北京欢乐大世界:北京欢乐大世界:null",
-                "0:0:4:北京欢乐谷:北京欢乐谷:null",
-        };
+
         findLevel = FindLevel.HIGH_MIDDLE;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
 
         text = "北**1**京";
 
         findLevel = FindLevel.HIGH;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertEquals(null, resultString);
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
 
         findLevel = FindLevel.HIGH_MIDDLE;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertEquals(null, resultString);
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
-        expect = new String[] {
-                "0:0:7:北京欢乐大世界:北京欢乐大世界:null"
-        };
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
     }
 
     @Test
     void processBack3Char() {
 
         String text = "我爱北京欢";
-        String[] expect = new String[] {
-                "0:2:5:我爱北京欢乐一家亲:北京欢乐一家亲:null",
-                "0:2:5:我爱北京欢乐大世界:北京欢乐大世界:null",
-                "0:2:5:我爱北京欢乐谷:北京欢乐谷:null",
-                "0:2:5:我爱北京欢迎你:北京欢迎你:null",
-                "0:2:5:我爱北京欢迎您:北京欢迎您:null"
-        };
-
         FindLevel findLevel = FindLevel.HIGH;
-        List<MatchResult> matchResults = dicMatch.match(text, findLevel);
-        List<String> resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
 
         findLevel = FindLevel.HIGH_MIDDLE;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
 
         text = "我爱北京**欢";
-
         findLevel = FindLevel.HIGH;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertEquals(null, resultString);
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
 
-        expect = new String[] {
-                "0:2:7:我爱北京欢乐大世界:北京欢乐大世界:null",
-                "0:2:7:我爱北京欢乐谷:北京欢乐谷:null",
-        };
+
         findLevel = FindLevel.HIGH_MIDDLE;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
 
         text = "我爱北京**1**欢";
-
         findLevel = FindLevel.HIGH;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertEquals(null, resultString);
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
 
         findLevel = FindLevel.HIGH_MIDDLE;
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertEquals(null, resultString);
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
-        expect = new String[] {
-                "0:2:10:我爱北京欢乐大世界:北京欢乐大世界:null"
-        };
-        matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
-        Assertions.assertArrayEquals(expect, resultString.toArray());
+        Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
+                TestDicMatchHelper.toStringArr(text, findLevel, dicMatch.match(text, findLevel)));
+
     }
 
     @Test
@@ -266,21 +205,22 @@ class DicMatchPrefixTest {
         String text = "我其实很爱";
         FindLevel findLevel = FindLevel.HIGH;
         List<MatchResult> matchResults = dicMatch.match(text, findLevel);
-        List<String> resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
+        List<String> resultString = TestDicMatchHelper.toString(text, findLevel, matchResults);
         Assertions.assertNull(resultString);
 
         text = "我其实很**爱";
         findLevel = FindLevel.HIGH_MIDDLE;
         matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
+        resultString = TestDicMatchHelper.toString(text, findLevel, matchResults);
         Assertions.assertNull(resultString);
 
         text = "我其实很**1**爱";
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
         matchResults = dicMatch.match(text, findLevel);
-        resultString = TestDicMatchHelper.printResult(text, findLevel, matchResults);
+        resultString = TestDicMatchHelper.toString(text, findLevel, matchResults);
         Assertions.assertNull(resultString);
 
     }
+
 
 }
