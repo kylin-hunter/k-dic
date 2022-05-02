@@ -12,12 +12,7 @@ import lombok.Data;
  * @date 2022/1/1
  **/
 @Data
-public class DicData implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private int classId;
-    private String words;
-    private String assistWords;
-    private String relationWords;
+public abstract class AbstractDicData implements Serializable {
     private HitMode hitMode;
     private int type;
 

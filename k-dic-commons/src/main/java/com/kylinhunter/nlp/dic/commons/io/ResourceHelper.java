@@ -1,10 +1,17 @@
 package com.kylinhunter.nlp.dic.commons.io;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.kylinhunter.nlp.dic.commons.exception.internal.KParamException;
+import com.kylinhunter.nlp.dic.commons.io.file.UserDirUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,6 +22,59 @@ import lombok.extern.slf4j.Slf4j;
  **/
 @Slf4j
 public class ResourceHelper {
+    public static final String USER_DIR_TAG = "$user.dir$";
+    public static final String CLASSPATH_TAG = "classpath:";
+
+    /**
+     * @param path path
+     * @return java.lang.String
+     * @title correctPath
+     * @description
+     * @author BiJi'an
+     * @updateTime 2022-01-21 00:52
+     */
+    public static PathInfo getPathInfo(String path) {
+        if (!StringUtils.isEmpty(path)) {
+            if (path.startsWith(CLASSPATH_TAG)) {
+                return new PathInfo(PathType.CLASSPATH, path.replace(CLASSPATH_TAG, ""));
+            } else {
+                return new PathInfo(PathType.FILESYSTEM, path.replace(USER_DIR_TAG,
+                        UserDirUtils.get().getAbsolutePath()));
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param pathInfo
+     * @return java.io.InputStream
+     * @throws
+     * @title getInputStream
+     * @description
+     * @author BiJi'an
+     * @updateTime 2022-05-03 02:11
+     */
+    public static InputStream getInputStream(PathInfo pathInfo, String subPath) {
+
+        if (pathInfo != null) {
+            PathType pathType = pathInfo.getPathType();
+            if (pathType == PathType.CLASSPATH) {
+                return ResourceHelper.getInputStreamInClassPath(pathInfo.getPath() + "/" + subPath);
+
+            } else {
+                File file = new File(pathInfo.getPath(), subPath);
+                try {
+                    if (file.exists() && file.isFile()) {
+                        return new FileInputStream(file);
+                    }
+                } catch (FileNotFoundException e) {
+                    throw new KParamException("invalid file " + file.getAbsolutePath(), e);
+
+                }
+            }
+        }
+        return null;
+    }
 
     /**
      * @param resourcePath the path

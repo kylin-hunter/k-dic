@@ -14,9 +14,9 @@ import lombok.Data;
 public class DicConfig {
     private DicType type;
     private DicMatchType dicMatchType;
-    private boolean assistMatchEnabled = false;
+    private boolean assistMatchEnabled = true;
     private int wordMaxLen = 10;
-    private int skipMaxLen = 2;
+    private int unclearSkipMaxLen = 2;
     private boolean defaultDicEnabled = false;
     private String dic;
 

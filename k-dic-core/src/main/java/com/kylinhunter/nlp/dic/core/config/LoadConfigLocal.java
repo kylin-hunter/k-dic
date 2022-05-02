@@ -1,18 +1,22 @@
 package com.kylinhunter.nlp.dic.core.config;
 
-import java.io.File;
+import com.kylinhunter.nlp.dic.commons.io.PathInfo;
 
 import lombok.Data;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022-01-01 23:54
  **/
 @Data
 public class LoadConfigLocal {
     private String dicPath;
-    private File exDicDirPath;
+    private PathInfo dicPathInfo;
     private boolean autoScan;
+
+    public void setDicPathInfo(PathInfo dicPathInfo) {
+        this.dicPathInfo = dicPathInfo;
+    }
 
 }

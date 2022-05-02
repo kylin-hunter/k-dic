@@ -7,6 +7,7 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
+import com.kylinhunter.nlp.dic.commons.io.PathInfo;
 import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
 import com.kylinhunter.nlp.dic.commons.io.file.FileUtil;
 import com.kylinhunter.nlp.dic.core.dic.constants.LoadSource;
@@ -78,16 +79,14 @@ public class ConfigHelper {
         LoadConfig loadConfig = config.getLoad();
         LoadConfigLocal loadConfigLocal = loadConfig.getLocal();
         if (loadConfigLocal != null && loadConfig.getSource() == LoadSource.LOCAL) {
-            File dicPath = FileUtil.correctPath(loadConfigLocal.getDicPath());
-            if (dicPath == null) {
-                throw new KInitException("dicPath not dir:" + loadConfigLocal.getDicPath());
+            PathInfo pathInfo = ResourceHelper.getPathInfo(loadConfigLocal.getDicPath());
+            loadConfigLocal.setDicPathInfo(pathInfo);
+            File dicPath = FileUtil.getFile(pathInfo);
+            if (dicPath != null && dicPath.exists()) {
+                if (dicPath.isFile()) {
+                    throw new KInitException("dicPath  can't be a file :" + dicPath);
+                }
             }
-            if (!dicPath.exists()) {
-                throw new KInitException("dicPath  no exist:" + dicPath);
-            } else if (dicPath.isFile()) {
-                throw new KInitException("dicPath  can't be a file :" + dicPath);
-            }
-            loadConfigLocal.setDicPath(dicPath.getAbsolutePath());
 
         }
         config.getDics().forEach((dicType, dicConfig) -> {

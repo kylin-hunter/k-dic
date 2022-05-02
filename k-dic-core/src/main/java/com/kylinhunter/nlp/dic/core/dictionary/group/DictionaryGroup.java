@@ -31,11 +31,11 @@ public class DictionaryGroup<T extends DictionaryNode> {
 
     public DictionaryGroup(DicConfig dicConfig) {
         this.dicConfig = dicConfig;
-        high = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getSkipMaxLen());
-        middle = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getSkipMaxLen());
-        low = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getSkipMaxLen());
-        highMiddleLow = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getSkipMaxLen());
-        middleLow = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getSkipMaxLen());
+        high = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getUnclearSkipMaxLen());
+        middle = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getUnclearSkipMaxLen());
+        low = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getUnclearSkipMaxLen());
+        highMiddleLow = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getUnclearSkipMaxLen());
+        middleLow = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getUnclearSkipMaxLen());
     }
 
     /**

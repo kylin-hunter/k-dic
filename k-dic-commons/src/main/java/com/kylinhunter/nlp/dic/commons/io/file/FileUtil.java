@@ -7,9 +7,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.commons.io.Charsets;
-import org.apache.commons.lang3.StringUtils;
 
 import com.kylinhunter.nlp.dic.commons.exception.internal.KIOException;
+import com.kylinhunter.nlp.dic.commons.io.PathInfo;
+import com.kylinhunter.nlp.dic.commons.io.PathType;
 import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
 
 /**
@@ -18,30 +19,27 @@ import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
  * @date 2022/1/1
  **/
 public class FileUtil {
-    public static final String USER_DIR_TAG = "$user.dir$";
-    public static final String CLASSPATH_TAG = "classpath:";
 
     /**
-     * @param path path
+     * @param pathInfo pathInfo
      * @return java.lang.String
      * @title correctPath
      * @description
      * @author BiJi'an
      * @updateTime 2022-01-21 00:52
      */
-    public static File correctPath(String path) {
-        if (!StringUtils.isEmpty(path)) {
-            if (path.startsWith(CLASSPATH_TAG)) {
-                path = path.replace(CLASSPATH_TAG, "");
-                File file = ResourceHelper.getFileInClassPath(path);
-                if (file != null) {
-                    return file;
-                }
+    public static File getFile(PathInfo pathInfo) {
+        if (pathInfo != null) {
+            PathType pathType = pathInfo.getPathType();
+            if (pathType == PathType.CLASSPATH) {
+                return ResourceHelper.getFileInClassPath(pathInfo.getPath());
+
             } else {
-                return new File(path.replace(USER_DIR_TAG, UserDirUtils.get().getAbsolutePath()));
+                return new File(pathInfo.getPath());
             }
         }
         return null;
+
     }
 
     /**
