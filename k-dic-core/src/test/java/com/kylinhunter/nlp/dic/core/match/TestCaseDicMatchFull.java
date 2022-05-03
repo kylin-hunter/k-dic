@@ -8,7 +8,7 @@ import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 /**
  * @author BiJi'an
  * @description
- * @create 2022-05-03 00:21
+ * @create 2022-01-03 00:21
  **/
 public class TestCaseDicMatchFull {
 

@@ -2,24 +2,23 @@ package com.kylinhunter.nlp.dic.core.dic.common;
 
 import java.util.List;
 
+import com.kylinhunter.nlp.dic.commons.service.KServices;
+import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
+import com.kylinhunter.nlp.dic.core.config.Config;
+import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
+import com.kylinhunter.nlp.dic.core.config.DicConfig;
+import com.kylinhunter.nlp.dic.core.dic.Dic;
+import com.kylinhunter.nlp.dic.core.dic.DicLoader;
+import com.kylinhunter.nlp.dic.core.dic.DicManager;
+import com.kylinhunter.nlp.dic.core.dic.bean.DicData;
+import com.kylinhunter.nlp.dic.core.dic.constants.DicType;
+import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
+import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
+import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.match.DicMatchCreator;
 import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.match.component.DicSkipper;
-import com.kylinhunter.nlp.dic.core.dic.DicManager;
-
-import com.kylinhunter.nlp.dic.commons.service.KServices;
-import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
-import com.kylinhunter.nlp.dic.core.config.Config;
-import com.kylinhunter.nlp.dic.core.config.DicConfig;
-import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
-import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
-import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
-import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
-import com.kylinhunter.nlp.dic.core.dic.DicLoader;
-import com.kylinhunter.nlp.dic.core.dic.bean.DicData;
-import com.kylinhunter.nlp.dic.core.dic.constants.DicType;
-import com.kylinhunter.nlp.dic.core.dic.Dic;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,9 +43,8 @@ public abstract class AbstractDicLoader implements DicLoader {
      */
     public DictionaryGroup<WordNode> createDictionaryGroup(DicType dicType, List<DicData> dicDatas,
                                                            DicConfig dicConfig) {
-        DictionaryGroup<WordNode> dictionaryGroup = null;
+        DictionaryGroup<WordNode> dictionaryGroup = new DictionaryGroup<>(config.getDics().get(dicType));
         if (dicDatas != null && dicDatas.size() > 0) {
-            dictionaryGroup = new DictionaryGroup<>(config.getDics().get(dicType));
             WordAnalyzer analyzer = KServices.get(config.getWordAnalyzer());
             for (DicData dicData : dicDatas) {
                 addDicData(dictionaryGroup, dicData, analyzer, dicConfig.getWordMaxLen());

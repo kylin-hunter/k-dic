@@ -52,7 +52,7 @@ public class ResourceHelper {
      * @title getInputStream
      * @description
      * @author BiJi'an
-     * @updateTime 2022-05-03 02:11
+     * @updateTime 2022-01-03 02:11
      */
     public static InputStream getInputStream(PathInfo pathInfo, String subPath) {
 

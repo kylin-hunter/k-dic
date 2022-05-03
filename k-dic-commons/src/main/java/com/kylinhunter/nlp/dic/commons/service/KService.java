@@ -1,14 +1,14 @@
 package com.kylinhunter.nlp.dic.commons.service;
 
 /**
- * @description  a definition for simple service
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description a definition for simple service
  * @date 2022/1/1
  **/
 public interface KService<T> {
 
-    Class<? extends T> getClazz();
-
     int getServiceId();
+
+    void setServiceId(int serviceId);
 
 }

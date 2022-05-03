@@ -1,13 +1,18 @@
 package com.kylinhunter.nlp.dic.core.pinyin;
 
+/**
+ * @author BiJi'an
+ * @description
+ * @create 2022/1/3
+ **/
 public interface PinyinService {
 
-    public String toPinyin(char c);
+    String toPinyin(char c);
 
-    public String toPinyin(String chars);
+    String toPinyin(String chars);
 
-    public String[] toPinyins(char c);
+    String[] toPinyins(char c);
 
-    public String[] toPinyins(String oriStr, int maxSize);
+    String[] toPinyins(String oriStr, int maxSize);
 
 }

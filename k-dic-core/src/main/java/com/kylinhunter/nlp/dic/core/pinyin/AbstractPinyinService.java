@@ -26,7 +26,7 @@ public abstract class AbstractPinyinService implements PinyinService {
      * @param c
      * @return java.lang.String
      * @throws
-     * @title 字符转拼音
+     * @title toPinyin
      * @description
      * @author BiJi'an
      * @updateTime 2022/1/1 4:33 下午
@@ -44,7 +44,7 @@ public abstract class AbstractPinyinService implements PinyinService {
      * @param pinYinStr
      * @return java.lang.String
      * @throws
-     * @title 字符串转拼音
+     * @title toPinyin
      * @description
      * @author BiJi'an
      * @updateTime 2022/1/1 4:34 下午
@@ -54,12 +54,10 @@ public abstract class AbstractPinyinService implements PinyinService {
 
         StringBuilder sb = new StringBuilder();
         String tempStr = null;
-        // 循环字符串
         for (int i = 0; i < pinYinStr.length(); i++) {
 
             tempStr = this.toPinyin(pinYinStr.charAt(i));
             if (tempStr == null) {
-                // 非汉字直接拼接
                 sb.append(pinYinStr.charAt(i));
             } else {
                 sb.append(tempStr);
@@ -74,7 +72,7 @@ public abstract class AbstractPinyinService implements PinyinService {
      * @param c
      * @return java.lang.String[]
      * @throws
-     * @title 支持多音字
+     * @title toPinyins
      * @description
      * @author BiJi'an
      * @updateTime 2022/1/1 4:34 下午
@@ -100,7 +98,7 @@ public abstract class AbstractPinyinService implements PinyinService {
      * @param oriStr
      * @param maxSize
      * @return java.lang.String[]
-     * @title 转拼音支持多音字，并防止内存溢出
+     * @title toPinyins
      * @description
      * @author BiJi'an
      * @updateTime 2022/1/1 4:36 下午

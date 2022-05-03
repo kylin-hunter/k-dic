@@ -12,7 +12,7 @@ import com.kylinhunter.nlp.dic.core.match.bean.MatchResult;
 /**
  * @author BiJi'an
  * @description
- * @create 2022-05-01 05:42
+ * @create 2022-01-01 05:42
  **/
 public class TestDicMatchHelper {
     public static String[] toStringArr(String text, FindLevel findLevel, List<MatchResult> matchResults) {

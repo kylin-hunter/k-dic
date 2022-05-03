@@ -1,6 +1,5 @@
 package com.kylinhunter.nlp.dic.commons.service;
 
-import java.lang.reflect.Constructor;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
@@ -25,10 +24,25 @@ public class KServices {
      * @author BiJi'an
      * @updateTime 2022/1/1 12:59
      */
-    public static int nextServiceId() {
-        int serviceId = SERVICE_ID_GENERATOR.incrementAndGet();
+    public static int register(KService<?> kService, Class<?> clazz) {
+        int serviceId = kService.getServiceId();
+        if (serviceId > 0) {
+            throw new KInitException("register duplicate" + serviceId);
+
+        }
+        serviceId = SERVICE_ID_GENERATOR.incrementAndGet();
         if (serviceId >= MAX_SERVICE_NUMS) {
             throw new KInitException("exceed max limit " + MAX_SERVICE_NUMS);
+        }
+        kService.setServiceId(serviceId);
+
+        try {
+            if (clazz == null) {
+                throw new KInitException("clazz can't be null");
+            }
+            SERVICES[serviceId] = clazz.newInstance();
+        } catch (Exception e) {
+            throw new KInitException("init SimpleService error", e);
         }
         return serviceId;
     }
@@ -44,60 +58,8 @@ public class KServices {
     @SuppressWarnings("unchecked")
     public static <T, R extends T> R get(KService<T> kService) {
         int serviceId = kService.getServiceId();
-        R service = (R) SERVICES[serviceId];
-        if (service != null) {
-            return service;
-        } else {
-            return (R) init(kService);
-        }
+        return (R) SERVICES[serviceId];
 
-    }
-
-    /**
-     * @param kService kService
-     * @return T
-     * @title init service
-     * @description
-     * @author BiJi'an
-     * @updateTime 2022/1/1 1:07
-     */
-
-    @SuppressWarnings("unchecked")
-    private static <T> T init(KService<T> kService) {
-
-        int serviceId = kService.getServiceId();
-        synchronized(KServices.class) {
-            T service = (T) SERVICES[serviceId];
-            if (service != null) {
-                return service;
-            } else {
-                return setService(serviceId, kService.getClazz());
-            }
-        }
-
-    }
-
-    /**
-     * @param serviceId serviceId
-     * @param clazz     clazz
-     * @return T
-     * @title set a service
-     * @description
-     * @author BiJi'an
-     * @updateTime 2022/1/1 1:06
-     */
-    private static <T> T setService(int serviceId, Class<? extends T> clazz) {
-
-        try {
-            if (clazz == null) {
-                throw new KInitException("clazz can't be null");
-            }
-            T service = clazz.newInstance();
-            SERVICES[serviceId] = service;
-            return service;
-        } catch (Exception e) {
-            throw new KInitException("init SimpleService error", e);
-        }
     }
 
 }
