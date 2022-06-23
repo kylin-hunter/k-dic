@@ -6,11 +6,9 @@ import java.io.InputStream;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
-import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
-import com.kylinhunter.nlp.dic.commons.io.PathInfo;
-import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
-import com.kylinhunter.nlp.dic.commons.io.file.FileUtil;
 import com.kylinhunter.nlp.dic.core.dic.constants.LoadSource;
+import com.kylinhunter.plat.commons.exception.inner.InitException;
+import com.kylinhunter.plat.commons.io.ResourceHelper;
 
 /**
  * @author BiJi'an
@@ -42,7 +40,7 @@ public class ConfigHelper {
             }
 
         } catch (Exception e) {
-            throw new KInitException("init dic config error", e);
+            throw new InitException("init dic config error", e);
         }
 
     }
@@ -62,7 +60,7 @@ public class ConfigHelper {
             loadAfter(config);
             return config;
         } catch (Exception e) {
-            throw new KInitException("init dic config error", e);
+            throw new InitException("init dic config error", e);
         }
 
     }
@@ -79,12 +77,11 @@ public class ConfigHelper {
         LoadConfig loadConfig = config.getLoad();
         LoadConfigLocal loadConfigLocal = loadConfig.getLocal();
         if (loadConfigLocal != null && loadConfig.getSource() == LoadSource.LOCAL) {
-            PathInfo pathInfo = ResourceHelper.getPathInfo(loadConfigLocal.getDicPath());
-            loadConfigLocal.setDicPathInfo(pathInfo);
-            File dicPath = FileUtil.getFile(pathInfo);
+             
+            File dicPath = ResourceHelper.getFile(loadConfigLocal.getDicPath());
             if (dicPath != null && dicPath.exists()) {
                 if (dicPath.isFile()) {
-                    throw new KInitException("dicPath  can't be a file :" + dicPath);
+                    throw new InitException("dicPath  can't be a file :" + dicPath);
                 }
             }
 

@@ -1,13 +1,21 @@
 dependencies {
-    compile project(':k-dic-commons')
-    compile(rootProject.dep['IKAnalyzer']) ;
-    compile("com.alibaba:easyexcel:3.0.5")
+    api(rootProject.dep['IKAnalyzer']) ;
+    api(rootProject.dep['pinyin4j']) ;
+    api("com.alibaba:easyexcel:3.0.5")
     implementation 'commons-beanutils:commons-beanutils:1.9.4'
     implementation 'org.yaml:snakeyaml:1.30'
+
+    implementation 'org.apache.pdfbox:pdfbox-app:2.0.26'
+    api(rootProject.dep['poi'])
+    api(rootProject.dep['poi-ooxml'])
+    api(rootProject.dep['poi-scratchpad'])
+
+    implementation 'com.kylinhunter.plat:plat-commons:1.0.0'
 
 }
 
 jar.enabled = true
+bootJar.enabled(false)
 
 test{
     jvmArgs "-javaagent:${classpath.find { it.name.contains("jmockit") }.absolutePath}"

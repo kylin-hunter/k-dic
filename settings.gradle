@@ -1,4 +1,3 @@
-rootProject.name = 'k-dic'
-include 'k-dic-commons'
-include 'k-dic-core'
+rootProject.name = 'k-nlp'
+include 'k-nlp-dic-core'
 

@@ -2,9 +2,7 @@ package com.kylinhunter.nlp.dic.core.match.imp;
 
 import java.util.List;
 
-import com.kylinhunter.nlp.dic.commons.service.KServices;
-import com.kylinhunter.nlp.dic.commons.util.CollectionUtil;
-import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
+import com.kylinhunter.nlp.dic.core.words.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.dictionary.Dictionary;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
@@ -12,6 +10,8 @@ import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.match.bean.MatchResult;
 import com.kylinhunter.nlp.dic.core.match.component.DicSkipper;
+import com.kylinhunter.plat.commons.service.EServices;
+import com.kylinhunter.plat.commons.util.CollectionUtil;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +27,7 @@ public abstract class AbstractDicMatch implements DicMatch {
     public AbstractDicMatch(DictionaryGroup<WordNode> dictionaryGroup) {
         this.dictionaryGroup = dictionaryGroup;
         this.assistMatchEnabled = dictionaryGroup.getDicConfig().isAssistMatchEnabled();
-        this.analyzer = KServices.get(dictionaryGroup.getConfig().getWordAnalyzer());
+        this.analyzer = EServices.get(dictionaryGroup.getConfig().getWordAnalyzer());
     }
 
     @Override

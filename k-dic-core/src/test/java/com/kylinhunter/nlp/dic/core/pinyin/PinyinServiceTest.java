@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
-import com.kylinhunter.nlp.dic.commons.service.KServices;
+import com.kylinhunter.plat.commons.service.EServices;
 
 class PinyinServiceTest {
     @Test
     public void testBasic() {
-        PinyinService service = KServices.get(PinyinType.BASIC);
+        PinyinService service = EServices.get(PinyinType.BASIC);
 
         String str = "毕继安";
         String pinyin = service.toPinyin(str);
@@ -42,13 +42,13 @@ class PinyinServiceTest {
 
     @Test
     public void testWithTone() {
-        PinyinService service = KServices.get(PinyinType.WITH_TONE);
+        PinyinService service = EServices.get(PinyinType.WITH_TONE);
 
         String str = "毕继安";
         String pinyin = service.toPinyin(str);
         System.out.println(str + ":" + pinyin);
         assertEquals("bi4ji4an1", pinyin);
-        service = KServices.get(PinyinType.WITH_TONE);
+        service = EServices.get(PinyinType.WITH_TONE);
         str = "女";
         pinyin = service.toPinyin(str.charAt(0));
         System.out.println(str.charAt(0) + ":" + pinyin);
@@ -72,7 +72,7 @@ class PinyinServiceTest {
 
     @Test
     public void testWithTonePrint() {
-        PinyinService service = KServices.get(PinyinType.WITH_TONE_PRINT);
+        PinyinService service = EServices.get(PinyinType.WITH_TONE_PRINT);
         String str = "毕继安";
         String pinyin = service.toPinyin(str);
         System.out.println(str + ":" + pinyin);
@@ -101,7 +101,7 @@ class PinyinServiceTest {
 
     @Test
     public void testPinyins1() {
-        PinyinService service = KServices.get(PinyinType.BASIC);
+        PinyinService service = EServices.get(PinyinType.BASIC);
 
         String str1 = "毕继安";
         String[] pinyins1 = service.toPinyins(str1, -1);
@@ -125,7 +125,7 @@ class PinyinServiceTest {
 
     @Test
     public void testPinyins2() {
-        PinyinService service = KServices.get(PinyinType.WITH_TONE_PRINT);
+        PinyinService service = EServices.get(PinyinType.WITH_TONE_PRINT);
 
         String str1 = "毕继安";
         String[] pinyins1 = service.toPinyins(str1, -1);

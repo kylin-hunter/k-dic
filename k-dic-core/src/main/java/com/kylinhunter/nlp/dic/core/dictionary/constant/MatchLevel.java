@@ -1,6 +1,7 @@
 package com.kylinhunter.nlp.dic.core.dictionary.constant;
 
-import com.kylinhunter.nlp.dic.commons.util.EnumUtil;
+
+import com.kylinhunter.plat.commons.util.EnumUtil;
 
 import lombok.Getter;
 

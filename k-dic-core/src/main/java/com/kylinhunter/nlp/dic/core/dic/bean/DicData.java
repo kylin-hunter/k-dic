@@ -2,6 +2,7 @@ package com.kylinhunter.nlp.dic.core.dic.bean;
 
 import java.io.Serializable;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 
 import lombok.Data;
@@ -18,6 +19,7 @@ public class DicData implements Serializable {
     private String words;
     private String assistWords;
     private String relationWords;
+    @ExcelIgnore
     private HitMode hitMode;
     private int type;
 

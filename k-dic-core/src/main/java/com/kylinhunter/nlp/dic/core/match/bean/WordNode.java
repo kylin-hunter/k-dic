@@ -1,6 +1,6 @@
 package com.kylinhunter.nlp.dic.core.match.bean;
 
-import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
+import com.kylinhunter.nlp.dic.core.words.analyzer.bean.Words;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.DictionaryNode;
 
 import lombok.Data;

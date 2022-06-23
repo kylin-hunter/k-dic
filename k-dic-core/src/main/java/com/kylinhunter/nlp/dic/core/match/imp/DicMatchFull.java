@@ -3,8 +3,8 @@ package com.kylinhunter.nlp.dic.core.match.imp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kylinhunter.nlp.dic.core.analyzer.bean.Word;
-import com.kylinhunter.nlp.dic.core.analyzer.bean.Words;
+import com.kylinhunter.nlp.dic.core.words.analyzer.bean.Word;
+import com.kylinhunter.nlp.dic.core.words.analyzer.bean.Words;
 import com.kylinhunter.nlp.dic.core.dictionary.Dictionary;
 import com.kylinhunter.nlp.dic.core.dictionary.bean.MatchContext;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;

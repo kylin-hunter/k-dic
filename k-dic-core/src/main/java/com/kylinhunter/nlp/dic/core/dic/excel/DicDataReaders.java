@@ -1,8 +1,7 @@
 package com.kylinhunter.nlp.dic.core.dic.excel;
 
-import com.kylinhunter.nlp.dic.commons.service.EnumService;
-import com.kylinhunter.nlp.dic.commons.service.EnumServiceBuilder;
 import com.kylinhunter.nlp.dic.core.dic.constants.DicType;
+import com.kylinhunter.plat.commons.service.EServices;
 
 /**
  * @author BiJi'an
@@ -10,13 +9,14 @@ import com.kylinhunter.nlp.dic.core.dic.constants.DicType;
  * @create 2022-01-03 01:48
  **/
 public class DicDataReaders {
-    private static EnumService<DicDataReader> enumService = new EnumServiceBuilder<DicDataReader>()
-            .register(DicType.SENSITIVE, DicDataReaderForSensitive.class)
-            .register(DicType.COMPLETE, DicDataReaderForComplete.class)
-            .register(DicType.PINYIN, DicDataReaderForPinyin.class)
-            .build();
+
+    static {
+        EServices.register(DicType.SENSITIVE, DicDataReaderForSensitive.class);
+        EServices.register(DicType.COMPLETE, DicDataReaderForComplete.class);
+        EServices.register(DicType.PINYIN, DicDataReaderForPinyin.class);
+    }
 
     public static DicDataReader get(DicType dicType) {
-        return enumService.get(dicType);
+        return EServices.get(dicType);
     }
 }

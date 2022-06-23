@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.kylinhunter.nlp.dic.commons.exception.KRuntimeException;
 import com.kylinhunter.nlp.dic.core.dic.bean.AbstractDicData;
 import com.kylinhunter.nlp.dic.core.dic.bean.DicData;
+import com.kylinhunter.plat.commons.exception.common.KRuntimeException;
 
 /**
  * @author BiJi'an

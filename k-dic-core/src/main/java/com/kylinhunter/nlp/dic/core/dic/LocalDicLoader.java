@@ -5,9 +5,6 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 
-import com.kylinhunter.nlp.dic.commons.exception.KRuntimeException;
-import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
-import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
 import com.kylinhunter.nlp.dic.core.config.DicConfig;
 import com.kylinhunter.nlp.dic.core.config.LoadConfigLocal;
 import com.kylinhunter.nlp.dic.core.dic.bean.DicData;
@@ -16,6 +13,9 @@ import com.kylinhunter.nlp.dic.core.dic.constants.DicType;
 import com.kylinhunter.nlp.dic.core.dic.excel.DicDataReaders;
 import com.kylinhunter.nlp.dic.core.dic.monitor.LocalDicFileMonitor;
 import com.kylinhunter.nlp.dic.core.match.DicMatch;
+import com.kylinhunter.plat.commons.exception.common.KRuntimeException;
+import com.kylinhunter.plat.commons.exception.inner.InitException;
+import com.kylinhunter.plat.commons.io.ResourceHelper;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -81,7 +81,7 @@ public class LocalDicLoader extends AbstractDicLoader {
             log.info("load loadDefaultDicData,size={}", dicDatas.size());
             return dicDatas;
         } catch (Exception e) {
-            throw new KInitException("loadDefaultDicData error,for:" + path, e);
+            throw new InitException("loadDefaultDicData error,for:" + path, e);
         } finally {
             IOUtils.closeQuietly(in);
         }
@@ -99,9 +99,9 @@ public class LocalDicLoader extends AbstractDicLoader {
         LoadConfigLocal loadConfigLocal = config.getLoad().getLocal();
         InputStream in = null;
         try {
-            in = ResourceHelper.getInputStream(loadConfigLocal.getDicPathInfo(), dicConfig.getDic());
+            in = ResourceHelper.getInputStream(loadConfigLocal.getDicPath() + "/" + dicConfig.getDic());
             if (in == null) {
-                throw new KInitException("invalid path:" + loadConfigLocal.getDicPath() + "/" + dicConfig.getDic());
+                throw new InitException("invalid path:" + loadConfigLocal.getDicPath() + "/" + dicConfig.getDic());
             }
 
             List<DicData> dicDatas = DicDataReaders.get(dicConfig.getType()).read(in);
@@ -111,7 +111,7 @@ public class LocalDicLoader extends AbstractDicLoader {
         } catch (KRuntimeException e) {
             throw e;
         } catch (Exception e) {
-            throw new KInitException("loadExDicData error", e);
+            throw new InitException("loadExDicData error", e);
         } finally {
             IOUtils.closeQuietly(in);
         }

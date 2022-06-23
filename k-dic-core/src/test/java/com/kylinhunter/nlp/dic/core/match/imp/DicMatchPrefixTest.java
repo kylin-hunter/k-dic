@@ -6,9 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.kylinhunter.nlp.dic.commons.service.KServices;
-import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
-import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzerType;
+import com.kylinhunter.nlp.dic.core.words.analyzer.WordAnalyzer;
+import com.kylinhunter.nlp.dic.core.words.analyzer.WordAnalyzerType;
 import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
 import com.kylinhunter.nlp.dic.core.config.DicConfig;
 import com.kylinhunter.nlp.dic.core.dic.constants.DicType;
@@ -22,10 +21,11 @@ import com.kylinhunter.nlp.dic.core.match.TestDicMatchHelper;
 import com.kylinhunter.nlp.dic.core.match.bean.MatchResult;
 import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.match.component.WordNodeConvertor;
+import com.kylinhunter.plat.commons.service.EServices;
 
 class DicMatchPrefixTest {
 
-    static WordAnalyzer analyzer = KServices.get(WordAnalyzerType.DEFAULT);
+    static WordAnalyzer analyzer = EServices.get(WordAnalyzerType.DEFAULT);
     static DicConfig dicConfig = ConfigHelper.get().getDics().get(DicType.COMPLETE);
     static DicMatch dicMatch;
 

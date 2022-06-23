@@ -2,8 +2,8 @@ package com.kylinhunter.nlp.dic.core.dic.common;
 
 import java.util.List;
 
-import com.kylinhunter.nlp.dic.commons.service.KServices;
-import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
+
+import com.kylinhunter.nlp.dic.core.words.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.config.Config;
 import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
 import com.kylinhunter.nlp.dic.core.config.DicConfig;
@@ -19,6 +19,7 @@ import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.match.DicMatchCreator;
 import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.match.component.DicSkipper;
+import com.kylinhunter.plat.commons.service.EServices;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,7 +46,7 @@ public abstract class AbstractDicLoader implements DicLoader {
                                                            DicConfig dicConfig) {
         DictionaryGroup<WordNode> dictionaryGroup = new DictionaryGroup<>(config.getDics().get(dicType));
         if (dicDatas != null && dicDatas.size() > 0) {
-            WordAnalyzer analyzer = KServices.get(config.getWordAnalyzer());
+            WordAnalyzer analyzer = EServices.get(config.getWordAnalyzer());
             for (DicData dicData : dicDatas) {
                 addDicData(dictionaryGroup, dicData, analyzer, dicConfig.getWordMaxLen());
             }

@@ -2,9 +2,9 @@ package com.kylinhunter.nlp.dic.core.match;
 
 import java.lang.reflect.Constructor;
 
-import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
 import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
 import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
+import com.kylinhunter.plat.commons.exception.inner.InitException;
 
 /**
  * @author BiJi'an
@@ -19,7 +19,7 @@ public class DicMatchCreator {
             return constructor.newInstance(dictionaryGroup);
 
         } catch (Exception e) {
-            throw new KInitException("init dictionary error", e);
+            throw new InitException("init dictionary error", e);
         }
 
     }

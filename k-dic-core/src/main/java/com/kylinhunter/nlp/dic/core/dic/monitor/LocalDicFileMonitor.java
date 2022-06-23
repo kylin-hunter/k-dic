@@ -8,12 +8,13 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 
-import com.kylinhunter.nlp.dic.commons.exception.internal.KInitException;
-import com.kylinhunter.nlp.dic.commons.io.file.FileUtil;
 import com.kylinhunter.nlp.dic.core.config.Config;
 import com.kylinhunter.nlp.dic.core.config.DicConfig;
 import com.kylinhunter.nlp.dic.core.config.LoadConfigLocal;
 import com.kylinhunter.nlp.dic.core.dic.constants.DicType;
+import com.kylinhunter.plat.commons.exception.inner.InitException;
+import com.kylinhunter.plat.commons.io.ResourceHelper;
+import com.kylinhunter.plat.commons.io.file.FileUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,7 +45,7 @@ public class LocalDicFileMonitor {
             LoadConfigLocal loadConfigLocal = config.getLoad().getLocal();
             if (!started && loadConfigLocal.isAutoScan()) {
 
-                File exDicPath = FileUtil.getFile(loadConfigLocal.getDicPathInfo());
+                File exDicPath = ResourceHelper.getFile(loadConfigLocal.getDicPath());
                 if (exDicPath.exists()) {
                     log.info("monitor path:" + exDicPath.getAbsolutePath());
                     Map<String, DicType> fileToDicType = config.getDics().values().stream()
@@ -63,7 +64,7 @@ public class LocalDicFileMonitor {
                 log.info(" ex dic monitor started...... ");
             }
         } catch (Exception e) {
-            throw new KInitException("init local dic monitor error", e);
+            throw new InitException("init local dic monitor error", e);
         }
     }
 

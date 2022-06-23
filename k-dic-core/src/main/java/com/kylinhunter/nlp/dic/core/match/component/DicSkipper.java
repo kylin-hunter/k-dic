@@ -9,10 +9,10 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.kylinhunter.nlp.dic.commons.io.ResourceHelper;
-import com.kylinhunter.nlp.dic.commons.io.file.FileUtil;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.DictionaryConst;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
+import com.kylinhunter.plat.commons.io.ResourceHelper;
+import com.kylinhunter.plat.commons.io.file.reader.FileReaderUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,7 +45,7 @@ public class DicSkipper {
         try {
             in = ResourceHelper.getInputStreamInClassPath(CONFIG_PATH);
 
-            FileUtil.process(in, "UTF-8", (line) -> {
+            FileReaderUtils.process(in, "UTF-8", (line) -> {
                 if (!StringUtils.isEmpty(line)) {
                     line = line.trim();
                     if (line.length() == 1) {

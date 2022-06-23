@@ -1,9 +1,9 @@
 package com.kylinhunter.nlp.dic.core.match.bean;
 
-import com.kylinhunter.nlp.dic.commons.util.EnumUtil;
 import com.kylinhunter.nlp.dic.core.dictionary.bean.MatchContext;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.MatchLevel;
 import com.kylinhunter.nlp.dic.core.dictionary.trie.TrieNode;
+import com.kylinhunter.plat.commons.util.EnumUtil;
 
 import lombok.Data;
 

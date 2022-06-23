@@ -1,22 +1,21 @@
 buildscript {
     repositories {
         mavenLocal()
-        maven {
-            url "https://maven.aliyun.com/repository/public-snapshots"
-        }
+//        maven {
+//            url "https://maven.aliyun.com/repository/public-snapshots"
+//        }
         maven {
             url "https://maven.aliyun.com/repository/public"
         }
+	mavenCentral()
     }
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
-        classpath('com.bmuschko:gradle-docker-plugin:6.6.1')
-
+        classpath(app_plugins['spring-boot-gradle-plugin'])
+        classpath(app_plugins['gradle-docker-plugin'])
     }
 }
+
 ext {
-
-
     changeActiveProfile = { profile ->
 
         File applicaitonFile = new File("$buildDir/resources/main/application.yml")

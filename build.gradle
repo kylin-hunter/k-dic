@@ -2,15 +2,15 @@ buildscript {
     apply from: "./script/gradle-script/ext-config.gradle"
     apply from: "./script/gradle-script/ext-version.gradle"
     apply from: "./script/gradle-script/ext-func-allprojects.gradle"
-
     repositories {
         mavenLocal()
-        maven {
-            url "https://maven.aliyun.com/repository/public-snapshots"
-        }
+//        maven {
+//            url "https://maven.aliyun.com/repository/public-snapshots"
+//        }
         maven {
             url "https://maven.aliyun.com/repository/public"
         }
+        mavenCentral()
     }
     dependencies {
         classpath(app_plugins['spring-boot-gradle-plugin'])
@@ -20,71 +20,79 @@ buildscript {
 }
 
 
-
 plugins {
-    id 'java'
-    id 'maven'
+    id 'java-library'
+    id 'maven-publish'
 
 }
 
 allprojects {
-    group 'com.kylinhunter.nlp.dic'
-    version '1.2.2-SNAPSHOT'
-
+    group 'com.kylinhunter.nlp'
+//    version '1.0.0-SNAPSHOT'
+    version '1.0.0'
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
     repositories {
         mavenLocal()
-        maven {
-            url "https://maven.aliyun.com/repository/public-snapshots"
-        }
+//        maven {
+//            url "https://maven.aliyun.com/repository/public-snapshots"
+//        }
         maven {
             url "https://maven.aliyun.com/repository/public"
         }
+        mavenCentral()
     }
 }
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'maven'
-
-    apply from: "../script/gradle-script/ext-func-subprojects.gradle"
-
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply from: "$rootProject.rootDir/script/gradle-script/ext-func-subprojects.gradle"
 
 
+    jar {
+        manifest.attributes provider: 'gradle'
+    }
 
     dependencies {
 
+        implementation("ch.qos.logback:logback-classic")
+        implementation("org.projectlombok:lombok")
+        annotationProcessor 'org.projectlombok:lombok'
 
 
-        compile("org.projectlombok:lombok:1.18.20")
-        annotationProcessor 'org.projectlombok:lombok:1.18.20'
-        compile(rootProject.dep['commons-io'])
-        compile(rootProject.dep['commons-lang3'])
-        compile(rootProject.dep['pinyin4j'])
 
 
-        compile("ch.qos.logback:logback-classic:1.2.3")
-        compile("org.apache.logging.log4j:log4j-to-slf4j:2.13.3")
-        compile("org.slf4j:jul-to-slf4j:1.7.30")
+
+        testImplementation("org.projectlombok:lombok")
+        testAnnotationProcessor 'org.projectlombok:lombok'
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+        testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+        testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
+
+        testImplementation 'org.junit.platform:junit-platform-suite-api:1.8.2'
+        testImplementation 'org.junit.platform:junit-platform-suite:1.8.2'
+        testImplementation 'org.junit.platform:junit-platform-engine:1.8.2'
+        testImplementation 'org.junit.platform:junit-platform-commons:1.8.2'
+        testImplementation 'org.junit.platform:junit-platform-launcher:1.8.2'
 
 
-        testCompile("org.projectlombok:lombok:1.18.20")
-        testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+        testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.2'
         testImplementation(rootProject.dep['jmockit'])
-
-        testImplementation(rootProject.dep['jmockit'])
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.3'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.3'
-
 
     }
 
     test {
-
+//        exclude 'com/kylinhunter/**/Suite**'
         useJUnitPlatform()
         testLogging {
-            outputs.upToDateWhen {false}
+            outputs.upToDateWhen { false }
             showStandardStreams = true
         }
 
@@ -96,18 +104,39 @@ subprojects {
         }
     }
     classes.finalizedBy(taskChangeActiveProfile)
-
-
-
-
     addDockerBuildTask(project.name)
+
+
+    java{
+        withSourcesJar()
+//        withJavadocJar()
+
+    }
+
+
+    // 解决javadoc打包乱码
+    javadoc {
+        options {
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            author true
+            version true
+        }
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+
+
 
 }
 
-group 'com.kylinhunter.nlp.dic'
-version '1.2.2-SNAPSHOT'
-
-wrapper{
+wrapper {
     gradleVersion = '6.9'
     archiveBase = 'GRADLE_USER_HOME'
     archivePath = 'wrapper/dists'

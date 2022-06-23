@@ -1,7 +1,8 @@
 package com.kylinhunter.nlp.dic.core.dictionary.group.bean;
 
 
-import com.kylinhunter.nlp.dic.commons.util.EnumUtil;
+
+import com.kylinhunter.plat.commons.util.EnumUtil;
 
 import lombok.Getter;
 

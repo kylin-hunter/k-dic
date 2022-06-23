@@ -11,12 +11,12 @@ import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.listener.PageReadListener;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.util.StringUtils;
-import com.kylinhunter.nlp.dic.commons.service.KServices;
 import com.kylinhunter.nlp.dic.core.dic.bean.DicData;
 import com.kylinhunter.nlp.dic.core.dic.bean.DicDataPinyin;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 import com.kylinhunter.nlp.dic.core.pinyin.PinyinService;
 import com.kylinhunter.nlp.dic.core.pinyin.PinyinType;
+import com.kylinhunter.plat.commons.service.EServices;
 
 /**
  * @author BiJi'an
@@ -24,7 +24,7 @@ import com.kylinhunter.nlp.dic.core.pinyin.PinyinType;
  * @create 2022-01-03 23:08
  **/
 public class DicDataReaderForPinyin extends AbstractExcelDicDataReader<DicDataPinyin> {
-    private static PinyinService pinyinService = KServices.get(PinyinType.BASIC);
+    private static PinyinService pinyinService = EServices.get(PinyinType.BASIC);
 
     @Override
     public List<DicDataPinyin> readExcel(InputStream in) {

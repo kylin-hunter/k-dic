@@ -2,7 +2,7 @@ package com.kylinhunter.nlp.dic.core.dic.common;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.kylinhunter.nlp.dic.core.analyzer.WordAnalyzer;
+import com.kylinhunter.nlp.dic.core.words.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.dic.bean.DicData;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
