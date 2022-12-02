@@ -15,7 +15,7 @@ import com.kylinhunter.nlp.dic.core.dic.bean.DicData;
 import com.kylinhunter.nlp.dic.core.dic.bean.DicDataPinyin;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 import io.github.kylinhunter.dic.words.pinyin.PinyinService;
-import io.github.kylinhunter.dic.words.pinyin.PinyinType;
+
 import com.kylinhunter.plat.commons.service.EServices;
 
 /**

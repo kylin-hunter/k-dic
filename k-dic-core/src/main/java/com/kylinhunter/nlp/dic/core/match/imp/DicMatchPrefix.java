@@ -120,7 +120,7 @@ public class DicMatchPrefix extends AbstractDicMatch implements DicMatch {
      * @title tryGetMatchResult
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-27 02:44
+     * @date 2022-01-27 02:44
      */
     private MatchResult tryGetMatchResult(String oriText, DictionarySearch dictionarySearch, WordNode wordNode) {
 

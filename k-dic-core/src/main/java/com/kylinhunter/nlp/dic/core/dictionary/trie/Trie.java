@@ -37,7 +37,7 @@ public class Trie<T> {
      * @title addRootNode
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-16 02:26
+     * @date 2022-01-16 02:26
      */
     private TrieNode<T> addRootNode(char character) {
         TrieNode<T> rootNode = getRootNode(character);
@@ -59,7 +59,7 @@ public class Trie<T> {
      * @title getRootNode
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-16 02:26
+     * @date 2022-01-16 02:26
      */
     public TrieNode<T> getRootNode(char character) {
         int index = character % FIRST_CHAR_INDEX_SLOT_NUM;
@@ -77,7 +77,7 @@ public class Trie<T> {
      * @title put
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-16 02:26
+     * @date 2022-01-16 02:26
      */
     @SuppressWarnings("UnusedReturnValue")
     public boolean put(String item, T t) {
@@ -108,7 +108,7 @@ public class Trie<T> {
      * @title addValue
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-16 02:29
+     * @date 2022-01-16 02:29
      */
     private void addValue(TrieNode<T> node, T t) {
         if (t != null) {
@@ -130,7 +130,7 @@ public class Trie<T> {
      * @title remove
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-16 02:30
+     * @date 2022-01-16 02:30
      */
     public void remove(String item) {
         TrieNode<T> node = getNode(item);
@@ -148,7 +148,7 @@ public class Trie<T> {
      * @title contains
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-16 02:46
+     * @date 2022-01-16 02:46
      */
     public boolean contains(String item) {
         TrieNode<T> node = getNode(item);
@@ -161,7 +161,7 @@ public class Trie<T> {
      * @title get
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-16 02:47
+     * @date 2022-01-16 02:47
      */
     public List<T> getValues(String item) {
         TrieNode<T> node = getNode(item);
@@ -177,7 +177,7 @@ public class Trie<T> {
      * @title get
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-16 02:47
+     * @date 2022-01-16 02:47
      */
     public T getValue(String item) {
         TrieNode<T> node = getNode(item);
@@ -195,7 +195,7 @@ public class Trie<T> {
      * @title size
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-16 02:55
+     * @date 2022-01-16 02:55
      */
     public int size() {
         return trieStat.count;
@@ -206,7 +206,7 @@ public class Trie<T> {
      * @title getMaxLength
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-16 02:56
+     * @date 2022-01-16 02:56
      */
     public int getMaxLength() {
         return trieStat.getMaxLength();
@@ -218,7 +218,7 @@ public class Trie<T> {
      * @title getNode
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-16 02:56
+     * @date 2022-01-16 02:56
      */
     private TrieNode<T> getNode(String item) {
         if (StringUtils.isEmpty(item)) {

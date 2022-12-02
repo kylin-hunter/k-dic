@@ -12,9 +12,9 @@ import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 
 /**
- * @description:
- * @author: BiJi'an
- * @create: 2022/1/1
+ * @author BiJi'an
+ * @description
+ * @date 2022/12/3
  **/
 @Slf4j
 public abstract class AbstractPinyinService implements PinyinService {
@@ -23,13 +23,12 @@ public abstract class AbstractPinyinService implements PinyinService {
     protected static String[] EMPTY = new String[0];
 
     /**
-     * @param c
+     * @param c c
      * @return java.lang.String
-     * @throws
      * @title toPinyin
      * @description
      * @author BiJi'an
-     * @updateTime 2022/1/1 4:33 下午
+     * @date 2022/1/1 4:33 下午
      */
     public String toPinyin(char c) {
         String[] pinyin = toPinyins(c);
@@ -41,19 +40,18 @@ public abstract class AbstractPinyinService implements PinyinService {
     }
 
     /**
-     * @param pinYinStr
+     * @param pinYinStr pinYinStr
      * @return java.lang.String
-     * @throws
      * @title toPinyin
      * @description
      * @author BiJi'an
-     * @updateTime 2022/1/1 4:34 下午
+     * @date 2022/1/1 4:34 下午
      */
 
     public String toPinyin(String pinYinStr) {
 
         StringBuilder sb = new StringBuilder();
-        String tempStr = null;
+        String tempStr;
         for (int i = 0; i < pinYinStr.length(); i++) {
 
             tempStr = this.toPinyin(pinYinStr.charAt(i));
@@ -69,13 +67,12 @@ public abstract class AbstractPinyinService implements PinyinService {
     }
 
     /**
-     * @param c
+     * @param c c
      * @return java.lang.String[]
-     * @throws
      * @title toPinyins
      * @description
      * @author BiJi'an
-     * @updateTime 2022/1/1 4:34 下午
+     * @date 2022/1/1 4:34 下午
      */
     public String[] toPinyins(char c) {
 
@@ -95,21 +92,20 @@ public abstract class AbstractPinyinService implements PinyinService {
     }
 
     /**
-     * @param oriStr
-     * @param maxSize
+     * @param oriStr  oriStr
+     * @param maxSize maxSize
      * @return java.lang.String[]
      * @title toPinyins
      * @description
      * @author BiJi'an
-     * @updateTime 2022/1/1 4:36 下午
-     * @throw
+     * @date 2022/1/1 4:36 下午
      */
-    public String[] toPinyins(String oriStr, int maxSize) { // 优化拼音组件防止内存溢出
+    public String[] toPinyins(String oriStr, int maxSize) {
 
         List<String[]> allPinyins = Lists.newArrayList();
 
         allPinyins.add(new String[oriStr.length()]);
-        String[] curCharPinyins = null;
+        String[] curCharPinyins;
         for (int curChar = 0; curChar < oriStr.length(); curChar++) {
             curCharPinyins = this.toPinyins(oriStr.charAt(curChar));
 

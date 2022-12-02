@@ -20,7 +20,7 @@ import com.kylinhunter.nlp.dic.core.match.bean.MatchResult;
 import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.match.component.WordNodeConvertor;
 import io.github.kylinhunter.dic.words.analyzer.WordAnalyzer;
-import io.github.kylinhunter.dic.words.analyzer.WordAnalyzerType;
+
 import com.kylinhunter.plat.commons.service.EServices;
 
 class DicMatchPrefixTest {

@@ -22,7 +22,7 @@ public class Words {
      * @title add a hitWord
      * @description
      * @author BiJi'an
-     * @updateTime 2022/1/1 11:22 下午
+     * @date 2022/1/1 11:22 下午
      */
     public void addWord(Word word) {
         words.add(word);
@@ -35,7 +35,7 @@ public class Words {
      * @param text text
      * @param statOffset statOffset
      * @param endOffset endOffset
-     * @updateTime 2022/1/1 11:22 下午
+     * @date 2022/1/1 11:22 下午
      */
     public void addWord(String text, int statOffset, int endOffset) {
         words.add(new Word(text, statOffset, endOffset));
@@ -46,7 +46,7 @@ public class Words {
      * @title traversal words
      * @description
      * @author BiJi'an
-     * @updateTime 2022/1/1 11:22 下午
+     * @date 2022/1/1 11:22 下午
      */
     public void forEach(Consumer<Word> action) {
         words.forEach(action);
@@ -58,7 +58,7 @@ public class Words {
      * @title test the words wether contains text
      * @description
      * @author BiJi'an
-     * @updateTime 2022/1/1 11:22 下午
+     * @date 2022/1/1 11:22 下午
      */
     public boolean contains(String text) {
         for (Word word : words) {
@@ -75,7 +75,7 @@ public class Words {
      * @title the size of words
      * @description
      * @author BiJi'an
-     * @updateTime 2022/1/1 3:39
+     * @date 2022/1/1 3:39
      */
     public int size() {
         return words.size();

@@ -28,7 +28,7 @@ public class LocalFileHelper {
      * @title writeDemo
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-01 22:58
+     * @date 2022-01-01 22:58
      */
     public static void writeDemo() {
         File file = UserDirUtils.getTmpFile("dic_test.xlsx");

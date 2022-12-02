@@ -74,7 +74,7 @@ public class DicSkipper {
      * @title processForFindLevelHigh
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-15 10:59
+     * @date 2022-01-15 10:59
      */
     private void processForFindLevelHigh() {
         hiChars.addAll(defaultChars);
@@ -119,7 +119,7 @@ public class DicSkipper {
      * @title remove
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-15 11:00
+     * @date 2022-01-15 11:00
      */
     public boolean remove(FindLevel findLevel, char c) {
         if (findLevel == FindLevel.HIGH) {
@@ -137,7 +137,7 @@ public class DicSkipper {
      * @title remove
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-15 11:00
+     * @date 2022-01-15 11:00
      */
     public boolean remove(FindLevel findLevel, String words) {
         for (int i = 0; i < words.length(); i++) {

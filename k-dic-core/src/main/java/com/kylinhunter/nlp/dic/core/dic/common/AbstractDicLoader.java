@@ -40,7 +40,7 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @title createDictionaryGroup
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-01 23:04
+     * @date 2022-01-01 23:04
      */
     public DictionaryGroup<WordNode> createDictionaryGroup(DicType dicType, List<DicData> dicDatas,
                                                            DicConfig dicConfig) {
@@ -61,7 +61,7 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @title add
      * @description
      * @author BiJi'an
-     * @updateTime 2022/1/26 5:48 下午
+     * @date 2022/1/26 5:48 下午
      */
     private void addDicData(DictionaryGroup<WordNode> dictionaryGroup, DicData dicData, WordAnalyzer analyzer,
                             int maxKeywordLen) {
@@ -82,7 +82,7 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @title loadDicData
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-01 23:35
+     * @date 2022-01-01 23:35
      */
     protected abstract List<DicData> loadDicData(DicType dicType, DicConfig dicConfig);
 
@@ -92,7 +92,7 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @title load
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-01 23:36
+     * @date 2022-01-01 23:36
      */
     @Override
     public DicMatch load(DicType dicType) {
@@ -118,7 +118,7 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @title createDic
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-01 23:41
+     * @date 2022-01-01 23:41
      */
     private DicMatch createDicMatch(DicType dicType, List<DicData> dicDatas, DicConfig dicConfig) {
         DictionaryGroup<WordNode> dictionaryGroup = createDictionaryGroup(dicType, dicDatas, dicConfig);

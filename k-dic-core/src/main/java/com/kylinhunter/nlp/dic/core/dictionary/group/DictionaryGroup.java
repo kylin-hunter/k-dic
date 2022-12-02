@@ -42,7 +42,7 @@ public class DictionaryGroup<T extends DictionaryNode> {
      * @title put
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-01 03:04
+     * @date 2022-01-01 03:04
      */
     public void put(T wordNode) {
         HitMode hitMode = wordNode.getHitMode();

@@ -131,7 +131,7 @@ public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {
      * @title nextValidChar
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-16 03:04
+     * @date 2022-01-16 03:04
      */
     private int nextValidChar(char[] word, int start, int end) {
         int num = 0;

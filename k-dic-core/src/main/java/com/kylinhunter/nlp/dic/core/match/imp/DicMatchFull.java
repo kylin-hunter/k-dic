@@ -126,7 +126,7 @@ public class DicMatchFull extends AbstractDicMatch implements DicMatch {
      * @title tryGetFindResultFull
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-27 02:44
+     * @date 2022-01-27 02:44
      */
     private MatchResult tryGetMatchResult(String text, DictionarySearch dictionarySearch, WordNode wordNode,
                                           Words textWords) {

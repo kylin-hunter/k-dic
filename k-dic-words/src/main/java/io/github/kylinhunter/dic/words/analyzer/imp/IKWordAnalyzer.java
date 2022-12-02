@@ -11,12 +11,11 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import io.github.kylinhunter.commons.component.C;
 import io.github.kylinhunter.dic.words.analyzer.AbstractWordAnalyzer;
 import io.github.kylinhunter.dic.words.analyzer.bean.Words;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @description  a implementation based on ik
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description a implementation based on ik
  * @date 2022-01-01 19:26
  **/
 @Slf4j
@@ -40,6 +39,7 @@ public class IKWordAnalyzer extends AbstractWordAnalyzer {
         } catch (IOException e) {
             log.error("analyze error", e);
         } finally {
+
             IOUtils.closeQuietly(ts);
         }
 

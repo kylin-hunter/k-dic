@@ -30,7 +30,7 @@ public class TrieNode<T> {
      * @title getSiblingNum
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-16 01:58
+     * @date 2022-01-16 01:58
      */
     public int getSiblingNum() {
         TrieNode<T> node = this;

@@ -24,7 +24,7 @@ public class ConfigHelper {
      * @title load
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-21 00:22
+     * @date 2022-01-21 00:22
      */
     public static Config get() {
         try {
@@ -70,7 +70,7 @@ public class ConfigHelper {
      * @title loadAfter
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-21 00:22
+     * @date 2022-01-21 00:22
      */
 
     public static void loadAfter(Config config) {

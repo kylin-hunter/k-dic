@@ -51,7 +51,7 @@ public class LocalDicLoader extends AbstractDicLoader {
      * @title load
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-01 22:58
+     * @date 2022-01-01 22:58
      */
     protected List<DicData> loadDicData(DicType dicType, DicConfig dicConfig) {
 
@@ -69,7 +69,7 @@ public class LocalDicLoader extends AbstractDicLoader {
      * @title loadDefaultDicData
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-18 15:05
+     * @date 2022-01-18 15:05
      */
     protected List<DicData> loadDefaultDicData(DicType dicType) {
         InputStream in = null;

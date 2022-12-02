@@ -24,7 +24,7 @@ public class WordNodeConvertor {
      * @title convert
      * @description
      * @author BiJi'an
-     * @updateTime 2022-01-24 23:55
+     * @date 2022-01-24 23:55
      */
     public static WordNode convert(HitMode hitMode, String words, String assistWords, String relationWords,
                                    WordAnalyzer analyzer,
