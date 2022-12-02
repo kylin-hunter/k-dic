@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.kylinhunter.nlp.dic.core.words.analyzer.WordAnalyzer;
-import com.kylinhunter.nlp.dic.core.words.analyzer.bean.Words;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
 import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
+import io.github.kylinhunter.dic.words.analyzer.WordAnalyzer;
+import io.github.kylinhunter.dic.words.analyzer.bean.Words;
 
 /**
  * @author BiJi'an

@@ -2,7 +2,6 @@ package com.kylinhunter.nlp.dic.core.match.imp;
 
 import java.util.List;
 
-import com.kylinhunter.nlp.dic.core.words.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.dictionary.Dictionary;
 import com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel;
 import com.kylinhunter.nlp.dic.core.dictionary.group.DictionaryGroup;
@@ -10,6 +9,7 @@ import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.match.bean.MatchResult;
 import com.kylinhunter.nlp.dic.core.match.component.DicSkipper;
+import io.github.kylinhunter.dic.words.analyzer.WordAnalyzer;
 import com.kylinhunter.plat.commons.service.EServices;
 import com.kylinhunter.plat.commons.util.CollectionUtil;
 

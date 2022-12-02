@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class MatchContext<T> {
 
     /**
-     * @see com.kylinhunter.nlp.dic.core.dictionary.constant.FindLevel
+     * @see FindLevel
      */
     public int findLevel = 1;
 

@@ -14,8 +14,8 @@ import com.alibaba.excel.util.StringUtils;
 import com.kylinhunter.nlp.dic.core.dic.bean.DicData;
 import com.kylinhunter.nlp.dic.core.dic.bean.DicDataPinyin;
 import com.kylinhunter.nlp.dic.core.dictionary.group.bean.HitMode;
-import com.kylinhunter.nlp.dic.core.pinyin.PinyinService;
-import com.kylinhunter.nlp.dic.core.pinyin.PinyinType;
+import io.github.kylinhunter.dic.words.pinyin.PinyinService;
+import io.github.kylinhunter.dic.words.pinyin.PinyinType;
 import com.kylinhunter.plat.commons.service.EServices;
 
 /**

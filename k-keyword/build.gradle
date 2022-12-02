@@ -1,17 +1,13 @@
 dependencies {
-    api project(':k-keyword')
+    api(rootProject.dependency_management['IKAnalyzer'])
+    api(rootProject.dependency_management['pinyin4j'])
+    api 'io.github.kylin-hunter:k-commons:1.0.4'
 
-    api(rootProject.dependency_management['pinyin4j']);
-
-    implementation 'commons-beanutils:commons-beanutils:1.9.4'
-    implementation 'org.yaml:snakeyaml:1.30'
     api("com.alibaba:easyexcel:3.0.5")
     implementation 'org.apache.pdfbox:pdfbox-app:2.0.26'
     api(rootProject.dependency_management['poi'])
     api(rootProject.dependency_management['poi-ooxml'])
     api(rootProject.dependency_management['poi-scratchpad'])
-
-    implementation 'com.kylinhunter.plat:plat-commons:1.0.0'
 
 }
 

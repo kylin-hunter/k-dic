@@ -3,7 +3,6 @@ package com.kylinhunter.nlp.dic.core.dic.common;
 import java.util.List;
 
 
-import com.kylinhunter.nlp.dic.core.words.analyzer.WordAnalyzer;
 import com.kylinhunter.nlp.dic.core.config.Config;
 import com.kylinhunter.nlp.dic.core.config.ConfigHelper;
 import com.kylinhunter.nlp.dic.core.config.DicConfig;
@@ -19,6 +18,7 @@ import com.kylinhunter.nlp.dic.core.match.DicMatch;
 import com.kylinhunter.nlp.dic.core.match.DicMatchCreator;
 import com.kylinhunter.nlp.dic.core.match.bean.WordNode;
 import com.kylinhunter.nlp.dic.core.match.component.DicSkipper;
+import io.github.kylinhunter.dic.words.analyzer.WordAnalyzer;
 import com.kylinhunter.plat.commons.service.EServices;
 
 import lombok.extern.slf4j.Slf4j;

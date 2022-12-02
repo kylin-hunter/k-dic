@@ -1,37 +1,73 @@
-# k-dic
+# k-file-detector
 
-#### 介绍
-词典服务。
+#### Description
 
-#### 软件架构
-软件架构说明
+a tool for detect file type
 
+#### Software Architecture
+##### detect file type by magic number or content  
+1. reference  https://www.garykessler.net/library/file_sigs.html
+2. reference xml/ooxml
 
-#### 安装教程
+#### Installation
+#####1、build and publish to local
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+```java
+        gradle clean build publishToMavenLocal -x test
+```
+#####2、gradle (gradle.org)
+```java
+        implementation 'io.github.kylin-hunter:k-file-detector:1.0.5'
+```
+#####3、maven (maven.apache.org)
+```java
+        <dependency>
+          <groupId>io.github.kylin-hunter</groupId>
+            <artifactId>k-file-detector</artifactId>
+          <version>1.0.5</version>
+        </dependency>
+```
 
-#### 使用说明
+#### Instructions
+1. by file
+```java
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+        DetectResult detectResult = FileDetector.detect(new File("xxxx.xxx"));  //by file
+        List<FileType> possibleFileTypes = detectResult.getPossibleFileTypes();
+        for (FileType fileType : possibleFileTypes) {
+            System.out.println("id=" + fileType.getId()); // file type id
+            System.out.println("extensions=" + fileType.getExtensions()); // the extensions, may be empty
+            System.out.println("desc=" + fileType.getDesc()); // the description 
+        }
+```
 
-#### 参与贡献
+2. by InputStream
+```java
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+        try (InputStream in = new FileInputStream(new File("xxx.xxx"))) {
+            // if  know the file name， you can invoke:  FileDetector.detect(in,"xxx.xxx)
+            DetectResult detectResult = FileDetector.detect(in); 
+            List<FileType> possibleFileTypes = detectResult.getPossibleFileTypes();
+            for (FileType fileType : possibleFileTypes) {
+                System.out.println("id=" + fileType.getId()); // file type id，
+                System.out.println("extensions=" + fileType.getExtensions()); // the extensions, may be empty
+                System.out.println("desc=" + fileType.getDesc()); // the description 
+            }
+        }
+```
 
+3. by bytes
+```java
+        byte[] content = FileUtils.readFileToByteArray(new File("xxx.xxx"));
+        // if  know the file name， you can invoke:  FileDetector.detect(content,"xxx.xxx)
+        DetectResult detectResult = FileDetector.detect(content); 
+        List<FileType> possibleFileTypes = detectResult.getPossibleFileTypes();
+        for (FileType fileType : possibleFileTypes) {
+            System.out.println("id=" + fileType.getId()); // file type id
+            System.out.println("extensions=" + fileType.getExtensions()); // the extensions, may be empty
+            System.out.println("desc=" + fileType.getDesc()); // the description 
+        }
+```
+#### License
 
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
