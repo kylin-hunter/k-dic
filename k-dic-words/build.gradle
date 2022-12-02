@@ -1,14 +1,7 @@
 dependencies {
+    api 'io.github.kylin-hunter:k-commons:1.0.4'
     api(rootProject.dependency_management['IKAnalyzer'])
     api(rootProject.dependency_management['pinyin4j'])
-    api 'io.github.kylin-hunter:k-commons:1.0.4'
-
-    api("com.alibaba:easyexcel:3.0.5")
-    implementation 'org.apache.pdfbox:pdfbox-app:2.0.26'
-    api(rootProject.dependency_management['poi'])
-    api(rootProject.dependency_management['poi-ooxml'])
-    api(rootProject.dependency_management['poi-scratchpad'])
-
 }
 
 jar.enabled = true
