@@ -14,7 +14,7 @@ public interface WordAnalyzer {
      * @author BiJi'an 
      * @param text text
      * @date 2022-01-15 02:04
-     * @return com.kylinhunter.nlp.Config.core.analyzer.bean.Words
+     * @return io.github.kylinhunter.toolsConfig.core.analyzer.bean.Words
      */
     Words analyze(String text);
 }

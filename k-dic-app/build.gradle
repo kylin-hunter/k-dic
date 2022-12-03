@@ -1,5 +1,5 @@
 dependencies {
-    api project(':k-dic-words')
+    api project(':k-dic-core')
 
     api(rootProject.dependency_management['pinyin4j']);
 

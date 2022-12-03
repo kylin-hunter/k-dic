@@ -1,13 +1,13 @@
 package io.github.kylinhunter.tools.dic.core.dictionary.group;
 
-import io.github.kylinhunter.tools.dic.core.config.Config;
-import io.github.kylinhunter.tools.dic.core.config.ConfigHelper;
-import io.github.kylinhunter.tools.dic.core.config.DicConfig;
+import io.github.kylinhunter.commons.component.CF;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.DictionaryCreator;
-import io.github.kylinhunter.tools.dic.core.dictionary.group.bean.HitMode;
+import io.github.kylinhunter.tools.dic.core.dictionary.DictionaryType;
 import io.github.kylinhunter.tools.dic.core.dictionary.group.bean.DictionaryNode;
-
+import io.github.kylinhunter.tools.dic.core.dictionary.group.bean.HitMode;
+import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzer;
+import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzerType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -21,21 +21,27 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 public class DictionaryGroup<T extends DictionaryNode> {
-    private final Config config = ConfigHelper.get();
-    private DicConfig dicConfig;
+    private WordAnalyzer wordAnalyzer;
+    private boolean assistMatchEnabled = true;
+    DictionaryType dictionaryType;
+    int unclearSkipMaxLen;
     private Dictionary<T> high;
     private Dictionary<T> middle;
     private Dictionary<T> low;
     private Dictionary<T> highMiddleLow;
     private Dictionary<T> middleLow;
 
-    public DictionaryGroup(DicConfig dicConfig) {
-        this.dicConfig = dicConfig;
-        high = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getUnclearSkipMaxLen());
-        middle = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getUnclearSkipMaxLen());
-        low = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getUnclearSkipMaxLen());
-        highMiddleLow = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getUnclearSkipMaxLen());
-        middleLow = DictionaryCreator.create(config.getDictionaryType(), dicConfig.getUnclearSkipMaxLen());
+    public DictionaryGroup(WordAnalyzerType wordAnalyzerType,
+                           boolean assistMatchEnabled, DictionaryType dictionaryType, int unclearSkipMaxLen) {
+        wordAnalyzer = CF.get(wordAnalyzerType.clazz);
+        this.assistMatchEnabled = assistMatchEnabled;
+        this.dictionaryType = dictionaryType;
+        this.unclearSkipMaxLen = unclearSkipMaxLen;
+        high = DictionaryCreator.create(dictionaryType, unclearSkipMaxLen);
+        middle = DictionaryCreator.create(dictionaryType, unclearSkipMaxLen);
+        low = DictionaryCreator.create(dictionaryType, unclearSkipMaxLen);
+        highMiddleLow = DictionaryCreator.create(dictionaryType, unclearSkipMaxLen);
+        middleLow = DictionaryCreator.create(dictionaryType, unclearSkipMaxLen);
     }
 
     /**
@@ -65,4 +71,5 @@ public class DictionaryGroup<T extends DictionaryNode> {
         }
 
     }
+
 }

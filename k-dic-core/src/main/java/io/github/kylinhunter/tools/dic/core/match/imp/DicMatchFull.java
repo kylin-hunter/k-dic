@@ -121,7 +121,7 @@ public class DicMatchFull extends AbstractDicMatch implements DicMatch {
      * @param dictionarySearch
      * @param wordNode
      * @param textWords
-     * @return com.kylinhunter.nlp.dic.core.match.bean.MatchResult
+     * @return io.github.kylinhunter.toolsdic.core.match.bean.MatchResult
      * @throws
      * @title tryGetFindResultFull
      * @description

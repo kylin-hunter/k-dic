@@ -47,7 +47,7 @@ public class LocalDicLoader extends AbstractDicLoader {
 
     /**
      * @param dicType dicType
-     * @return java.util.List<com.kylinhunter.nlp.Config.core.loader.bean.DicData>
+     * @return java.util.List<io.github.kylinhunter.toolsConfig.core.loader.bean.DicData>
      * @title load
      * @description
      * @author BiJi'an
@@ -65,7 +65,7 @@ public class LocalDicLoader extends AbstractDicLoader {
 
     /**
      * @param dicType dicType
-     * @return java.util.List<com.kylinhunter.nlp.Config.core.loader.bean.DicData>
+     * @return java.util.List<io.github.kylinhunter.toolsConfig.core.loader.bean.DicData>
      * @title loadDefaultDicData
      * @description
      * @author BiJi'an
@@ -93,7 +93,7 @@ public class LocalDicLoader extends AbstractDicLoader {
      * @author  BiJi'an
      * @Param dicType dicType
      * @Param dicConfig dicConfig
-     * @return java.util.List<com.kylinhunter.nlp.dic.core.loader.bean.DicData>
+     * @return java.util.List<io.github.kylinhunter.toolsdic.core.loader.bean.DicData>
      */
     protected List<DicData> loadExDicData(DicConfig dicConfig) {
         LoadConfigLocal loadConfigLocal = config.getLoad().getLocal();

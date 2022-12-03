@@ -2,7 +2,7 @@ package io.github.kylinhunter.tools.dic.core.match.imp;
 
 import java.util.List;
 
-import io.github.kylinhunter.tools.dic.core.dic.common.CollectionUtil;
+import io.github.kylinhunter.tools.dic.core.commons.CollectionUtil;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.group.DictionaryGroup;
@@ -10,8 +10,6 @@ import io.github.kylinhunter.tools.dic.core.match.DicMatch;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 import io.github.kylinhunter.tools.dic.core.match.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.match.component.DicSkipper;
-
-import io.github.kylinhunter.commons.component.CF;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzer;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,8 +24,8 @@ public abstract class AbstractDicMatch implements DicMatch {
 
     public AbstractDicMatch(DictionaryGroup<WordNode> dictionaryGroup) {
         this.dictionaryGroup = dictionaryGroup;
-        this.assistMatchEnabled = dictionaryGroup.getDicConfig().isAssistMatchEnabled();
-        this.analyzer = CF.get(dictionaryGroup.getConfig().getWordAnalyzer().clazz);
+        this.assistMatchEnabled = dictionaryGroup.isAssistMatchEnabled();
+        this.analyzer = dictionaryGroup.getWordAnalyzer();
     }
 
     @Override

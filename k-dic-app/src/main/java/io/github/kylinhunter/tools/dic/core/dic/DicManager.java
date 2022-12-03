@@ -24,7 +24,7 @@ public class DicManager {
      * @date  2022/1/23 1:12
      * @author  BiJi'an
      * @Param dicType
-     * @return com.kylinhunter.nlp.dic.core.loader.Dic
+     * @return io.github.kylinhunter.toolsdic.core.loader.Dic
      */
     public static Dic get(DicType dicType) {
         return get(dicType, true);
@@ -36,7 +36,7 @@ public class DicManager {
      * @author  BiJi'an
      * @Param dicType
      * @Param loadIfNull
-     * @return com.kylinhunter.nlp.dic.core.loader.Dic
+     * @return io.github.kylinhunter.toolsdic.core.loader.Dic
      */
     public static Dic get(DicType dicType, boolean tryInit) {
         Dic dic = dics[dicType.ordinal()];

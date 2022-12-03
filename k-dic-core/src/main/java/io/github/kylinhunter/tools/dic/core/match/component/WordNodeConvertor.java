@@ -20,7 +20,7 @@ public class WordNodeConvertor {
     /**
      * @param analyzer      analyzer
      * @param maxKeywordLen maxKeywordLen
-     * @return com.kylinhunter.nlp.dic.core.dictionary.group.bean.WordNode
+     * @return io.github.kylinhunter.toolsdic.core.dictionary.group.bean.WordNode
      * @title convert
      * @description
      * @author BiJi'an

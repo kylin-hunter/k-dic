@@ -2,6 +2,7 @@ package io.github.kylinhunter.tools.dic.core.dic.common;
 
 import java.util.List;
 
+import io.github.kylinhunter.commons.component.CF;
 import io.github.kylinhunter.tools.dic.core.config.Config;
 import io.github.kylinhunter.tools.dic.core.config.ConfigHelper;
 import io.github.kylinhunter.tools.dic.core.config.DicConfig;
@@ -10,6 +11,7 @@ import io.github.kylinhunter.tools.dic.core.dic.DicLoader;
 import io.github.kylinhunter.tools.dic.core.dic.DicManager;
 import io.github.kylinhunter.tools.dic.core.dic.bean.DicData;
 import io.github.kylinhunter.tools.dic.core.dic.constants.DicType;
+import io.github.kylinhunter.tools.dic.core.dictionary.DictionaryType;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.group.DictionaryGroup;
 import io.github.kylinhunter.tools.dic.core.dictionary.group.bean.HitMode;
@@ -17,9 +19,8 @@ import io.github.kylinhunter.tools.dic.core.match.DicMatch;
 import io.github.kylinhunter.tools.dic.core.match.DicMatchCreator;
 import io.github.kylinhunter.tools.dic.core.match.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.match.component.DicSkipper;
-
-import io.github.kylinhunter.commons.component.CF;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzer;
+import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzerType;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -35,7 +36,7 @@ public abstract class AbstractDicLoader implements DicLoader {
     /**
      * @param dicType  dicType
      * @param dicDatas dicDatas
-     * @return com.kylinhunter.nlp.Config.core.dictionary.group.DictionaryGroup
+     * @return io.github.kylinhunter.toolsConfig.core.dictionary.group.DictionaryGroup
      * @title createDictionaryGroup
      * @description
      * @author BiJi'an
@@ -43,7 +44,13 @@ public abstract class AbstractDicLoader implements DicLoader {
      */
     public DictionaryGroup<WordNode> createDictionaryGroup(DicType dicType, List<DicData> dicDatas,
                                                            DicConfig dicConfig) {
-        DictionaryGroup<WordNode> dictionaryGroup = new DictionaryGroup<>(config.getDics().get(dicType));
+        WordAnalyzerType wordAnalyzerType = config.getWordAnalyzer();
+        boolean assistMatchEnabled = dicConfig.isAssistMatchEnabled();
+        DictionaryType dictionaryType = config.getDictionaryType();
+        int unclearSkipMaxLen = dicConfig.getUnclearSkipMaxLen();
+
+        DictionaryGroup<WordNode> dictionaryGroup = new DictionaryGroup<>(wordAnalyzerType, assistMatchEnabled,
+                dictionaryType, unclearSkipMaxLen);
         if (dicDatas != null && dicDatas.size() > 0) {
             WordAnalyzer analyzer = CF.get(config.getWordAnalyzer().clazz);
             for (DicData dicData : dicDatas) {
@@ -77,7 +84,7 @@ public abstract class AbstractDicLoader implements DicLoader {
 
     /**
      * @param dicType dicType
-     * @return java.util.List<com.kylinhunter.nlp.Config.core.loader.bean.DicData>
+     * @return java.util.List<io.github.kylinhunter.toolsConfig.core.loader.bean.DicData>
      * @title loadDicData
      * @description
      * @author BiJi'an
@@ -87,7 +94,7 @@ public abstract class AbstractDicLoader implements DicLoader {
 
     /**
      * @param dicType dicType
-     * @return com.kylinhunter.nlp.Config.core.Config.DicMatch
+     * @return io.github.kylinhunter.toolsConfig.core.Config.DicMatch
      * @title load
      * @description
      * @author BiJi'an
@@ -113,7 +120,7 @@ public abstract class AbstractDicLoader implements DicLoader {
     /**
      * @param dicType  dicType
      * @param dicDatas dicDatas
-     * @return com.kylinhunter.nlp.Config.core.Config.DicMatch
+     * @return io.github.kylinhunter.toolsConfig.core.Config.DicMatch
      * @title createDic
      * @description
      * @author BiJi'an

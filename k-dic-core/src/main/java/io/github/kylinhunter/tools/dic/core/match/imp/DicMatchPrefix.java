@@ -115,7 +115,7 @@ public class DicMatchPrefix extends AbstractDicMatch implements DicMatch {
      * @param oriText
      * @param dictionarySearch
      * @param wordNode
-     * @return com.kylinhunter.nlp.dic.core.match.bean.MatchResult
+     * @return io.github.kylinhunter.toolsdic.core.match.bean.MatchResult
      * @throws
      * @title tryGetMatchResult
      * @description

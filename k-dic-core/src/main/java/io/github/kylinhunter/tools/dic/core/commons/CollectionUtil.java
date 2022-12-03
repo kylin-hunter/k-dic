@@ -1,4 +1,4 @@
-package io.github.kylinhunter.tools.dic.core.dic.common;
+package io.github.kylinhunter.tools.dic.core.commons;
 
 import java.util.List;
 

@@ -23,7 +23,7 @@ public class DicMatchHelper {
     /**
      * @param dictionarySearch
      * @param wordNode
-     * @return com.kylinhunter.nlp.dic.core.match.bean.MatchResult
+     * @return io.github.kylinhunter.toolsdic.core.match.bean.MatchResult
      * @throws
      * @title toMatchResult
      * @description
@@ -68,7 +68,7 @@ public class DicMatchHelper {
      * @param start
      * @param len
      * @param matchContext
-     * @return java.util.List<com.kylinhunter.nlp.dic.core.match.bean.DictionarySearch>
+     * @return java.util.List<io.github.kylinhunter.toolsdic.core.match.bean.DictionarySearch>
      * @throws
      * @title add
      * @description

@@ -33,7 +33,7 @@ public class Trie<T> {
 
     /**
      * @param character character
-     * @return com.kylinhunter.nlp.Config.core.Config.single.trie.TrieNode<T>
+     * @return io.github.kylinhunter.toolsConfig.core.Config.single.trie.TrieNode<T>
      * @title addRootNode
      * @description
      * @author BiJi'an
@@ -55,7 +55,7 @@ public class Trie<T> {
 
     /**
      * @param character character
-     * @return com.kylinhunter.nlp.Config.core.Config.single.trie.TrieNode<T>
+     * @return io.github.kylinhunter.toolsConfig.core.Config.single.trie.TrieNode<T>
      * @title getRootNode
      * @description
      * @author BiJi'an
@@ -214,7 +214,7 @@ public class Trie<T> {
 
     /**
      * @param item item
-     * @return com.kylinhunter.nlp.Config.core.Config.single.trie.TrieNode<T>
+     * @return io.github.kylinhunter.toolsConfig.core.Config.single.trie.TrieNode<T>
      * @title getNode
      * @description
      * @author BiJi'an

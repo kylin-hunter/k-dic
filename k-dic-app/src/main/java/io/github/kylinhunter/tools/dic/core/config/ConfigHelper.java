@@ -21,7 +21,7 @@ public class ConfigHelper {
     private static Config config;
 
     /**
-     * @return com.kylinhunter.nlp.dic.core.config.Config
+     * @return io.github.kylinhunter.toolsdic.core.config.Config
      * @title load
      * @description
      * @author BiJi'an
@@ -51,7 +51,7 @@ public class ConfigHelper {
      * @date  2022/1/23 22:32
      * @author  BiJi'an
      * @Param
-     * @return com.kylinhunter.nlp.dic.core.config.Config
+     * @return io.github.kylinhunter.toolsdic.core.config.Config
      */
     public static Config init() {
         try {
