@@ -1,4 +1,6 @@
 rootProject.name = 'k-dic'
 include 'k-dic-core'
 include 'k-dic-words'
+include 'k-dic-app'
+
 
