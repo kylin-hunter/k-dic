@@ -11,7 +11,7 @@ import io.github.kylinhunter.commons.component.CF;
 class PinyinServiceTest {
     @Test
     public void testBasic() {
-        PinyinService service = CF.get(PinyinServiceBasic.class);
+        PinyinService service = CF.get(PinyinType.BASIC);
 
         String str = "毕继安";
         String pinyin = service.toPinyin(str);
@@ -42,13 +42,13 @@ class PinyinServiceTest {
 
     @Test
     public void testWithTone() {
-        PinyinService service = CF.get(PinyinServiceWithTone.class);
+        PinyinService service = CF.get(PinyinType.WITH_TONE);
 
         String str = "毕继安";
         String pinyin = service.toPinyin(str);
         System.out.println(str + ":" + pinyin);
         assertEquals("bi4ji4an1", pinyin);
-        service = CF.get(PinyinServiceWithTone.class);
+        service = CF.get(PinyinType.WITH_TONE);
         str = "女";
         pinyin = service.toPinyin(str.charAt(0));
         System.out.println(str.charAt(0) + ":" + pinyin);
@@ -72,7 +72,7 @@ class PinyinServiceTest {
 
     @Test
     public void testWithTonePrint() {
-        PinyinService service = CF.get(PinyinServiceWithTonePrint.class);
+        PinyinService service = CF.get(PinyinType.WITH_TONE_PRINT);
         String str = "毕继安";
         String pinyin = service.toPinyin(str);
         System.out.println(str + ":" + pinyin);

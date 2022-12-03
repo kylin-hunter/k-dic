@@ -1,14 +1,17 @@
 package io.github.kylinhunter.tools.dic.words.pinyin;
 
-import lombok.AllArgsConstructor;
+import io.github.kylinhunter.commons.component.CT;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
-public enum PinyinType {
+@RequiredArgsConstructor
+public enum PinyinType implements CT<PinyinService> {
 
     BASIC(PinyinServiceBasic.class),
     WITH_TONE(PinyinServiceWithTone.class),
     WITH_TONE_PRINT(PinyinServiceWithTonePrint.class);
+
     @Getter
-    public Class<? extends PinyinService> clazz;
+    public final Class<? extends PinyinService> clazz;
+
 }
