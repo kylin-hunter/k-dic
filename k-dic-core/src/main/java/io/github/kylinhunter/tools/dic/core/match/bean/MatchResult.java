@@ -2,6 +2,7 @@ package io.github.kylinhunter.tools.dic.core.match.bean;
 
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
 
+import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,12 +1,10 @@
-package io.github.kylinhunter.tools.dic.core.match;
+package io.github.kylinhunter.tools.dic.app;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.Lists;
 
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
@@ -22,12 +20,12 @@ public class TestDicMatchHelper {
         if (result != null) {
             return result.toArray(new String[0]);
         }
-        return new String[0];
+        return null;
     }
 
     public static List<String> toString(String text, FindLevel findLevel, List<MatchResult> matchResults) {
         System.out.println("************ print start *********************");
-        List<String> matchResultsArr = Lists.newArrayList();
+        List<String> matchResultsArr = null;
         if (text != null) {
             System.out.println("print[" + findLevel + ":] text:" + text.substring(0, Math.min(10, text.length())));
             if (matchResults != null) {

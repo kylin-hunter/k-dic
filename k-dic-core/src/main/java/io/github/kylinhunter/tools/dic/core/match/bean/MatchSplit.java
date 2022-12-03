@@ -1,0 +1,36 @@
+package io.github.kylinhunter.tools.dic.core.match.bean;
+
+import io.github.kylinhunter.commons.util.EnumUtils;
+import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary.MatchContext;
+import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
+import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
+import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
+import lombok.Data;
+
+@Data
+public class MatchSplit {
+
+    private MatchLevel level;
+    private int start;
+    private int end;
+    private String hitWord;
+    private TrieNode<WordNode> node;
+
+    public MatchSplit(String text, int start, int len, MatchContext<WordNode> matchContext) {
+
+        this.start = start;
+        this.end = start + len;
+        this.hitWord = text.substring(start, start + len);
+        this.level = EnumUtils.fromCode(MatchLevel.class, matchContext.matchLevel);
+        this.node = matchContext.node;
+    }
+
+    public MatchSplit(String text, int start, int len, TrieNode<WordNode> node) {
+
+        this.start = start;
+        this.end = start + len;
+        this.hitWord = text.substring(start, start + len);
+        this.level = MatchLevel.NONE;
+        this.node = node;
+    }
+}

@@ -1,8 +1,9 @@
-package io.github.kylinhunter.tools.dic.core.match;
+package io.github.kylinhunter.tools.dic.app;
 
 import java.util.Map;
 
 import com.google.common.collect.Maps;
+
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 
 /**
@@ -36,14 +37,14 @@ public class TestCaseDicMatchPrefix {
                 "0:0:1:北京欢乐大世界:北京欢乐大世界:null",
                 "0:0:1:北京欢乐谷:北京欢乐谷:null",
         };
-        put(text, FindLevel.HIGH, new String[0]);
+        put(text, FindLevel.HIGH, null);
         put(text, FindLevel.HIGH_MIDDLE, expect);
         put(text, FindLevel.HIGH_MIDDLE_LOW, expect);
 
         text = "北**1**";
-        put(text, FindLevel.HIGH, new String[0]);
-        put(text, FindLevel.HIGH_MIDDLE, new String[0]);
-        put(text, FindLevel.HIGH_MIDDLE_LOW, new String[0]);
+        put(text, FindLevel.HIGH, null);
+        put(text, FindLevel.HIGH_MIDDLE, null);
+        put(text, FindLevel.HIGH_MIDDLE_LOW, null);
 
         text = "北京";
         expect = new String[] {
@@ -66,7 +67,7 @@ public class TestCaseDicMatchPrefix {
                 "0:0:4:北京欢乐大世界:北京欢乐大世界:null",
                 "0:0:4:北京欢乐谷:北京欢乐谷:null",
         };
-        put(text, FindLevel.HIGH, new String[0]);
+        put(text, FindLevel.HIGH, null);
         put(text, FindLevel.HIGH_MIDDLE, expect);
         put(text, FindLevel.HIGH_MIDDLE_LOW, expect);
 
@@ -74,8 +75,8 @@ public class TestCaseDicMatchPrefix {
         expect = new String[] {
                 "0:0:7:北京欢乐大世界:北京欢乐大世界:null"
         };
-        put(text, FindLevel.HIGH, new String[0]);
-        put(text, FindLevel.HIGH_MIDDLE, new String[0]);
+        put(text, FindLevel.HIGH, null);
+        put(text, FindLevel.HIGH_MIDDLE, null);
         put(text, FindLevel.HIGH_MIDDLE_LOW, expect);
 
 
@@ -99,7 +100,7 @@ public class TestCaseDicMatchPrefix {
                 "0:2:7:我爱北京欢乐大世界:北京欢乐大世界:null",
                 "0:2:7:我爱北京欢乐谷:北京欢乐谷:null",
         };
-        put(text, FindLevel.HIGH, new String[0]);
+        put(text, FindLevel.HIGH, null);
         put(text, FindLevel.HIGH_MIDDLE, expect);
         put(text, FindLevel.HIGH_MIDDLE_LOW, expect);
 
@@ -107,8 +108,8 @@ public class TestCaseDicMatchPrefix {
         expect = new String[] {
                 "0:2:10:我爱北京欢乐大世界:北京欢乐大世界:null"
         };
-        put(text, FindLevel.HIGH, new String[0]);
-        put(text, FindLevel.HIGH_MIDDLE, new String[0]);
+        put(text, FindLevel.HIGH, null);
+        put(text, FindLevel.HIGH_MIDDLE, null);
         put(text, FindLevel.HIGH_MIDDLE_LOW, expect);
 
 
@@ -120,7 +121,7 @@ public class TestCaseDicMatchPrefix {
     }
 
     public static String[] get(String text, FindLevel findLevel) {
-        return datas.getOrDefault(text + "_" + findLevel,new String[0]);
+        return datas.get(text + "_" + findLevel);
     }
 
 }
