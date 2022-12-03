@@ -2,7 +2,7 @@ package io.github.kylinhunter.tools.dic.core.match.imp;
 
 import java.util.List;
 
-import io.github.kylinhunter.tools.dic.core.commons.CollectionUtil;
+import io.github.kylinhunter.commons.util.CollectionUtils;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.group.DictionaryGroup;
@@ -38,14 +38,14 @@ public abstract class AbstractDicMatch implements DicMatch {
 
                 List<MatchResult> resultHigh = process(text, FindLevel.HIGH, dictionaryGroup.getHigh());
                 List<MatchResult> resultMiddle = process(text, FindLevel.HIGH_MIDDLE, dictionaryGroup.getMiddleLow());
-                return CollectionUtil.merge(resultHigh, resultMiddle);
+                return CollectionUtils.merge(true, resultHigh, resultMiddle);
             }
             case HIGH_MIDDLE_LOW: {
 
                 List<MatchResult> resultHigh = process(text, FindLevel.HIGH, dictionaryGroup.getHigh());
                 List<MatchResult> resultMiddle = process(text, FindLevel.HIGH_MIDDLE, dictionaryGroup.getMiddle());
                 List<MatchResult> resultLow = process(text, FindLevel.HIGH_MIDDLE_LOW, dictionaryGroup.getLow());
-                return CollectionUtil.merge(resultHigh, resultMiddle, resultLow);
+                return CollectionUtils.merge(true, resultHigh, resultMiddle, resultLow);
             }
         }
 

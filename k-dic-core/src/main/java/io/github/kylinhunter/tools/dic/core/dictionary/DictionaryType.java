@@ -1,9 +1,9 @@
 package io.github.kylinhunter.tools.dic.core.dictionary;
 
+import io.github.kylinhunter.commons.component.CT;
 import io.github.kylinhunter.tools.dic.core.dictionary.imp.DictionaryTrie;
-
 import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author BiJi'an
@@ -11,17 +11,11 @@ import lombok.Setter;
  * @date 2022/1/1
  **/
 @SuppressWarnings("ALL")
-public enum DictionaryType {
+@RequiredArgsConstructor
+public enum DictionaryType implements CT<Dictionary> {
     DEFAULT(DictionaryTrie.class),
     TRIE(DictionaryTrie.class);
-
     @Getter
-    @Setter
-    Class<? extends Dictionary> clazz;
-
-    DictionaryType(Class<? extends Dictionary> clazz) {
-
-        this.clazz = clazz;
-    }
+    public final Class<? extends Dictionary> clazz;
 
 }

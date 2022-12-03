@@ -1,8 +1,8 @@
 package io.github.kylinhunter.tools.dic.core.dictionary.group;
 
 import io.github.kylinhunter.commons.component.CF;
+import io.github.kylinhunter.commons.reflect.BeanCreator;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
-import io.github.kylinhunter.tools.dic.core.dictionary.DictionaryCreator;
 import io.github.kylinhunter.tools.dic.core.dictionary.DictionaryType;
 import io.github.kylinhunter.tools.dic.core.dictionary.group.bean.DictionaryNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.group.bean.HitMode;
@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 public class DictionaryGroup<T extends DictionaryNode> {
     private WordAnalyzer wordAnalyzer;
-    private boolean assistMatchEnabled = true;
+    private boolean assistMatchEnabled;
     DictionaryType dictionaryType;
     int unclearSkipMaxLen;
     private Dictionary<T> high;
@@ -37,11 +37,12 @@ public class DictionaryGroup<T extends DictionaryNode> {
         this.assistMatchEnabled = assistMatchEnabled;
         this.dictionaryType = dictionaryType;
         this.unclearSkipMaxLen = unclearSkipMaxLen;
-        high = DictionaryCreator.create(dictionaryType, unclearSkipMaxLen);
-        middle = DictionaryCreator.create(dictionaryType, unclearSkipMaxLen);
-        low = DictionaryCreator.create(dictionaryType, unclearSkipMaxLen);
-        highMiddleLow = DictionaryCreator.create(dictionaryType, unclearSkipMaxLen);
-        middleLow = DictionaryCreator.create(dictionaryType, unclearSkipMaxLen);
+        Class<? extends Dictionary> clazz = dictionaryType.getClazz();
+        high = BeanCreator.createBean(clazz, new Class[] {int.class}, new Object[] {unclearSkipMaxLen});
+        middle = BeanCreator.createBean(clazz, new Class[] {int.class}, new Object[] {unclearSkipMaxLen});
+        low = BeanCreator.createBean(clazz, new Class[] {int.class}, new Object[] {unclearSkipMaxLen});
+        highMiddleLow = BeanCreator.createBean(clazz, new Class[] {int.class}, new Object[] {unclearSkipMaxLen});
+        middleLow = BeanCreator.createBean(clazz, new Class[] {int.class}, new Object[] {unclearSkipMaxLen});
     }
 
     /**

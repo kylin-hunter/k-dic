@@ -25,13 +25,6 @@ public interface Dictionary<T> {
 
     T getValue(String item);
 
-    /**
-     * judge a part of text if a hitWord or not
-     *
-     * @param text   the text for judge
-     * @param start  the start postion of text
-     * @param length the length from start position
-     */
     void match(char[] text, int start, int length, MatchContext<T> matchContext);
 
     void match(String text, MatchContext<T> matchContext);
