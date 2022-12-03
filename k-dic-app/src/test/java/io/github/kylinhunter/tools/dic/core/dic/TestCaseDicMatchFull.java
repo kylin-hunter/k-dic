@@ -1,8 +1,9 @@
-package io.github.kylinhunter.tools.dic.core.match;
+package io.github.kylinhunter.tools.dic.core.dic;
 
 import java.util.Map;
 
 import com.google.common.collect.Maps;
+
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 
 /**

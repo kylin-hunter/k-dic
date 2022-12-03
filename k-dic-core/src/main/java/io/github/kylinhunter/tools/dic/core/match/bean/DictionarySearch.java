@@ -2,7 +2,7 @@ package io.github.kylinhunter.tools.dic.core.match.bean;
 
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.MatchContext;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
-import io.github.kylinhunter.tools.dic.core.dictionary.trie.TrieNode;
+import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
 import io.github.kylinhunter.commons.util.EnumUtils;
 
 import lombok.Data;

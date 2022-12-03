@@ -1,5 +1,5 @@
 
-package io.github.kylinhunter.tools.dic.core.dictionary.trie;
+package io.github.kylinhunter.tools.dic.core.trie;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +60,7 @@ public class TrieStatHelper {
             count += key * value;
             sb.append("there is  ").append(value).append(" slot  whose conflict Num is ").append(key).append("\n");
         }
-        int firstCharIndexSlotNum = Trie.FIRST_CHAR_INDEX_SLOT_NUM;
+        int firstCharIndexSlotNum = trie.getFirstCharIndexSlotNum();
         sb.append("all conflict num:").append(count).append("\n");
         sb.append("usage rate:(").append(firstCharIndexSlotNum - emptySlot).append("/");
         sb.append(firstCharIndexSlotNum).append(")=");

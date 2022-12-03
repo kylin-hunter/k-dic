@@ -4,8 +4,8 @@ package io.github.kylinhunter.tools.dic.core.dictionary.imp;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.MatchContext;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.DictionaryConst;
-import io.github.kylinhunter.tools.dic.core.dictionary.trie.Trie;
-import io.github.kylinhunter.tools.dic.core.dictionary.trie.TrieNode;
+import io.github.kylinhunter.tools.dic.core.trie.Trie;
+import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +30,8 @@ public class DictionaryTrie<T> extends Trie<T> implements Dictionary<T> {
     public void match(String text, MatchContext<T> matchContext) {
         this.match(text.toCharArray(), 0, text.length(), matchContext);
     }
+
+
 
     @Override
     public void match(char[] word, int start, int length, MatchContext<T> matchContext) {

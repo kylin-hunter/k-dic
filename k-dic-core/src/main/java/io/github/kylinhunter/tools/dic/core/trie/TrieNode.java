@@ -1,8 +1,9 @@
 
-package io.github.kylinhunter.tools.dic.core.dictionary.trie;
+package io.github.kylinhunter.tools.dic.core.trie;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class TrieNode<T> {
      * @title getSiblingNum
      * @description
      * @author BiJi'an
-     * @date 2022-01-16 01:58
+     * @date 2022-12-03 18:59
      */
     public int getSiblingNum() {
         TrieNode<T> node = this;
@@ -42,9 +43,12 @@ public class TrieNode<T> {
     }
 
     /**
-     * getChild
-     *
      * @param character character
+     * @return io.github.kylinhunter.tools.dic.core.trie.TrieNode<T>
+     * @title getChild
+     * @description
+     * @author BiJi'an
+     * @date 2022-12-03 18:59
      */
     public TrieNode<T> getChild(char character) {
         int index = Arrays.binarySearch(childrenChar, character);
@@ -55,9 +59,12 @@ public class TrieNode<T> {
     }
 
     /**
-     * addChild
-     *
      * @param childChar childChar
+     * @return io.github.kylinhunter.tools.dic.core.trie.TrieNode<T>
+     * @title addChild
+     * @description
+     * @author BiJi'an
+     * @date 2022-12-03 19:00
      */
     @SuppressWarnings("unchecked")
     public TrieNode<T> addChild(char childChar) {
@@ -100,13 +107,13 @@ public class TrieNode<T> {
 
     @Override
     public String toString() {
-        return "TrieNode{" +
-                "character=" + character +
-                ", terminal=" + terminal +
-                ", sibling=" + sibling +
-                ", childrenChar=" + Arrays.toString(childrenChar) +
-                ", children=" + children.length +
-                ", values=" + values +
-                '}';
+        return new StringJoiner(", ", TrieNode.class.getSimpleName() + "[", "]")
+                .add("character=" + character)
+                .add("terminal=" + terminal)
+                .add("sibling=" + sibling)
+                .add("childrenChar=" + Arrays.toString(childrenChar))
+                .add("children=" + children.length)
+                .add("values=" + values)
+                .toString();
     }
 }

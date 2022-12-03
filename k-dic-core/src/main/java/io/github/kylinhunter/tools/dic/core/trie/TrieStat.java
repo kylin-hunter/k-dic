@@ -1,5 +1,5 @@
 
-package io.github.kylinhunter.tools.dic.core.dictionary.trie;
+package io.github.kylinhunter.tools.dic.core.trie;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,10 +15,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TrieStat {
-    Map<Integer, Integer> wordNums = new HashMap<>();
-    public int count = 0;
+    Map<Integer, Integer> wordLenCounter = new HashMap<>();
+    public int wordNums = 0;
     public int totalLength = 0;
-    public int maxLength;
+    public int wordMaxLen;
 
     /**
      * @param word hitWord
@@ -29,16 +29,16 @@ public class TrieStat {
      */
     public void put(String word) {
         int wordLen = word.length();
-        wordNums.compute(wordLen, (k, v) -> {
+        wordLenCounter.compute(wordLen, (k, v) -> {
             if (v == null) {
                 return 1;
             } else {
                 return v + 1;
             }
         });
-        count++;
-        if (wordLen > maxLength) {
-            maxLength = wordLen;
+        wordNums++;
+        if (wordLen > wordMaxLen) {
+            wordMaxLen = wordLen;
         }
         totalLength += wordLen;
     }
@@ -52,18 +52,18 @@ public class TrieStat {
      */
     public void remove(String word) {
         int wordLen = word.length();
-        wordNums.compute(wordLen, (k, v) -> {
+        wordLenCounter.compute(wordLen, (k, v) -> {
             if (v == null) {
                 return 0;
             } else {
                 return v - 1;
             }
         });
-        count--;
-        if (wordLen == maxLength) {
-            int num = wordNums.get(wordLen);
+        wordNums--;
+        if (wordLen == wordMaxLen) {
+            int num = wordLenCounter.get(wordLen);
             if (num <= 0) {
-                maxLength--;
+                wordMaxLen--;
             }
         }
         totalLength -= word.length();
@@ -72,10 +72,10 @@ public class TrieStat {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n count:").append(count).append(",maxLength:").append(maxLength).append("\n");
-        wordNums.forEach((key, value) -> sb.append("hitWord with length(").append(key).append(")  :")
+        sb.append("\n wordNums:").append(wordNums).append(",curMaxLength:").append(wordMaxLen).append("\n");
+        wordLenCounter.forEach((key, value) -> sb.append("hitWord with length(").append(key).append(")  :")
                 .append(value).append("\n"));
-        sb.append("hitWord average length:").append((float) totalLength / count).append("\n");
+        sb.append("hitWord average length:").append((float) totalLength / wordNums).append("\n");
         return sb.toString();
     }
 

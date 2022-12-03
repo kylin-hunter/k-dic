@@ -1,4 +1,4 @@
-package io.github.kylinhunter.tools.dic.core.match;
+package io.github.kylinhunter.tools.dic.core.dic;
 
 import java.util.Arrays;
 import java.util.Collections;

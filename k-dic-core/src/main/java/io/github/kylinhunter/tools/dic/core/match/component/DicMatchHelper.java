@@ -2,16 +2,16 @@ package io.github.kylinhunter.tools.dic.core.match.component;
 
 import java.util.List;
 
-import org.apache.commons.compress.utils.Lists;
+import com.google.common.collect.Lists;
 
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.MatchContext;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
-import io.github.kylinhunter.tools.dic.core.dictionary.trie.TrieNode;
 import io.github.kylinhunter.tools.dic.core.match.bean.DictionarySearch;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 import io.github.kylinhunter.tools.dic.core.match.bean.WordNode;
+import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
 
 /**
  * @author BiJi'an
@@ -51,7 +51,7 @@ public class DicMatchHelper {
      * @date 2022-01-28 03:00
      */
     public static int getDefaultMaxScanLen(Dictionary<WordNode> dictionary, FindLevel findLevel) {
-        int maxLength = dictionary.getMaxLength();
+        int maxLength = dictionary.getWordMaxLen();
         if (findLevel == FindLevel.HIGH) {
             return maxLength;
         } else if (findLevel == FindLevel.HIGH_MIDDLE) {

@@ -1,7 +1,7 @@
 package io.github.kylinhunter.tools.dic.core.dictionary.bean;
 
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
-import io.github.kylinhunter.tools.dic.core.dictionary.trie.TrieNode;
+import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
 
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
 import lombok.NoArgsConstructor;

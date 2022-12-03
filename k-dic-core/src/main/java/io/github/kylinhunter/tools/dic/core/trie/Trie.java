@@ -1,5 +1,5 @@
 
-package io.github.kylinhunter.tools.dic.core.dictionary.trie;
+package io.github.kylinhunter.tools.dic.core.trie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,43 +7,46 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * @description 
- * @author  BiJi'an
+ * @author BiJi'an
+ * @description
  * @date 2022/1/1
  **/
-@NoArgsConstructor
 @Getter
 @Setter
 public class Trie<T> {
-    private static final int MAX_WORD_LENGTH = 200;
-    public static final int FIRST_CHAR_INDEX_SLOT_NUM = 24000;
-    @SuppressWarnings("unchecked")
-    private final TrieNode<T>[] firstCharIndex = new TrieNode[FIRST_CHAR_INDEX_SLOT_NUM];
-    private final TrieStat trieStat = new TrieStat();
+    private int wordLenLimit;
+    private int firstCharIndexSlotNum;
+    private TrieNode<T>[] firstCharIndex;
+    private TrieStat trieStat = new TrieStat();
 
-    public TrieNode<T>[] getFirstCharIndex() {
-        return firstCharIndex;
+    public Trie() {
+        this(TireConst.DEFAULT_MAX_WORD_LENGTH, TireConst.DEFAULT_FIRST_CHAR_INDEX_SLOT_NUM);
     }
 
-    private int maxLength = 2;
+    @SuppressWarnings("unchecked")
+    public Trie(int wordLenLimit, int firstCharIndexSlotNum) {
+        this.wordLenLimit = wordLenLimit;
+        this.firstCharIndexSlotNum = firstCharIndexSlotNum;
+        this.firstCharIndex = new TrieNode[firstCharIndexSlotNum];
+
+    }
 
     /**
      * @param character character
-     * @return io.github.kylinhunter.toolsConfig.core.Config.single.trie.TrieNode<T>
+     * @return io.github.kylinhunter.tools.dic.core.trie.TrieNode<T>
      * @title addRootNode
      * @description
      * @author BiJi'an
-     * @date 2022-01-16 02:26
+     * @date 2022-12-03 18:44
      */
     private TrieNode<T> addRootNode(char character) {
         TrieNode<T> rootNode = getRootNode(character);
         if (rootNode == null) {
             rootNode = new TrieNode<>(character);
-            int index = rootNode.getCharacter() % FIRST_CHAR_INDEX_SLOT_NUM;
+            int index = rootNode.getCharacter() % firstCharIndexSlotNum;
             TrieNode<T> existRootNode = firstCharIndex[index];
             if (existRootNode != null) {
                 rootNode.setSibling(existRootNode);
@@ -55,14 +58,14 @@ public class Trie<T> {
 
     /**
      * @param character character
-     * @return io.github.kylinhunter.toolsConfig.core.Config.single.trie.TrieNode<T>
+     * @return io.github.kylinhunter.tools.dic.core.trie.TrieNode<T>
      * @title getRootNode
      * @description
      * @author BiJi'an
-     * @date 2022-01-16 02:26
+     * @date 2022-12-03 18:44
      */
     public TrieNode<T> getRootNode(char character) {
-        int index = character % FIRST_CHAR_INDEX_SLOT_NUM;
+        int index = character % firstCharIndexSlotNum;
         TrieNode<T> trieNode = firstCharIndex[index];
         while (trieNode != null && character != trieNode.getCharacter()) {
             trieNode = trieNode.getSibling();
@@ -72,18 +75,29 @@ public class Trie<T> {
 
     /**
      * @param item item
-     * @param t value
      * @return boolean
      * @title put
      * @description
      * @author BiJi'an
-     * @date 2022-01-16 02:26
+     * @date 2022-12-03 19:17
      */
-    @SuppressWarnings("UnusedReturnValue")
+    public boolean put(String item) {
+        return this.put(item, null);
+    }
+
+    /**
+     * @param item item
+     * @param t    t
+     * @return boolean
+     * @title put
+     * @description
+     * @author BiJi'an
+     * @date 2022-12-03 18:44
+     */
     public boolean put(String item, T t) {
         item = item.trim();
         int len = item.length();
-        if (len < 1 || len > MAX_WORD_LENGTH) {
+        if (len < 1 || len > wordLenLimit) {
             return false;
         }
         TrieNode<T> node = addRootNode(item.charAt(0));
@@ -95,9 +109,6 @@ public class Trie<T> {
             return false;
         }
         node.setTerminal(true);
-        if (len > maxLength) {
-            maxLength = len;
-        }
         trieStat.put(item);
         return true;
 
@@ -105,10 +116,12 @@ public class Trie<T> {
 
     /**
      * @param node node
+     * @param t    t
+     * @return void
      * @title addValue
      * @description
      * @author BiJi'an
-     * @date 2022-01-16 02:29
+     * @date 2022-12-03 18:45
      */
     private void addValue(TrieNode<T> node, T t) {
         if (t != null) {
@@ -127,10 +140,11 @@ public class Trie<T> {
 
     /**
      * @param item item
+     * @return void
      * @title remove
      * @description
      * @author BiJi'an
-     * @date 2022-01-16 02:30
+     * @date 2022-12-03 18:45
      */
     public void remove(String item) {
         TrieNode<T> node = getNode(item);
@@ -148,7 +162,7 @@ public class Trie<T> {
      * @title contains
      * @description
      * @author BiJi'an
-     * @date 2022-01-16 02:46
+     * @date 2022-12-03 18:45
      */
     public boolean contains(String item) {
         TrieNode<T> node = getNode(item);
@@ -158,10 +172,10 @@ public class Trie<T> {
     /**
      * @param item item
      * @return java.util.List<T>
-     * @title get
+     * @title getValues
      * @description
      * @author BiJi'an
-     * @date 2022-01-16 02:47
+     * @date 2022-12-03 18:45
      */
     public List<T> getValues(String item) {
         TrieNode<T> node = getNode(item);
@@ -173,11 +187,11 @@ public class Trie<T> {
 
     /**
      * @param item item
-     * @return java.util.List<T>
-     * @title get
+     * @return T
+     * @title getValue
      * @description
      * @author BiJi'an
-     * @date 2022-01-16 02:47
+     * @date 2022-12-03 18:45
      */
     public T getValue(String item) {
         TrieNode<T> node = getNode(item);
@@ -195,30 +209,30 @@ public class Trie<T> {
      * @title size
      * @description
      * @author BiJi'an
-     * @date 2022-01-16 02:55
+     * @date 2022-12-03 18:45
      */
     public int size() {
-        return trieStat.count;
+        return trieStat.wordNums;
     }
 
     /**
      * @return int
-     * @title getMaxLength
+     * @title getCurMaxLength
      * @description
      * @author BiJi'an
-     * @date 2022-01-16 02:56
+     * @date 2022-12-03 18:48
      */
-    public int getMaxLength() {
-        return trieStat.getMaxLength();
+    public int getWordMaxLen() {
+        return trieStat.getWordMaxLen();
     }
 
     /**
      * @param item item
-     * @return io.github.kylinhunter.toolsConfig.core.Config.single.trie.TrieNode<T>
+     * @return io.github.kylinhunter.tools.dic.core.trie.TrieNode<T>
      * @title getNode
      * @description
      * @author BiJi'an
-     * @date 2022-01-16 02:56
+     * @date 2022-12-03 18:46
      */
     private TrieNode<T> getNode(String item) {
         if (StringUtils.isEmpty(item)) {

@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import io.github.kylinhunter.tools.dic.core.config.ConfigHelper;
-import io.github.kylinhunter.tools.dic.core.config.DicConfig;
-import io.github.kylinhunter.tools.dic.core.dic.constants.DicType;
+import io.github.kylinhunter.commons.component.CF;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.group.DictionaryGroup;
 import io.github.kylinhunter.tools.dic.core.dictionary.group.bean.HitMode;
@@ -19,21 +17,18 @@ import io.github.kylinhunter.tools.dic.core.match.TestCaseDicMatchFull;
 import io.github.kylinhunter.tools.dic.core.match.TestDicMatchHelper;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 import io.github.kylinhunter.tools.dic.core.match.component.WordNodeConvertor;
-
-import io.github.kylinhunter.commons.component.CF;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzer;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzerType;
 
 class DicMatchFullTest {
 
     static WordAnalyzer analyzer = CF.get(WordAnalyzerType.DEFAULT.clazz);
-    static DicConfig dicConfig = ConfigHelper.get().getDics().get(DicType.SENSITIVE);
     static DicMatch dicMatch;
 
     @BeforeAll
     static void init() {
 
-        DictionaryGroup dictionaryGroup = new DictionaryGroup(dicConfig);
+        DictionaryGroup dictionaryGroup = null;
 
         dictionaryGroup.put(WordNodeConvertor.convert(HitMode.HIGH, "北京", "", "", analyzer, 10));
         dictionaryGroup.put(WordNodeConvertor.convert(HitMode.HIGH, "北京海淀", "", "", analyzer, 10));

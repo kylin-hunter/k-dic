@@ -8,7 +8,7 @@ import io.github.kylinhunter.tools.dic.core.dictionary.bean.MatchContext;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.group.DictionaryGroup;
-import io.github.kylinhunter.tools.dic.core.dictionary.trie.TrieNode;
+import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
 import io.github.kylinhunter.tools.dic.core.match.DicMatch;
 import io.github.kylinhunter.tools.dic.core.match.bean.DictionarySearch;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;

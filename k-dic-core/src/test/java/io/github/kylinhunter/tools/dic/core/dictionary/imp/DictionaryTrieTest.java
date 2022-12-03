@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.MatchContext;
-import io.github.kylinhunter.tools.dic.core.dictionary.trie.TrieStatHelper;
+import io.github.kylinhunter.tools.dic.core.trie.TrieStatHelper;
 
 public class DictionaryTrieTest {
 

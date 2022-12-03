@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import io.github.kylinhunter.tools.dic.core.dic.constants.DicType;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
-import io.github.kylinhunter.tools.dic.core.match.TestCaseDicMatchPrefix;
-import io.github.kylinhunter.tools.dic.core.match.TestDicMatchHelper;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 
 class DicTypeCompleteTest {

@@ -1,5 +1,5 @@
 
-package io.github.kylinhunter.tools.dic.core.dictionary.trie;
+package io.github.kylinhunter.tools.dic.core.trie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +14,32 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TrieHelper {
 
+    /**
+     * @param parent  parent
+     * @param maxSize maxSize
+     * @return java.util.List<io.github.kylinhunter.tools.dic.core.trie.TrieNode < T>>
+     * @title prefix
+     * @description
+     * @author BiJi'an
+     * @date 2022-12-03 18:58
+     */
     public static <T> List<TrieNode<T>> prefix(TrieNode<T> parent, int maxSize) {
         List<TrieNode<T>> result = new ArrayList<>();
         TrieHelper.prefix(parent, result, maxSize);
         return result;
     }
 
-    public static <T> void prefix(TrieNode<T> parent, List<TrieNode<T>> result, int maxSize) {
+    /**
+     * @param parent  parent
+     * @param result  result
+     * @param maxSize maxSize
+     * @return void
+     * @title prefix
+     * @description
+     * @author BiJi'an
+     * @date 2022-12-03 18:58
+     */
+    private static <T> void prefix(TrieNode<T> parent, List<TrieNode<T>> result, int maxSize) {
         if (result.size() >= maxSize) {
             return;
         }
