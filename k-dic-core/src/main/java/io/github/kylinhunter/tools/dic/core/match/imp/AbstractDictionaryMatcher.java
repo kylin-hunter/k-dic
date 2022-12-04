@@ -15,27 +15,18 @@ import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzer;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzerType;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
 public abstract class AbstractDictionaryMatcher implements DictionaryMatcher {
-    protected DictionarySkipper dictionarySkipper = CF.get(DictionarySkipper.class);
-    protected DictionaryGroup dictionaryGroup;
-    protected WordAnalyzer analyzer;
-    protected boolean assistMatchEnabled;
+    protected final DictionarySkipper dictionarySkipper;
+    protected DictionaryGroup dictionaryGroup = new DictionaryGroup();
+    protected WordAnalyzer analyzer = CF.get(WordAnalyzerType.DEFAULT);
+    protected boolean assistMatchEnabled = true;
 
-    public AbstractDictionaryMatcher(DictionaryGroup dictionaryGroup, WordAnalyzerType wordAnalyzerType) {
-        this(dictionaryGroup, wordAnalyzerType, true);
-    }
-
-    public AbstractDictionaryMatcher(DictionaryGroup dictionaryGroup, WordAnalyzerType wordAnalyzerType,
-                                     boolean assistMatchEnabled) {
-        this.dictionaryGroup = dictionaryGroup;
-        this.analyzer = CF.get(wordAnalyzerType);
-        this.assistMatchEnabled = assistMatchEnabled;
-
-    }
 
     @Override
     public List<MatchResult> match(String text, FindLevel findLevel) {
@@ -63,6 +54,18 @@ public abstract class AbstractDictionaryMatcher implements DictionaryMatcher {
         }
         return result != null ? result : Collections.EMPTY_LIST;
 
+    }
+
+    /**
+     * @param wordNode wordNode
+     * @return void
+     * @title addWord
+     * @description
+     * @author BiJi'an
+     * @date 2022-12-04 19:57
+     */
+    public void addWord(WordNode wordNode) {
+        this.dictionaryGroup.put(wordNode);
     }
 
     protected abstract List<MatchResult> process(String text, FindLevel high, Dictionary<WordNode> dictionary);

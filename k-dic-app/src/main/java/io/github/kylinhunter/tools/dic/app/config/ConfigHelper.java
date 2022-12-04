@@ -89,7 +89,7 @@ public class ConfigHelper {
         }
         config.getDics().forEach((dicType, dicConfig) -> {
             dicConfig.setType(dicType);
-            dicConfig.setDictionaryMatcherType(dicType.getDictionaryMatcherType());
+            dicConfig.setMatcherType(dicType.getMatcherType());
         });
     }
 }

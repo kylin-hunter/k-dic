@@ -1,7 +1,7 @@
 package io.github.kylinhunter.tools.dic.app.config;
 
 import io.github.kylinhunter.tools.dic.app.constants.DicType;
-import io.github.kylinhunter.tools.dic.core.match.DictionaryMatcherType;
+import io.github.kylinhunter.tools.dic.core.match.MatcherType;
 
 import lombok.Data;
 
@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class DicConfig {
     private DicType type;
-    private DictionaryMatcherType dictionaryMatcherType;
+    private MatcherType matcherType;
     private boolean assistMatchEnabled = true;
     private int wordMaxLen = 10;
     private int unclearSkipMaxLen = 2;

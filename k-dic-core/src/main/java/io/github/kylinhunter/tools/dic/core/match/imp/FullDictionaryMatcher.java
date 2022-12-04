@@ -3,19 +3,19 @@ package io.github.kylinhunter.tools.dic.core.match.imp;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.kylinhunter.commons.component.C;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary.MatchContext;
-import io.github.kylinhunter.tools.dic.core.dictionary.DictionaryGroup;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.DicConst;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
+import io.github.kylinhunter.tools.dic.core.dictionary.helper.DictionarySkipper;
 import io.github.kylinhunter.tools.dic.core.match.DictionaryMatcher;
-import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchFrag;
+import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 import io.github.kylinhunter.tools.dic.core.match.helper.DictionaryMatchHelper;
 import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
-import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzerType;
 import io.github.kylinhunter.tools.dic.words.analyzer.bean.Word;
 import io.github.kylinhunter.tools.dic.words.analyzer.bean.Words;
 import lombok.Getter;
@@ -23,10 +23,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@C
 public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements DictionaryMatcher {
 
-    public FullDictionaryMatcher(DictionaryGroup dictionaryGroup, WordAnalyzerType wordAnalyzerType) {
-        super(dictionaryGroup, wordAnalyzerType);
+    public FullDictionaryMatcher(DictionarySkipper dictionarySkipper) {
+        super(dictionarySkipper);
     }
 
     @SuppressWarnings("CommentedOutCode")
@@ -118,10 +119,10 @@ public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements 
     }
 
     /**
-     * @param text       text
+     * @param text      text
      * @param matchFrag matchFrag
-     * @param wordNode   wordNode
-     * @param textWords  textWords
+     * @param wordNode  wordNode
+     * @param textWords textWords
      * @return io.github.kylinhunter.toolsdic.core.match.bean.MatchResult
      * @title tryGetFindResultFull
      * @description

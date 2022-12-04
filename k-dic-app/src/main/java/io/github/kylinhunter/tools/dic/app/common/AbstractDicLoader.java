@@ -17,7 +17,6 @@ import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.HitMode;
 import io.github.kylinhunter.tools.dic.core.dictionary.helper.DictionarySkipper;
 import io.github.kylinhunter.tools.dic.core.match.DictionaryMatcher;
-import io.github.kylinhunter.tools.dic.core.match.DictionaryMatcherFactory;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzer;
 import lombok.extern.slf4j.Slf4j;
 
@@ -70,7 +69,7 @@ public abstract class AbstractDicLoader implements DicLoader {
 
         WordNode wordNode = DicDataHelper.convert(dicData, analyzer, maxKeywordLen);
         if (wordNode != null) {
-            dictionaryGroup.put(wordNode);
+            dictionaryMatcher.addWord(wordNode);
             if (HitMode.HIGH == wordNode.getHitMode()) {
                 dictionarySkipper.remove(FindLevel.HIGH, wordNode.getKeyword());
             }
@@ -125,7 +124,7 @@ public abstract class AbstractDicLoader implements DicLoader {
     private DictionaryMatcher createDicMatch(DicType dicType, List<DicData> dicDatas, DicConfig dicConfig) {
         DictionaryGroup dictionaryGroup = createDictionaryGroup(dicType, dicDatas, dicConfig);
 
-        DictionaryMatcher dictionaryMatcher = DictionaryMatcherFactory.create(dicType.getDictionaryMatcherType(),
+        DictionaryMatcher dictionaryMatcher = MatcherFactory.create(dicType.getMatcherType(),
                 dictionaryGroup, config.getWordAnalyzer());
         log.info("createDic success,dicData'size={}", dicDatas.size());
         return dictionaryMatcher;

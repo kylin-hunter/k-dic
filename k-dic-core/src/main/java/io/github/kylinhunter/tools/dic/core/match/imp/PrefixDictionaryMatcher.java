@@ -3,28 +3,28 @@ package io.github.kylinhunter.tools.dic.core.match.imp;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.kylinhunter.commons.component.C;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary.MatchContext;
-import io.github.kylinhunter.tools.dic.core.dictionary.DictionaryGroup;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.DicConst;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
+import io.github.kylinhunter.tools.dic.core.dictionary.helper.DictionarySkipper;
 import io.github.kylinhunter.tools.dic.core.match.DictionaryMatcher;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchFrag;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 import io.github.kylinhunter.tools.dic.core.match.helper.DictionaryMatchHelper;
 import io.github.kylinhunter.tools.dic.core.trie.TrieHelper;
 import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
-import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzerType;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@C
 public class PrefixDictionaryMatcher extends AbstractDictionaryMatcher implements DictionaryMatcher {
-
-    public PrefixDictionaryMatcher(DictionaryGroup dictionaryGroup, WordAnalyzerType wordAnalyzerType) {
-        super(dictionaryGroup, wordAnalyzerType);
+    public PrefixDictionaryMatcher(DictionarySkipper dictionarySkipper) {
+        super(dictionarySkipper);
     }
 
     @SuppressWarnings("CommentedOutCode")
@@ -108,9 +108,9 @@ public class PrefixDictionaryMatcher extends AbstractDictionaryMatcher implement
     }
 
     /**
-     * @param oriText    oriText
+     * @param oriText   oriText
      * @param matchFrag matchFrag
-     * @param wordNode   wordNode
+     * @param wordNode  wordNode
      * @return io.github.kylinhunter.toolsdic.core.match.bean.MatchResult
      * @title tryGetMatchResult
      * @description

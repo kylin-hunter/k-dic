@@ -5,9 +5,12 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import io.github.kylinhunter.commons.component.CF;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.HitMode;
+import io.github.kylinhunter.tools.dic.core.trie.TireConst;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzer;
+import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzerType;
 import io.github.kylinhunter.tools.dic.words.analyzer.bean.Words;
 
 /**
@@ -16,6 +19,13 @@ import io.github.kylinhunter.tools.dic.words.analyzer.bean.Words;
  * @date 2022/12/4
  **/
 public class WordNodeConvertor {
+    private static WordAnalyzer wordAnalyzer = CF.get(WordAnalyzerType.DEFAULT);
+
+    public static WordNode convert(HitMode hitMode, String keyword, String assistedKeywords, String targetWords) {
+
+        return convert(hitMode, keyword, assistedKeywords, targetWords, wordAnalyzer,
+                TireConst.DEFAULT_MAX_WORD_LENGTH);
+    }
 
     /**
      * @param analyzer      analyzer
@@ -26,18 +36,18 @@ public class WordNodeConvertor {
      * @author BiJi'an
      * @date 2022-01-24 23:55
      */
-    public static WordNode convert(HitMode hitMode, String words, String assistedKeywords, String targetWords,
+    public static WordNode convert(HitMode hitMode, String keyword, String assistedKeywords, String targetWords,
                                    WordAnalyzer analyzer,
                                    int maxKeywordLen) {
-        if (!StringUtils.isEmpty(words)) {
-            words = words.trim();
+        if (!StringUtils.isEmpty(keyword)) {
+            keyword = keyword.trim();
 
             WordNode wordNode = new WordNode();
             wordNode.setHitMode(hitMode);
 
-            if (words.length() > 0 && words.length() <= maxKeywordLen) {
-                wordNode.setKeyword(words);
-                wordNode.setAnalyzedKeywords(analyzer.analyze(words));
+            if (keyword.length() > 0 && keyword.length() <= maxKeywordLen) {
+                wordNode.setKeyword(keyword);
+                wordNode.setAnalyzedKeywords(analyzer.analyze(keyword));
 
                 List<String> assistWordsList = new ArrayList<>();
                 List<Words> assistWordsSplitList = new ArrayList<>();

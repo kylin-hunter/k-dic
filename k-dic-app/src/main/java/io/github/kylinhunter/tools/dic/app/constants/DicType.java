@@ -4,7 +4,7 @@ import io.github.kylinhunter.tools.dic.app.excel.DicDataReader;
 import io.github.kylinhunter.tools.dic.app.excel.DicDataReaderForComplete;
 import io.github.kylinhunter.tools.dic.app.excel.DicDataReaderForPinyin;
 import io.github.kylinhunter.tools.dic.app.excel.DicDataReaderForSensitive;
-import io.github.kylinhunter.tools.dic.core.match.DictionaryMatcherType;
+import io.github.kylinhunter.tools.dic.core.match.MatcherType;
 
 import lombok.Getter;
 
@@ -14,25 +14,25 @@ import lombok.Getter;
  * @date 2022-01-01 15:10
  **/
 public enum DicType {
-    SENSITIVE(1, DictionaryMatcherType.FULL, "/k-dic-default/k-dic-sensitive-default.xlsx", DicDataReaderForSensitive.class),
-    COMPLETE(2, DictionaryMatcherType.PREFIX, "/k-dic-default/k-dic-complete-default.xlsx", DicDataReaderForComplete.class),
-    PINYIN(3, DictionaryMatcherType.FULL, "/config/dic/pinyin.txt", DicDataReaderForPinyin.class),
-    ASSOCIATE(4, DictionaryMatcherType.FULL, "/config/dic/associate.txt", null),
-    SYNONYM(5, DictionaryMatcherType.FULL, "/config/dic/synonym.txt", null),
-    PROFESSIONAL(6, DictionaryMatcherType.FULL, "/config/dic/professional.txt", null),
-    CORRECTION(7, DictionaryMatcherType.FULL, "/config/dic/correction.txt", null);
+    SENSITIVE(1, MatcherType.FULL, "/k-dic-default/k-dic-sensitive-default.xlsx", DicDataReaderForSensitive.class),
+    COMPLETE(2, MatcherType.PREFIX, "/k-dic-default/k-dic-complete-default.xlsx", DicDataReaderForComplete.class),
+    PINYIN(3, MatcherType.FULL, "/config/dic/pinyin.txt", DicDataReaderForPinyin.class),
+    ASSOCIATE(4, MatcherType.FULL, "/config/dic/associate.txt", null),
+    SYNONYM(5, MatcherType.FULL, "/config/dic/synonym.txt", null),
+    PROFESSIONAL(6, MatcherType.FULL, "/config/dic/professional.txt", null),
+    CORRECTION(7, MatcherType.FULL, "/config/dic/correction.txt", null);
 
     private final int code;
 
     @Getter
-    private DictionaryMatcherType dictionaryMatcherType;
+    private MatcherType matcherType;
     @Getter
     private final String path;
     @Getter
     public Class<? extends DicDataReader> clazz;
 
-    DicType(int code, DictionaryMatcherType dictionaryMatcherType, String path, Class<? extends DicDataReader> clazz) {
-        this.dictionaryMatcherType = dictionaryMatcherType;
+    DicType(int code, MatcherType matcherType, String path, Class<? extends DicDataReader> clazz) {
+        this.matcherType = matcherType;
         this.code = code;
         this.path = path;
         this.clazz = clazz;
