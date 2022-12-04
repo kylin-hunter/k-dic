@@ -3,7 +3,7 @@ package io.github.kylinhunter.tools.dic.app.common;
 import java.util.List;
 
 import io.github.kylinhunter.commons.component.CF;
-import io.github.kylinhunter.tools.dic.app.DicAPP;
+import io.github.kylinhunter.tools.dic.app.Dic;
 import io.github.kylinhunter.tools.dic.app.DicLoader;
 import io.github.kylinhunter.tools.dic.app.DicManager;
 import io.github.kylinhunter.tools.dic.app.bean.DicData;
@@ -105,10 +105,10 @@ public abstract class AbstractDicLoader implements DicLoader {
 
     @Override
     public void reload(DicType dicType) {
-        DicAPP dicAPPWrapper = DicManager.get(dicType, false);
-        if (dicAPPWrapper != null) {
+        Dic dicWrapper = DicManager.get(dicType, false);
+        if (dicWrapper != null) {
             DictionaryMatcher dictionaryMatcher = this.load(dicType);
-            dicAPPWrapper.setDictionaryMatcher(dictionaryMatcher);
+            dicWrapper.setDictionaryMatcher(dictionaryMatcher);
         }
     }
 

@@ -3,13 +3,11 @@ package io.github.kylinhunter.tools.dic.core.match.imp;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.kylinhunter.commons.component.C;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary.MatchContext;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.DicConst;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
-import io.github.kylinhunter.tools.dic.core.dictionary.helper.DictionarySkipper;
 import io.github.kylinhunter.tools.dic.core.match.DictionaryMatcher;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchFrag;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
@@ -21,11 +19,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@C
 public class PrefixDictionaryMatcher extends AbstractDictionaryMatcher implements DictionaryMatcher {
-    public PrefixDictionaryMatcher(DictionarySkipper dictionarySkipper) {
-        super(dictionarySkipper);
-    }
 
     @SuppressWarnings("CommentedOutCode")
     public List<MatchResult> process(String text, FindLevel findLevel, Dictionary<WordNode> dictionary) {

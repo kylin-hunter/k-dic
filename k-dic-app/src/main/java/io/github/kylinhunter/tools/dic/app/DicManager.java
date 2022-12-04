@@ -16,7 +16,7 @@ import lombok.Data;
  */
 @Data
 public class DicManager {
-    protected static DicAPP[] dicAPPS = new DicAPP[DicType.values().length];
+    protected static Dic[] dics = new Dic[DicType.values().length];
     protected static Config config = ConfigHelper.get();
 
     /*
@@ -24,9 +24,9 @@ public class DicManager {
      * @date  2022/1/23 1:12
      * @author  BiJi'an
      * @Param dicType
-     * @return io.github.kylinhunter.toolsdic.core.loader.DicAPP
+     * @return io.github.kylinhunter.toolsdic.core.loader.Dic
      */
-    public static DicAPP get(DicType dicType) {
+    public static Dic get(DicType dicType) {
         return get(dicType, true);
     }
 
@@ -36,25 +36,25 @@ public class DicManager {
      * @author  BiJi'an
      * @Param dicType
      * @Param loadIfNull
-     * @return io.github.kylinhunter.toolsdic.core.loader.DicAPP
+     * @return io.github.kylinhunter.toolsdic.core.loader.Dic
      */
-    public static DicAPP get(DicType dicType, boolean tryInit) {
-        DicAPP dicAPP = dicAPPS[dicType.ordinal()];
-        if (dicAPP == null && tryInit) {
+    public static Dic get(DicType dicType, boolean tryInit) {
+        Dic dic = dics[dicType.ordinal()];
+        if (dic == null && tryInit) {
             synchronized(DicManager.class) {
-                dicAPP = dicAPPS[dicType.ordinal()];
-                if (dicAPP == null) {
+                dic = dics[dicType.ordinal()];
+                if (dic == null) {
                     LoadConfig loadConfig = config.getLoad();
                     if (loadConfig.getSource() == LoadSource.LOCAL) {
-                        dicAPP = new DicAPP(LocalDicLoader.getInstance().load(dicType));
+                        dic = new Dic(LocalDicLoader.getInstance().load(dicType));
                     } else {
-                        dicAPP = new DicAPP(DBDicLoader.getInstance().load(dicType));
+                        dic = new Dic(DBDicLoader.getInstance().load(dicType));
                     }
 
-                    dicAPPS[dicType.ordinal()] = dicAPP;
+                    dics[dicType.ordinal()] = dic;
                 }
             }
         }
-        return dicAPP;
+        return dic;
     }
 }

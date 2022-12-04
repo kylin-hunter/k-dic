@@ -17,7 +17,7 @@ import java.util.List;
  */
 @AllArgsConstructor
 @Data
-public class DicAPP {
+public class Dic {
     private DictionaryMatcher dictionaryMatcher;
 
     public List<MatchResult> match(String inputText, FindLevel findLevel) {

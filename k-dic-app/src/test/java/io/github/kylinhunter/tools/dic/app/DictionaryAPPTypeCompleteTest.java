@@ -12,11 +12,11 @@ import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 
 class DictionaryAPPTypeCompleteTest {
 
-    static DicAPP dicAPP;
+    static Dic dic;
 
     @BeforeAll
     static void init() {
-        dicAPP = DicManager.get(DicType.COMPLETE);
+        dic = DicManager.get(DicType.COMPLETE);
     }
 
     @Test
@@ -25,42 +25,42 @@ class DictionaryAPPTypeCompleteTest {
         String text = "北";
         FindLevel findLevel = FindLevel.HIGH;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         text = "北**";
 
         findLevel = FindLevel.HIGH;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         text = "北**1**";
         findLevel = FindLevel.HIGH;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
     }
 
@@ -71,43 +71,43 @@ class DictionaryAPPTypeCompleteTest {
 
         FindLevel findLevel = FindLevel.HIGH;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         text = "北**京";
 
         findLevel = FindLevel.HIGH;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         text = "北**1**京";
 
         findLevel = FindLevel.HIGH;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
     }
 
@@ -117,41 +117,41 @@ class DictionaryAPPTypeCompleteTest {
         String text = "我爱北京欢";
         FindLevel findLevel = FindLevel.HIGH;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         text = "我爱北京**欢";
         findLevel = FindLevel.HIGH;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         text = "我爱北京**1**欢";
         findLevel = FindLevel.HIGH;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
         Assertions.assertArrayEquals(TestCaseDicMatchPrefix.get(text, findLevel),
-                TestDicMatchHelper.toStringArr(text, findLevel, dicAPP.match(text, findLevel)));
+                TestDicMatchHelper.toStringArr(text, findLevel, dic.match(text, findLevel)));
 
     }
 
@@ -159,19 +159,19 @@ class DictionaryAPPTypeCompleteTest {
     void processNull() {
         String text = "我其实很爱";
         FindLevel findLevel = FindLevel.HIGH;
-        List<MatchResult> matchResults = dicAPP.match(text, findLevel);
+        List<MatchResult> matchResults = dic.match(text, findLevel);
         List<String> resultString = TestDicMatchHelper.toString(text, findLevel, matchResults);
         Assertions.assertNull(resultString);
 
         text = "我其实很**爱";
         findLevel = FindLevel.HIGH_MIDDLE;
-        matchResults = dicAPP.match(text, findLevel);
+        matchResults = dic.match(text, findLevel);
         resultString = TestDicMatchHelper.toString(text, findLevel, matchResults);
         Assertions.assertNull(resultString);
 
         text = "我其实很**1**爱";
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
-        matchResults = dicAPP.match(text, findLevel);
+        matchResults = dic.match(text, findLevel);
         resultString = TestDicMatchHelper.toString(text, findLevel, matchResults);
         Assertions.assertNull(resultString);
 

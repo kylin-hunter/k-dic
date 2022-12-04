@@ -1,10 +1,5 @@
 dependencies {
     api project(':k-dic-words')
-
-    api(rootProject.dependency_management['pinyin4j']);
-
-
-
 }
 
 jar.enabled = true

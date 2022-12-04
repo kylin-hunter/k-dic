@@ -7,18 +7,15 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import io.github.kylinhunter.commons.component.CF;
-import io.github.kylinhunter.tools.dic.core.dictionary.DictionaryGroup;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.HitMode;
 import io.github.kylinhunter.tools.dic.core.dictionary.helper.WordNodeConvertor;
 import io.github.kylinhunter.tools.dic.core.match.DictionaryMatcher;
-import io.github.kylinhunter.tools.dic.core.match.MatcherType;
 import io.github.kylinhunter.tools.dic.core.match.TestCaseDicMatchPrefix;
 import io.github.kylinhunter.tools.dic.core.match.TestDicMatchHelper;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzer;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzerType;
-import jdk.nashorn.internal.runtime.regexp.joni.MatcherFactory;
 
 class PrefixDictionaryMatcherTest {
 
@@ -28,20 +25,19 @@ class PrefixDictionaryMatcherTest {
     @BeforeAll
     static void init() {
 
-        dictionaryMatcher = CF.get(MatcherType.PREFIX);
+        dictionaryMatcher = new PrefixDictionaryMatcher();
 
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京", "", "", analyzer, 10));
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京人", "", "", analyzer, 10));
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京地铁", "", "", analyzer, 10));
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京欢迎您", "", "", analyzer, 10));
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京欢迎你", "", "", analyzer, 10));
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京欢乐一家亲", "", "", analyzer, 10));
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京海淀", "", "", analyzer, 10));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京", "", ""));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京人", "", ""));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京地铁", "", ""));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京欢迎您", "", ""));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京欢迎你", "", ""));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京欢乐一家亲", "", ""));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京海淀", "", ""));
 
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.MIDDLE, "北京欢乐谷", "", "", analyzer, 10));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.MIDDLE, "北京欢乐谷", "", ""));
 
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.LOW, "北京欢乐大世界", "", "", analyzer, 10));
-
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.LOW, "北京欢乐大世界", "", ""));
 
     }
 

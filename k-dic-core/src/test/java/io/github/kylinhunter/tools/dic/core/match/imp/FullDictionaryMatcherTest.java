@@ -11,13 +11,11 @@ import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.HitMode;
 import io.github.kylinhunter.tools.dic.core.dictionary.helper.WordNodeConvertor;
 import io.github.kylinhunter.tools.dic.core.match.DictionaryMatcher;
-import io.github.kylinhunter.tools.dic.core.match.MatcherType;
 import io.github.kylinhunter.tools.dic.core.match.TestCaseDicMatchFull;
 import io.github.kylinhunter.tools.dic.core.match.TestDicMatchHelper;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzer;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzerType;
-import jdk.nashorn.internal.runtime.regexp.joni.MatcherFactory;
 
 class FullDictionaryMatcherTest {
 
@@ -27,18 +25,17 @@ class FullDictionaryMatcherTest {
     @BeforeAll
     static void init() {
 
-        dictionaryMatcher = CF.get(MatcherType.FULL);
+        dictionaryMatcher = new FullDictionaryMatcher();
 
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京", "", "", analyzer, 10));
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京海淀", "", "", analyzer, 10));
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "河北", "廊坊,张家口", "", analyzer, 10));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京", "", ""));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京海淀", "", ""));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "河北", "廊坊,张家口", ""));
 
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.MIDDLE, "乌鲁木齐", "", "", analyzer, 10));
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.MIDDLE, "呼和浩特", "新疆", "", analyzer, 10));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.MIDDLE, "乌鲁木齐", "", ""));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.MIDDLE, "呼和浩特", "新疆", ""));
 
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.LOW, "上海", "", "", analyzer, 10));
-        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.LOW, "山西", "大同府,阎王寨", "", analyzer, 10));
-
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.LOW, "上海", "", ""));
+        dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.LOW, "山西", "大同府,阎王寨", ""));
 
     }
 

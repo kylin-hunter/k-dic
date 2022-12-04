@@ -12,17 +12,17 @@ import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 
 class DictionaryAPPTypSensitiveTest {
 
-    static DicAPP dicAPP;
+    static Dic dic;
 
     @BeforeAll
     static void init() {
-        dicAPP = DicManager.get(DicType.SENSITIVE);
+        dic = DicManager.get(DicType.SENSITIVE);
     }
 
     @Test
     void processHigh() {
         FindLevel findLevel = FindLevel.HIGH;
-        List<MatchResult> matchResults = dicAPP.match(TestCaseDicMatchFull.text, findLevel);
+        List<MatchResult> matchResults = dic.match(TestCaseDicMatchFull.text, findLevel);
         Assertions.assertArrayEquals(TestCaseDicMatchFull.get(findLevel),
                 TestDicMatchHelper.toStringArr(TestCaseDicMatchFull.text, findLevel, matchResults));
 
@@ -32,7 +32,7 @@ class DictionaryAPPTypSensitiveTest {
     void processHighMiddle() {
 
         FindLevel findLevel = FindLevel.HIGH_MIDDLE;
-        List<MatchResult> matchResults = dicAPP.match(TestCaseDicMatchFull.text, findLevel);
+        List<MatchResult> matchResults = dic.match(TestCaseDicMatchFull.text, findLevel);
         Assertions.assertArrayEquals(TestCaseDicMatchFull.get(findLevel),
                 TestDicMatchHelper.toStringArr(TestCaseDicMatchFull.text, findLevel, matchResults));
     }
@@ -41,7 +41,7 @@ class DictionaryAPPTypSensitiveTest {
     void processHighMiddleLow() {
 
         FindLevel findLevel = FindLevel.HIGH_MIDDLE_LOW;
-        List<MatchResult> matchResults = dicAPP.match(TestCaseDicMatchFull.text, findLevel);
+        List<MatchResult> matchResults = dic.match(TestCaseDicMatchFull.text, findLevel);
         Assertions.assertArrayEquals(TestCaseDicMatchFull.get(findLevel),
                 TestDicMatchHelper.toStringArr(TestCaseDicMatchFull.text, findLevel, matchResults));
 
@@ -50,7 +50,7 @@ class DictionaryAPPTypSensitiveTest {
     @Test
     void processNull() {
         String text = "hello";
-        List<MatchResult> matchResults = dicAPP.match(text, FindLevel.HIGH_MIDDLE_LOW);
+        List<MatchResult> matchResults = dic.match(text, FindLevel.HIGH_MIDDLE_LOW);
         Assertions.assertNull(TestDicMatchHelper.toStringArr(text, FindLevel.HIGH_MIDDLE_LOW, matchResults));
 
     }

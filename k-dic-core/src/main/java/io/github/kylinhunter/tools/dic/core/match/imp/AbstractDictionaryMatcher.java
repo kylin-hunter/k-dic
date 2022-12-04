@@ -22,11 +22,10 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public abstract class AbstractDictionaryMatcher implements DictionaryMatcher {
-    protected final DictionarySkipper dictionarySkipper;
+    protected DictionarySkipper dictionarySkipper = CF.get(DictionarySkipper.class);
     protected DictionaryGroup dictionaryGroup = new DictionaryGroup();
     protected WordAnalyzer wordAnalyzer = CF.get(WordAnalyzerType.DEFAULT);
     protected boolean assistMatchEnabled = true;
-
 
     @Override
     public List<MatchResult> match(String text, FindLevel findLevel) {

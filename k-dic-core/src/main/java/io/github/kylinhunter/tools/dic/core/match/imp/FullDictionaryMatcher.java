@@ -23,12 +23,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@C
 public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements DictionaryMatcher {
 
-    public FullDictionaryMatcher(DictionarySkipper dictionarySkipper) {
-        super(dictionarySkipper);
-    }
+
 
     @SuppressWarnings("CommentedOutCode")
     public List<MatchResult> process(String text, FindLevel findLevel, Dictionary<WordNode> dictionary) {
