@@ -94,7 +94,7 @@ public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements 
     public List<MatchResult> merge(String oriText, List<MatchFrag> matchFrags) {
         if (matchFrags != null && matchFrags.size() > 0) {
             List<MatchResult> matchResults = new ArrayList<>();
-            Words oriSplitWords = analyzer.analyze(oriText);
+            Words oriSplitWords = wordAnalyzer.analyze(oriText);
             for (MatchFrag matchFrag : matchFrags) {
                 //                System.out.println("matchFrag:" + matchFrag);
 

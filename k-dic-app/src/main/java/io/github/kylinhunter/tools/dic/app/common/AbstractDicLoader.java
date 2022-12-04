@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class AbstractDicLoader implements DicLoader {
 
     protected Config config = ConfigHelper.get();
-    protected DictionarySkipper dictionarySkipper=CF.get(DictionarySkipper.class);
+    protected DictionarySkipper dictionarySkipper = CF.get(DictionarySkipper.class);
 
     /**
      * @param dicType  dicType
@@ -69,7 +69,7 @@ public abstract class AbstractDicLoader implements DicLoader {
 
         WordNode wordNode = DicDataHelper.convert(dicData, analyzer, maxKeywordLen);
         if (wordNode != null) {
-            dictionaryMatcher.addWord(wordNode);
+            dictionaryGroup.put(wordNode);
             if (HitMode.HIGH == wordNode.getHitMode()) {
                 dictionarySkipper.remove(FindLevel.HIGH, wordNode.getKeyword());
             }
@@ -122,10 +122,11 @@ public abstract class AbstractDicLoader implements DicLoader {
      * @date 2022-01-01 23:41
      */
     private DictionaryMatcher createDicMatch(DicType dicType, List<DicData> dicDatas, DicConfig dicConfig) {
-        DictionaryGroup dictionaryGroup = createDictionaryGroup(dicType, dicDatas, dicConfig);
 
-        DictionaryMatcher dictionaryMatcher = MatcherFactory.create(dicType.getMatcherType(),
-                dictionaryGroup, config.getWordAnalyzer());
+        DictionaryMatcher dictionaryMatcher = CF.get(dicConfig.getMatcherType());
+        dictionaryMatcher.setWordAnalyzer(CF.get(config.getWordAnalyzer()));
+        dictionaryMatcher.setDictionaryGroup(createDictionaryGroup(dicType, dicDatas, dicConfig));
+
         log.info("createDic success,dicData'size={}", dicDatas.size());
         return dictionaryMatcher;
     }

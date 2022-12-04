@@ -28,7 +28,7 @@ public class WordNodeConvertor {
     }
 
     /**
-     * @param analyzer      analyzer
+     * @param analyzer      wordAnalyzer
      * @param maxKeywordLen maxKeywordLen
      * @return io.github.kylinhunter.toolsdic.core.dictionary.group.bean.WordNode
      * @title convert

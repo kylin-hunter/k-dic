@@ -24,7 +24,7 @@ import lombok.Setter;
 public abstract class AbstractDictionaryMatcher implements DictionaryMatcher {
     protected final DictionarySkipper dictionarySkipper;
     protected DictionaryGroup dictionaryGroup = new DictionaryGroup();
-    protected WordAnalyzer analyzer = CF.get(WordAnalyzerType.DEFAULT);
+    protected WordAnalyzer wordAnalyzer = CF.get(WordAnalyzerType.DEFAULT);
     protected boolean assistMatchEnabled = true;
 
 
