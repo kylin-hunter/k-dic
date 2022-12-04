@@ -1,4 +1,4 @@
-package io.github.kylinhunter.tools.dic.core.match;
+package io.github.kylinhunter.tools.dic.app.imp;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -52,7 +52,7 @@ public class TestDicMatchHelper {
                 });
 
                 matchResultsArr = matchResults.stream()
-                        .map(e -> e.getMatchLevel() + ":" + e.getStart() + ":" + e.getEnd() + ":"
+                        .map(e -> e.getMatchLevel().getCode() + ":" + e.getStart() + ":" + e.getEnd() + ":"
                                 + e.getHitWord() + ":" + e.getHitWordRaw() + ":" + Arrays.toString(e.getAssistedWords()))
                         .collect(Collectors.toList());
 
@@ -71,4 +71,5 @@ public class TestDicMatchHelper {
         return matchResultsArr;
 
     }
+
 }

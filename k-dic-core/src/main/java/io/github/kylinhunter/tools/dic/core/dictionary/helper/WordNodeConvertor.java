@@ -11,7 +11,6 @@ import io.github.kylinhunter.tools.dic.core.dictionary.constant.HitMode;
 import io.github.kylinhunter.tools.dic.core.trie.TireConst;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzer;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzerType;
-import io.github.kylinhunter.tools.dic.words.analyzer.bean.Words;
 
 /**
  * @author BiJi'an
@@ -19,7 +18,7 @@ import io.github.kylinhunter.tools.dic.words.analyzer.bean.Words;
  * @date 2022/12/4
  **/
 public class WordNodeConvertor {
-    private static WordAnalyzer wordAnalyzer = CF.get(WordAnalyzerType.DEFAULT);
+    private static final WordAnalyzer wordAnalyzer = CF.get(WordAnalyzerType.DEFAULT);
 
     public static WordNode convert(HitMode hitMode, String keyword, String assistedKeywords, String targetWords) {
 
@@ -46,23 +45,19 @@ public class WordNodeConvertor {
             wordNode.setHitMode(hitMode);
 
             if (keyword.length() > 0 && keyword.length() <= maxKeywordLen) {
-                wordNode.setKeyword(keyword);
-                wordNode.setAnalyzedKeywords(analyzer.analyze(keyword));
+                wordNode.setWord(keyword);
 
-                List<String> assistWordsList = new ArrayList<>();
-                List<Words> assistWordsSplitList = new ArrayList<>();
                 if (!StringUtils.isEmpty(assistedKeywords)) {
+                    List<String> assistWordsList = new ArrayList<>();
                     assistedKeywords = assistedKeywords.trim();
-
                     for (String assistedKeyword : StringUtils.split(assistedKeywords, ',')) {
                         if (!StringUtils.isEmpty(assistedKeyword) && assistedKeyword.length() <= maxKeywordLen) {
                             assistWordsList.add(assistedKeyword);
-                            assistWordsSplitList.add(analyzer.analyze(assistedKeyword));
+
                         }
                     }
+                    wordNode.setAssistedWords(assistWordsList.toArray(new String[0]));
                 }
-                wordNode.setAssistedKeywords(assistWordsList.toArray(new String[0]));
-                wordNode.setAnalyzedRelatedKeywords(assistWordsSplitList.toArray(new Words[0]));
 
                 if (!StringUtils.isEmpty(targetWords)) {
                     wordNode.setTargetWords(StringUtils.split(targetWords, ','));
@@ -73,4 +68,5 @@ public class WordNodeConvertor {
         }
         return null;
     }
+
 }

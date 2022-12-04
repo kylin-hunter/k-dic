@@ -2,21 +2,21 @@ package io.github.kylinhunter.tools.dic.core.match.bean;
 
 import io.github.kylinhunter.commons.util.EnumUtils;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary.MatchContext;
-import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
+import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
 import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
 import lombok.Data;
 
 @Data
-public class MatchFrag {
+public class MatchFrag<T extends WordNode> {
 
     private MatchLevel level;
     private int start;
     private int end;
     private String hitWord;
-    private TrieNode<WordNode> node;
+    private TrieNode<T> node;
 
-    public MatchFrag(String text, int start, int len, MatchContext<WordNode> matchContext) {
+    public MatchFrag(String text, int start, int len, MatchContext<T> matchContext) {
 
         this.start = start;
         this.end = start + len;
@@ -25,7 +25,7 @@ public class MatchFrag {
         this.node = matchContext.node;
     }
 
-    public MatchFrag(String text, int start, int len, TrieNode<WordNode> node) {
+    public MatchFrag(String text, int start, int len, TrieNode<T> node) {
 
         this.start = start;
         this.end = start + len;

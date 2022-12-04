@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
+import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary.MatchContext;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
@@ -28,9 +29,9 @@ public class DictionaryMatchHelper {
      * @author BiJi'an
      * @date 2022-01-27 02:44
      */
-    public static MatchResult toMatchResult(MatchFrag matchFrag, WordNode wordNode) {
+    public static <T extends WordNode> MatchResult<T> toMatchResult(MatchFrag<T> matchFrag, T wordNode) {
         MatchLevel matchLevel = matchFrag.getLevel();
-        MatchResult matchResult = new MatchResult(wordNode.getType(), wordNode.getClassId(), matchLevel.getCode());
+        MatchResult<T> matchResult = new MatchResult<>(matchLevel);
         matchResult.setHitWord(matchFrag.getHitWord());
         matchResult.setStart(matchFrag.getStart());
         matchResult.setEnd(matchFrag.getEnd());
@@ -47,7 +48,7 @@ public class DictionaryMatchHelper {
      * @author BiJi'an
      * @date 2022-01-28 03:00
      */
-    public static int getDefaultMaxScanLen(Dictionary<WordNode> dictionary, FindLevel findLevel) {
+    public static <T extends WordNode> int getDefaultMaxScanLen(Dictionary<T> dictionary, FindLevel findLevel) {
         int maxLength = dictionary.getWordMaxLen();
         if (findLevel == FindLevel.HIGH) {
             return maxLength;
@@ -71,13 +72,14 @@ public class DictionaryMatchHelper {
      * @author BiJi'an
      * @date 2022-01-28 03:07
      */
-    public static List<MatchFrag> add(List<MatchFrag> datas, String text, int start, int len,
-                                      Dictionary.MatchContext<WordNode> matchContext) {
+    public static <T extends WordNode> List<MatchFrag<T>> add(List<MatchFrag<T>> datas, String text, int start, int len,
+                                                              MatchContext<T> matchContext) {
 
         if (datas == null) {
             datas = Lists.newArrayList();
         }
-        datas.add(new MatchFrag(text, start, len, matchContext));
+
+        datas.add(new MatchFrag<>(text, start, len, matchContext));
         return datas;
 
     }
@@ -94,13 +96,13 @@ public class DictionaryMatchHelper {
      * @author BiJi'an
      * @date 2022-12-04 02:44
      */
-    public static List<MatchFrag> add(List<MatchFrag> datas, String text, int start, int len,
-                                      TrieNode<WordNode> distNode) {
+    public static <T extends WordNode> List<MatchFrag<T>> add(List<MatchFrag<T>> datas, String text, int start, int len,
+                                                              TrieNode<T> distNode) {
 
         if (datas == null) {
             datas = Lists.newArrayList();
         }
-        datas.add(new MatchFrag(text, start, len, distNode));
+        datas.add(new MatchFrag<>(text, start, len, distNode));
         return datas;
 
     }

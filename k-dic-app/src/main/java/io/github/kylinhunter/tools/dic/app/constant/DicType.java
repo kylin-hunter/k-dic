@@ -1,4 +1,4 @@
-package io.github.kylinhunter.tools.dic.core.constant;
+package io.github.kylinhunter.tools.dic.app.constant;
 
 
 import io.github.kylinhunter.tools.dic.core.match.MatchType;

@@ -14,13 +14,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Getter
 @Setter
-public class DictionaryGroup {
+public class DictionaryGroup<T extends WordNode> {
 
-    private Dictionary<WordNode> high;
-    private Dictionary<WordNode> middle;
-    private Dictionary<WordNode> low;
-    private Dictionary<WordNode> highMiddleLow;
-    private Dictionary<WordNode> middleLow;
+    private Dictionary<T> high;
+    private Dictionary<T> middle;
+    private Dictionary<T> low;
+    private Dictionary<T> highMiddleLow;
+    private Dictionary<T> middleLow;
 
     public DictionaryGroup() {
         this(2);
@@ -42,21 +42,21 @@ public class DictionaryGroup {
      * @author BiJi'an
      * @date 2022-12-04 01:43
      */
-    public void put(WordNode wordNode) {
+    public void put(T wordNode) {
         HitMode hitMode = wordNode.getHitMode();
         if (hitMode == HitMode.HIGH) {
-            high.put(wordNode.getKeyword(), wordNode);
-            highMiddleLow.put(wordNode.getKeyword(), wordNode);
+            high.put(wordNode.getWord(), wordNode);
+            highMiddleLow.put(wordNode.getWord(), wordNode);
 
         } else if (hitMode == HitMode.MIDDLE) {
-            middle.put(wordNode.getKeyword(), wordNode);
-            highMiddleLow.put(wordNode.getKeyword(), wordNode);
-            middleLow.put(wordNode.getKeyword(), wordNode);
+            middle.put(wordNode.getWord(), wordNode);
+            highMiddleLow.put(wordNode.getWord(), wordNode);
+            middleLow.put(wordNode.getWord(), wordNode);
 
         } else if (hitMode == HitMode.LOW) {
-            low.put(wordNode.getKeyword(), wordNode);
-            highMiddleLow.put(wordNode.getKeyword(), wordNode);
-            middleLow.put(wordNode.getKeyword(), wordNode);
+            low.put(wordNode.getWord(), wordNode);
+            highMiddleLow.put(wordNode.getWord(), wordNode);
+            middleLow.put(wordNode.getWord(), wordNode);
         }
 
     }

@@ -21,19 +21,18 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements DictionaryMatcher {
-
-
+public class FullDictionaryMatcher<T extends WordNode> extends AbstractDictionaryMatcher<T>
+        implements DictionaryMatcher<T> {
 
     @SuppressWarnings("CommentedOutCode")
-    public List<MatchResult> process(String text, FindLevel findLevel, Dictionary<WordNode> dictionary) {
+    public List<MatchResult<T>> process(String text, FindLevel findLevel, Dictionary<T> dictionary) {
         if (dictionary.size() <= 0 || text == null || text.length() < 1) {
             return null;
         }
         char[] textChars = this.dictionarySkipper.replaceSkipChar(text, findLevel);
 
-        List<MatchFrag> matchFrags = null; // tmp save
-        MatchContext<WordNode> matchContext = new MatchContext<>(findLevel);
+        List<MatchFrag<T>> matchFrags = null; // tmp save
+        MatchContext<T> matchContext = new MatchContext<>(findLevel);
 
         int curLen = textChars.length;
         int start = 0;
@@ -55,13 +54,13 @@ public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements 
                 // (start, start + curScanLen));
 
                 dictionary.match(textChars, start, curScanLen, matchContext);
-                TrieNode<WordNode> node = matchContext.node;
+                TrieNode<T> node = matchContext.node;
                 if (node != null && node.isTerminal()) {
                     matchNum++;
                     if (curScanLen < matchMinLen) {
                         matchMinLen = curScanLen;
                     }
-                    // System.out.println("find node:" + node.getValues().get(0).getKeyword());
+                    // System.out.println("find node:" + node.getValues().get(0).getWord());
                     matchFrags = DictionaryMatchHelper.add(matchFrags, text, start, curScanLen, matchContext);
                 }
                 if (matchNum > 0) {
@@ -86,19 +85,18 @@ public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements 
         return merge(text, matchFrags);
     }
 
-    public List<MatchResult> merge(String oriText, List<MatchFrag> matchFrags) {
+    public List<MatchResult<T>> merge(String oriText, List<MatchFrag<T>> matchFrags) {
         if (matchFrags != null && matchFrags.size() > 0) {
-            List<MatchResult> matchResults = new ArrayList<>();
+            List<MatchResult<T>> matchResults = new ArrayList<>();
             Words oriSplitWords = wordAnalyzer.analyze(oriText);
-            for (MatchFrag matchFrag : matchFrags) {
+            for (MatchFrag<T> matchFrag : matchFrags) {
                 //                System.out.println("matchFrag:" + matchFrag);
+                TrieNode<T> node = matchFrag.getNode();
 
-                TrieNode<WordNode> node = matchFrag.getNode();
-
-                List<WordNode> wordNodes = node.getValues();
+                List<T> wordNodes = node.getValues();
                 if (wordNodes != null && wordNodes.size() > 0) {
-                    for (WordNode wordNode : wordNodes) {
-                        MatchResult matchResult = tryGetMatchResult(oriText, matchFrag, wordNode, oriSplitWords);
+                    for (T wordNode : wordNodes) {
+                        MatchResult<T> matchResult = tryGetMatchResult(oriText, matchFrag, wordNode, oriSplitWords);
                         if (matchResult != null) {
                             matchResults.add(matchResult);
                         }
@@ -124,17 +122,17 @@ public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements 
      * @author BiJi'an
      * @date 2022-01-27 02:44
      */
-    private MatchResult tryGetMatchResult(String text, MatchFrag matchFrag, WordNode wordNode,
-                                          Words textWords) {
+    private MatchResult<T> tryGetMatchResult(String text, MatchFrag<T> matchFrag, T wordNode,
+                                             Words textWords) {
 
         MatchLevel matchLevel = matchFrag.getLevel();
         if (matchLevel == MatchLevel.NONE) {
             return null;
         }
-        MatchResult matchResult = DictionaryMatchHelper.toMatchResult(matchFrag, wordNode);
+        MatchResult<T> matchResult = DictionaryMatchHelper.toMatchResult(matchFrag, wordNode);
 
         if (matchLevel == MatchLevel.HIGH) {
-            Words keywordSplit = wordNode.getAnalyzedKeywords();
+            Words keywordSplit = wordNode.getAnalyzedWords();
             if (keywordSplit != null) {
                 for (Word word : keywordSplit.getWords()) {
                     if (!textWords.contains(word.getText())) {
@@ -145,12 +143,12 @@ public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements 
         }
         if (this.assistMatchEnabled) {
             if (wordNode.hasAssistedKeywords()) {
-                for (String subWord : wordNode.getAssistedKeywords()) {
+                for (String subWord : wordNode.getAssistedWords()) {
                     if (!text.contains(subWord)) {
                         return null;
                     }
                 }
-                matchResult.setAssistWords(wordNode.getAssistedKeywords());
+                matchResult.setAssistedWords(wordNode.getAssistedWords());
             }
         }
         return matchResult;

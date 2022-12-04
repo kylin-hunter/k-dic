@@ -19,7 +19,6 @@ import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzerType;
 
 class FullDictionaryMatcherTest {
 
-    static WordAnalyzer analyzer = CF.get(WordAnalyzerType.DEFAULT.clazz);
     static DictionaryMatcher dictionaryMatcher;
 
     @BeforeAll
