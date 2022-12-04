@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class AbstractDicLoader implements DicLoader {
 
     protected Config config = ConfigHelper.get();
+    protected DictionarySkipper dictionarySkipper=CF.get(DictionarySkipper.class);
 
     /**
      * @param dicType  dicType
@@ -71,7 +72,7 @@ public abstract class AbstractDicLoader implements DicLoader {
         if (wordNode != null) {
             dictionaryGroup.put(wordNode);
             if (HitMode.HIGH == wordNode.getHitMode()) {
-                DictionarySkipper.getInstance().remove(FindLevel.HIGH, wordNode.getKeyword());
+                dictionarySkipper.remove(FindLevel.HIGH, wordNode.getKeyword());
             }
         }
 

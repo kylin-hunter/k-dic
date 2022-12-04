@@ -1,5 +1,6 @@
 package io.github.kylinhunter.tools.dic.core.match.imp;
 
+import java.util.Collections;
 import java.util.List;
 
 import io.github.kylinhunter.commons.component.CF;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class AbstractDictionaryMatcher implements DictionaryMatcher {
-    protected DictionarySkipper dictionarySkipper = DictionarySkipper.getInstance();
+    protected DictionarySkipper dictionarySkipper = CF.get(DictionarySkipper.class);
     protected DictionaryGroup dictionaryGroup;
     protected WordAnalyzer analyzer;
     protected boolean assistMatchEnabled;
@@ -38,26 +39,29 @@ public abstract class AbstractDictionaryMatcher implements DictionaryMatcher {
 
     @Override
     public List<MatchResult> match(String text, FindLevel findLevel) {
+        List<MatchResult> result = null;
         switch (findLevel) {
             case HIGH: {
-                return process(text, FindLevel.HIGH, dictionaryGroup.getHighMiddleLow());
+                result = process(text, FindLevel.HIGH, dictionaryGroup.getHighMiddleLow());
+                break;
             }
             case HIGH_MIDDLE: {
 
                 List<MatchResult> resultHigh = process(text, FindLevel.HIGH, dictionaryGroup.getHigh());
                 List<MatchResult> resultMiddle = process(text, FindLevel.HIGH_MIDDLE, dictionaryGroup.getMiddleLow());
-                return CollectionUtils.merge(true, resultHigh, resultMiddle);
+                result = CollectionUtils.merge(true, resultHigh, resultMiddle);
+                break;
             }
             case HIGH_MIDDLE_LOW: {
 
                 List<MatchResult> resultHigh = process(text, FindLevel.HIGH, dictionaryGroup.getHigh());
                 List<MatchResult> resultMiddle = process(text, FindLevel.HIGH_MIDDLE, dictionaryGroup.getMiddle());
                 List<MatchResult> resultLow = process(text, FindLevel.HIGH_MIDDLE_LOW, dictionaryGroup.getLow());
-                return CollectionUtils.merge(true, resultHigh, resultMiddle, resultLow);
+                result = CollectionUtils.merge(true, resultHigh, resultMiddle, resultLow);
+                break;
             }
         }
-
-        return null;
+        return result != null ? result : Collections.EMPTY_LIST;
 
     }
 

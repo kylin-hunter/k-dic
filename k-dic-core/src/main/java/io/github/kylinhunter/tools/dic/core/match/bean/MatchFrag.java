@@ -8,7 +8,7 @@ import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
 import lombok.Data;
 
 @Data
-public class MatchSplit {
+public class MatchFrag {
 
     private MatchLevel level;
     private int start;
@@ -16,7 +16,7 @@ public class MatchSplit {
     private String hitWord;
     private TrieNode<WordNode> node;
 
-    public MatchSplit(String text, int start, int len, MatchContext<WordNode> matchContext) {
+    public MatchFrag(String text, int start, int len, MatchContext<WordNode> matchContext) {
 
         this.start = start;
         this.end = start + len;
@@ -25,7 +25,7 @@ public class MatchSplit {
         this.node = matchContext.node;
     }
 
-    public MatchSplit(String text, int start, int len, TrieNode<WordNode> node) {
+    public MatchFrag(String text, int start, int len, TrieNode<WordNode> node) {
 
         this.start = start;
         this.end = start + len;

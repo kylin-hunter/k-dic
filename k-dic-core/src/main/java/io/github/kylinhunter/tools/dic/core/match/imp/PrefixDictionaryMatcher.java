@@ -7,11 +7,11 @@ import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary.MatchContext;
 import io.github.kylinhunter.tools.dic.core.dictionary.DictionaryGroup;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
+import io.github.kylinhunter.tools.dic.core.dictionary.constant.DicConst;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
-import io.github.kylinhunter.tools.dic.core.dictionary.helper.DictionarySkipper;
 import io.github.kylinhunter.tools.dic.core.match.DictionaryMatcher;
+import io.github.kylinhunter.tools.dic.core.match.bean.MatchFrag;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
-import io.github.kylinhunter.tools.dic.core.match.bean.MatchSplit;
 import io.github.kylinhunter.tools.dic.core.match.helper.DictionaryMatchHelper;
 import io.github.kylinhunter.tools.dic.core.trie.TrieHelper;
 import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
@@ -33,7 +33,7 @@ public class PrefixDictionaryMatcher extends AbstractDictionaryMatcher implement
             return null;
         }
         char[] textChars = this.dictionarySkipper.replaceSkipChar(text, findLevel);
-        List<MatchSplit> matchSplits = null; // tmp save
+        List<MatchFrag> matchFrags = null; // tmp save
         MatchContext<WordNode> matchContext = new MatchContext<>(findLevel);
         int curLen = textChars.length;
         int end = textChars.length;
@@ -42,7 +42,7 @@ public class PrefixDictionaryMatcher extends AbstractDictionaryMatcher implement
         int curScanLen;
 
         while (curLen > 0) {
-            if (textChars[end - 1] != DictionarySkipper.SPECIAL_CHAR) {
+            if (textChars[end - 1] != DicConst.SKIP_NULL) {
                 scanMax = Math.min(curLen, defaultMaxScanLen);
                 curScanLen = scanMax;
                 while (curScanLen > 0) {
@@ -55,8 +55,8 @@ public class PrefixDictionaryMatcher extends AbstractDictionaryMatcher implement
                         //System.out.println("find node" + node.getCharacter());
                         List<TrieNode<WordNode>> distNodes = TrieHelper.prefix(node, 10);
                         for (TrieNode<WordNode> distNode : distNodes) {
-                            matchSplits =
-                                    DictionaryMatchHelper.add(matchSplits, text, end - curScanLen, curScanLen,
+                            matchFrags =
+                                    DictionaryMatchHelper.add(matchFrags, text, end - curScanLen, curScanLen,
                                             distNode);
                             //for (WordNode wordNode : distNode.getValues()) {
                             // System.out.println(wordNode.getKeyword());
@@ -79,22 +79,22 @@ public class PrefixDictionaryMatcher extends AbstractDictionaryMatcher implement
 
         }
 
-        return merge(text, matchSplits);
+        return merge(text, matchFrags);
     }
 
-    public List<MatchResult> merge(String oriText, List<MatchSplit> matchSplits) {
-        if (matchSplits != null && matchSplits.size() > 0) {
+    public List<MatchResult> merge(String oriText, List<MatchFrag> matchFrags) {
+        if (matchFrags != null && matchFrags.size() > 0) {
             List<MatchResult> matchResults = new ArrayList<>();
-            for (MatchSplit matchSplit : matchSplits) {
-                //                System.out.println("matchSplit:" + matchSplit);
+            for (MatchFrag matchFrag : matchFrags) {
+                //                System.out.println("matchFrag:" + matchFrag);
 
-                TrieNode<WordNode> node = matchSplit.getNode();
+                TrieNode<WordNode> node = matchFrag.getNode();
 
                 List<WordNode> wordNodes = node.getValues();
                 if (wordNodes != null && wordNodes.size() > 0) {
                     for (WordNode wordNode : wordNodes) { // 某一个词可能对应多个分类
 
-                        MatchResult matchResult = tryGetMatchResult(oriText, matchSplit, wordNode);
+                        MatchResult matchResult = tryGetMatchResult(oriText, matchFrag, wordNode);
                         matchResults.add(matchResult);
                     }
                 }
@@ -109,7 +109,7 @@ public class PrefixDictionaryMatcher extends AbstractDictionaryMatcher implement
 
     /**
      * @param oriText    oriText
-     * @param matchSplit matchSplit
+     * @param matchFrag matchFrag
      * @param wordNode   wordNode
      * @return io.github.kylinhunter.toolsdic.core.match.bean.MatchResult
      * @title tryGetMatchResult
@@ -117,9 +117,9 @@ public class PrefixDictionaryMatcher extends AbstractDictionaryMatcher implement
      * @author BiJi'an
      * @date 2022-01-27 02:44
      */
-    private MatchResult tryGetMatchResult(String oriText, MatchSplit matchSplit, WordNode wordNode) {
+    private MatchResult tryGetMatchResult(String oriText, MatchFrag matchFrag, WordNode wordNode) {
 
-        MatchResult matchResult = DictionaryMatchHelper.toMatchResult(matchSplit, wordNode);
+        MatchResult matchResult = DictionaryMatchHelper.toMatchResult(matchFrag, wordNode);
         matchResult.setHitWord(oriText.substring(0, matchResult.getStart()) + wordNode.getKeyword());
         return matchResult;
 

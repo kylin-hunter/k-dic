@@ -8,23 +8,26 @@ import lombok.ToString;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(of = {"type", "classId", "assistWords", "relationWords"}, callSuper = true)
+@ToString(of = {"type", "classId", "assistedKeywords", "targetWords"})
 public class WordNode {
-    protected HitMode hitMode;  // hit mode
+
     @EqualsAndHashCode.Include
     protected String keyword; // key word
     @EqualsAndHashCode.Include
     private int type;
     @EqualsAndHashCode.Include
     private int classId;
-    private String[] assistWords;
-    private String[] relationWords;
 
-    private Words keywordSplit;
-    private Words[] assistWordsSplit;
+    protected HitMode hitMode;  // hit mode
 
-    public boolean hasAssistWords() {
-        return (assistWords != null && assistWords.length > 0);
+    private String[] assistedKeywords;  // the  words for auxiliary judging hit
+    private String[] targetWords; // the targed words
+
+    private Words analyzedKeywords; // the analyzed  words for keyword
+    private Words[] analyzedRelatedKeywords; // the analyzed  words for assistedKeywords
+
+    public boolean hasAssistedKeywords() {
+        return (assistedKeywords != null && assistedKeywords.length > 0);
     }
 
 }

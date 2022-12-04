@@ -156,7 +156,7 @@ public class Dictionary<T> extends Trie<T> {
     private int nextValidChar(char[] word, int start, int end) {
         int num = 0;
         while (start < end) {
-            if (word[start] == DicConst.SPECIAL_CHAR) {
+            if (word[start] == DicConst.SKIP_NULL) {
                 start++;
                 num++;
                 if (num > skipMaxLen) {

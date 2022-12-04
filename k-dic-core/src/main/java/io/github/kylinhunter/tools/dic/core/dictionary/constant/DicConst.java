@@ -7,7 +7,7 @@ package io.github.kylinhunter.tools.dic.core.dictionary.constant;
  * @date 2022/1/23 22:21
  */
 public class DicConst {
-    public static final char SPECIAL_CHAR = '\u0000';
+    public static final char SKIP_NULL = '\u0000';
     public static final int MATCH_LEVEL_NONE = MatchLevel.NONE.getCode();
     public static final int MATCH_LEVEL_HIGH = MatchLevel.HIGH.getCode();
     public static final int MATCH_LEVEL_MIDDLE = MatchLevel.MIDDLE.getCode();

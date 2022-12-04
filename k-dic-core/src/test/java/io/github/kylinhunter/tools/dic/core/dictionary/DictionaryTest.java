@@ -11,7 +11,7 @@ import io.github.kylinhunter.tools.dic.core.trie.TrieStatHelper;
 
 public class DictionaryTest {
 
-    private static final char SC = DicConst.SPECIAL_CHAR;
+    private static final char SC = DicConst.SKIP_NULL;
     static Dictionary<Long> dictionary = new Dictionary<>();
 
     @BeforeAll

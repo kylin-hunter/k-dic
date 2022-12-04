@@ -26,41 +26,37 @@ public class WordNodeConvertor {
      * @author BiJi'an
      * @date 2022-01-24 23:55
      */
-    public static WordNode convert(HitMode hitMode, String words, String assistWords, String relationWords,
+    public static WordNode convert(HitMode hitMode, String words, String assistedKeywords, String targetWords,
                                    WordAnalyzer analyzer,
                                    int maxKeywordLen) {
         if (!StringUtils.isEmpty(words)) {
+            words = words.trim();
+
             WordNode wordNode = new WordNode();
             wordNode.setHitMode(hitMode);
-            words = words.trim();
 
             if (words.length() > 0 && words.length() <= maxKeywordLen) {
                 wordNode.setKeyword(words);
-                wordNode.setKeywordSplit(analyzer.analyze(words));
+                wordNode.setAnalyzedKeywords(analyzer.analyze(words));
 
-                if (!StringUtils.isEmpty(assistWords)) {
-                    assistWords = assistWords.trim();
+                List<String> assistWordsList = new ArrayList<>();
+                List<Words> assistWordsSplitList = new ArrayList<>();
+                if (!StringUtils.isEmpty(assistedKeywords)) {
+                    assistedKeywords = assistedKeywords.trim();
 
-                    List<String> assistWordsList = new ArrayList<>();
-                    List<Words> assistWordsSplitList = new ArrayList<>();
-
-                    for (String assistWord : StringUtils.split(assistWords, ',')) {
-                        if (!StringUtils.isEmpty(assistWord) && assistWord.length() > 0
-                                && assistWord.length() <= maxKeywordLen) {
-                            assistWordsList.add(assistWord);
-                            assistWordsSplitList.add(analyzer.analyze(assistWord));
+                    for (String assistedKeyword : StringUtils.split(assistedKeywords, ',')) {
+                        if (!StringUtils.isEmpty(assistedKeyword) && assistedKeyword.length() <= maxKeywordLen) {
+                            assistWordsList.add(assistedKeyword);
+                            assistWordsSplitList.add(analyzer.analyze(assistedKeyword));
                         }
-
-                    }
-                    if (assistWordsList.size() > 0) {
-                        wordNode.setAssistWords(assistWordsList.toArray(new String[0]));
-                        wordNode.setAssistWordsSplit(assistWordsSplitList.toArray(new Words[0]));
                     }
                 }
+                wordNode.setAssistedKeywords(assistWordsList.toArray(new String[0]));
+                wordNode.setAnalyzedRelatedKeywords(assistWordsSplitList.toArray(new Words[0]));
 
-                String[] relationWordsSplit = StringUtils.split(relationWords, ',');
-                wordNode.setRelationWords(relationWordsSplit);
-
+                if (!StringUtils.isEmpty(targetWords)) {
+                    wordNode.setTargetWords(StringUtils.split(targetWords, ','));
+                }
                 return wordNode;
             }
 

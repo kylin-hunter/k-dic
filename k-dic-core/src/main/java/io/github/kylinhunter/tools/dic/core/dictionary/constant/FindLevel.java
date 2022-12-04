@@ -1,8 +1,5 @@
 package io.github.kylinhunter.tools.dic.core.dictionary.constant;
 
-
-
-
 import io.github.kylinhunter.commons.util.EnumUtils;
 import lombok.Getter;
 
@@ -16,7 +13,7 @@ public enum FindLevel implements EnumUtils.EnumCode {
     HIGH_MIDDLE(2),
     HIGH_MIDDLE_LOW(3);
     @Getter
-    private final int code;
+    public final int code;
 
     FindLevel(int code) {
         this.code = code;

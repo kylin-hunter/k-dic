@@ -5,10 +5,12 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.google.common.collect.Sets;
+
+import io.github.kylinhunter.commons.component.C;
+import io.github.kylinhunter.commons.exception.embed.InitException;
 import io.github.kylinhunter.commons.io.ResourceHelper;
 import io.github.kylinhunter.commons.io.file.reader.FileReaderUtils;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.DicConst;
@@ -21,50 +23,44 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2022-01-01
  **/
 @Slf4j
+@C
 public class DictionarySkipper {
-    private static final DictionarySkipper singleton = new DictionarySkipper();
-    public static final char SPECIAL_CHAR = DicConst.SPECIAL_CHAR;
 
-    private DictionarySkipper() {
+    @SuppressWarnings("unchecked")
+    private final Set<Character>[] skipCharsArr = new HashSet[4];
+    private static final String CONFIG_PATH = "/k-dic-default/dic_skipper.txt";
+
+    public DictionarySkipper() {
         init();
     }
 
-    public static DictionarySkipper getInstance() {
-        return singleton;
-    }
-
-    private final Set<Character> hiChars = new HashSet<>();
-    private final Set<Character> defaultChars = new HashSet<>();
-
-    private static final String CONFIG_PATH = "/k-dic-default/dic_skipper.txt";
-
     public void init() {
 
-        InputStream in = null;
-        try {
-            in = ResourceHelper.getInputStreamInClassPath(CONFIG_PATH);
-
+        Set<Character> skipChars = Sets.newHashSet();
+        try (InputStream in = ResourceHelper.getInputStreamInClassPath(CONFIG_PATH)) {
             FileReaderUtils.process(in, "UTF-8", (line) -> {
                 if (!StringUtils.isEmpty(line)) {
                     line = line.trim();
                     if (line.length() == 1) {
-                        defaultChars.add(line.charAt(0));
-                        //                        log.info("add:" + line.charAt(0));
+                        skipChars.add(line.charAt(0));
+
+                        // log.info("add:" + line.charAt(0));
                     } else {
-                        log.error("error char:" + line);
+                        throw new InitException("a line can only  have on charactor,the line :" + line);
                     }
                 }
             });
 
-            processForFindLevelHigh();
+            processDefaultSkipChars(skipChars);
+            for (FindLevel findLevel : FindLevel.values()) {
+                Set<Character> chars = new HashSet<>(2048); // lagger size for reducing confict
+                chars.addAll(skipChars);
+                skipCharsArr[findLevel.getCode()] = chars;
+            }
 
             log.info("init ok");
-
         } catch (Exception e) {
-            throw new RuntimeException("init error", e);
-
-        } finally {
-            IOUtils.closeQuietly(in);
+            throw new InitException("init error", e);
         }
 
     }
@@ -75,13 +71,13 @@ public class DictionarySkipper {
      * @author BiJi'an
      * @date 2022-01-15 10:59
      */
-    private void processForFindLevelHigh() {
-        hiChars.addAll(defaultChars);
-        hiChars.add(' ');
-        hiChars.add('　');
-        hiChars.add('\t');
-        hiChars.add('\n');
-        hiChars.add('\r');
+    private void processDefaultSkipChars(Set<Character> skipChars) {
+        skipChars.add(' ');
+        skipChars.add('　');
+        skipChars.add('\t');
+        skipChars.add('\n');
+        skipChars.add('\r');
+
     }
 
     /**
@@ -94,22 +90,7 @@ public class DictionarySkipper {
      * @date 2022-12-04 02:50
      */
     public boolean isSkip(FindLevel findLevel, char c) {
-        if (findLevel == FindLevel.HIGH) {
-            return hiChars.contains(c);
-        } else {
-            return defaultChars.contains(c);
-        }
-    }
-
-    /**
-     * @param c c
-     * @return boolean
-     * @description isSkip
-     * @date 2022/1/24 3:27
-     * @author BiJi'an
-     */
-    public boolean isSkip(char c) {
-        return defaultChars.contains(c);
+        return skipCharsArr[findLevel.code].contains(c);
     }
 
     /**
@@ -122,12 +103,8 @@ public class DictionarySkipper {
      * @date 2022-01-15 11:00
      */
     public boolean remove(FindLevel findLevel, char c) {
-        if (findLevel == FindLevel.HIGH) {
-            return hiChars.remove(c);
-        } else {
-            return defaultChars.remove(c);
+        return skipCharsArr[findLevel.code].remove(c);
 
-        }
     }
 
     /**
@@ -141,11 +118,13 @@ public class DictionarySkipper {
      */
     public void remove(FindLevel findLevel, String words) {
         for (int i = 0; i < words.length(); i++) {
-            if (words.charAt(i) != ' ' && !CharUtils.isAsciiAlphanumeric(words.charAt(i))) {
-                if (this.remove(findLevel, words.charAt(i))) {
-                    log.error("remove FindLevel.HIGH char skip:" + words.charAt(i));
-                }
+            char c = words.charAt(i);
+            Set<Character> skipChars = skipCharsArr[findLevel.code];
+            if (skipChars.contains(c)) {
+                skipChars.remove(c);
+                log.error("remove {} char={}", findLevel, c);
             }
+
         }
 
     }
@@ -161,9 +140,10 @@ public class DictionarySkipper {
      */
     public char[] replaceSkipChar(String text, FindLevel findLevel) {
         char[] textChars = text.toCharArray();
+        Set<Character> skipChars = skipCharsArr[findLevel.code];
         for (int i = 0; i < textChars.length; i++) {
-            if (this.isSkip(findLevel, textChars[i])) {
-                textChars[i] = DictionarySkipper.SPECIAL_CHAR;
+            if (skipChars.contains(textChars[i])) {
+                textChars[i] = DicConst.SKIP_NULL;
             }
         }
         return textChars;

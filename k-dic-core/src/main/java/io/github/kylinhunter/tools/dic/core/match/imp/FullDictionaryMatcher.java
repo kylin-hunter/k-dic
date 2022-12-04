@@ -7,12 +7,12 @@ import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary.MatchContext;
 import io.github.kylinhunter.tools.dic.core.dictionary.DictionaryGroup;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
+import io.github.kylinhunter.tools.dic.core.dictionary.constant.DicConst;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
-import io.github.kylinhunter.tools.dic.core.dictionary.helper.DictionarySkipper;
 import io.github.kylinhunter.tools.dic.core.match.DictionaryMatcher;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
-import io.github.kylinhunter.tools.dic.core.match.bean.MatchSplit;
+import io.github.kylinhunter.tools.dic.core.match.bean.MatchFrag;
 import io.github.kylinhunter.tools.dic.core.match.helper.DictionaryMatchHelper;
 import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
 import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzerType;
@@ -36,7 +36,7 @@ public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements 
         }
         char[] textChars = this.dictionarySkipper.replaceSkipChar(text, findLevel);
 
-        List<MatchSplit> matchSplits = null; // tmp save
+        List<MatchFrag> matchFrags = null; // tmp save
         MatchContext<WordNode> matchContext = new MatchContext<>(findLevel);
 
         int curLen = textChars.length;
@@ -52,7 +52,7 @@ public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements 
             matchNum = 0;
             matchMinLen = Integer.MAX_VALUE;
             while (curScanLen <= scanMax) {
-                if (textChars[start] == DictionarySkipper.SPECIAL_CHAR) {
+                if (textChars[start] == DicConst.SKIP_NULL) {
                     break; // skip fast
                 }
                 // System.out.println(findLevel + "start:" + start + ",curScanLen:" + curScanLen + ":"+text.substring
@@ -66,7 +66,7 @@ public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements 
                         matchMinLen = curScanLen;
                     }
                     // System.out.println("find node:" + node.getValues().get(0).getKeyword());
-                    matchSplits = DictionaryMatchHelper.add(matchSplits, text, start, curScanLen, matchContext);
+                    matchFrags = DictionaryMatchHelper.add(matchFrags, text, start, curScanLen, matchContext);
                 }
                 if (matchNum > 0) {
                     if (matchNum == 1) { // find one
@@ -87,22 +87,22 @@ public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements 
                 curLen -= 1;
             }
         }
-        return merge(text, matchSplits);
+        return merge(text, matchFrags);
     }
 
-    public List<MatchResult> merge(String oriText, List<MatchSplit> matchSplits) {
-        if (matchSplits != null && matchSplits.size() > 0) {
+    public List<MatchResult> merge(String oriText, List<MatchFrag> matchFrags) {
+        if (matchFrags != null && matchFrags.size() > 0) {
             List<MatchResult> matchResults = new ArrayList<>();
             Words oriSplitWords = analyzer.analyze(oriText);
-            for (MatchSplit matchSplit : matchSplits) {
-                //                System.out.println("matchSplit:" + matchSplit);
+            for (MatchFrag matchFrag : matchFrags) {
+                //                System.out.println("matchFrag:" + matchFrag);
 
-                TrieNode<WordNode> node = matchSplit.getNode();
+                TrieNode<WordNode> node = matchFrag.getNode();
 
                 List<WordNode> wordNodes = node.getValues();
                 if (wordNodes != null && wordNodes.size() > 0) {
                     for (WordNode wordNode : wordNodes) {
-                        MatchResult matchResult = tryGetMatchResult(oriText, matchSplit, wordNode, oriSplitWords);
+                        MatchResult matchResult = tryGetMatchResult(oriText, matchFrag, wordNode, oriSplitWords);
                         if (matchResult != null) {
                             matchResults.add(matchResult);
                         }
@@ -119,7 +119,7 @@ public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements 
 
     /**
      * @param text       text
-     * @param matchSplit matchSplit
+     * @param matchFrag matchFrag
      * @param wordNode   wordNode
      * @param textWords  textWords
      * @return io.github.kylinhunter.toolsdic.core.match.bean.MatchResult
@@ -128,17 +128,17 @@ public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements 
      * @author BiJi'an
      * @date 2022-01-27 02:44
      */
-    private MatchResult tryGetMatchResult(String text, MatchSplit matchSplit, WordNode wordNode,
+    private MatchResult tryGetMatchResult(String text, MatchFrag matchFrag, WordNode wordNode,
                                           Words textWords) {
 
-        MatchLevel matchLevel = matchSplit.getLevel();
+        MatchLevel matchLevel = matchFrag.getLevel();
         if (matchLevel == MatchLevel.NONE) {
             return null;
         }
-        MatchResult matchResult = DictionaryMatchHelper.toMatchResult(matchSplit, wordNode);
+        MatchResult matchResult = DictionaryMatchHelper.toMatchResult(matchFrag, wordNode);
 
         if (matchLevel == MatchLevel.HIGH) {
-            Words keywordSplit = wordNode.getKeywordSplit();
+            Words keywordSplit = wordNode.getAnalyzedKeywords();
             if (keywordSplit != null) {
                 for (Word word : keywordSplit.getWords()) {
                     if (!textWords.contains(word.getText())) {
@@ -148,13 +148,13 @@ public class FullDictionaryMatcher extends AbstractDictionaryMatcher implements 
             }
         }
         if (this.assistMatchEnabled) {
-            if (wordNode.hasAssistWords()) {
-                for (String subWord : wordNode.getAssistWords()) {
+            if (wordNode.hasAssistedKeywords()) {
+                for (String subWord : wordNode.getAssistedKeywords()) {
                     if (!text.contains(subWord)) {
                         return null;
                     }
                 }
-                matchResult.setAssistWords(wordNode.getAssistWords());
+                matchResult.setAssistWords(wordNode.getAssistedKeywords());
             }
         }
         return matchResult;

@@ -8,8 +8,8 @@ import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
+import io.github.kylinhunter.tools.dic.core.match.bean.MatchFrag;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
-import io.github.kylinhunter.tools.dic.core.match.bean.MatchSplit;
 import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
 
 /**
@@ -20,20 +20,20 @@ import io.github.kylinhunter.tools.dic.core.trie.TrieNode;
 public class DictionaryMatchHelper {
 
     /**
-     * @param matchSplit matchSplit
-     * @param wordNode   wordNode
+     * @param matchFrag matchFrag
+     * @param wordNode  wordNode
      * @return io.github.kylinhunter.toolsdic.core.match.bean.MatchResult
      * @title toMatchResult
      * @description
      * @author BiJi'an
      * @date 2022-01-27 02:44
      */
-    public static MatchResult toMatchResult(MatchSplit matchSplit, WordNode wordNode) {
-        MatchLevel matchLevel = matchSplit.getLevel();
+    public static MatchResult toMatchResult(MatchFrag matchFrag, WordNode wordNode) {
+        MatchLevel matchLevel = matchFrag.getLevel();
         MatchResult matchResult = new MatchResult(wordNode.getType(), wordNode.getClassId(), matchLevel.getCode());
-        matchResult.setHitWord(matchSplit.getHitWord());
-        matchResult.setStart(matchSplit.getStart());
-        matchResult.setEnd(matchSplit.getEnd());
+        matchResult.setHitWord(matchFrag.getHitWord());
+        matchResult.setStart(matchFrag.getStart());
+        matchResult.setEnd(matchFrag.getEnd());
         matchResult.setWordNode(wordNode);
         return matchResult;
     }
@@ -65,19 +65,19 @@ public class DictionaryMatchHelper {
      * @param start        start
      * @param len          len
      * @param matchContext matchContext
-     * @return java.util.List<io.github.kylinhunter.toolsdic.core.match.bean.MatchSplit>
+     * @return java.util.List<io.github.kylinhunter.toolsdic.core.match.bean.MatchFrag>
      * @title add
      * @description
      * @author BiJi'an
      * @date 2022-01-28 03:07
      */
-    public static List<MatchSplit> add(List<MatchSplit> datas, String text, int start, int len,
-                                       Dictionary.MatchContext<WordNode> matchContext) {
+    public static List<MatchFrag> add(List<MatchFrag> datas, String text, int start, int len,
+                                      Dictionary.MatchContext<WordNode> matchContext) {
 
         if (datas == null) {
             datas = Lists.newArrayList();
         }
-        datas.add(new MatchSplit(text, start, len, matchContext));
+        datas.add(new MatchFrag(text, start, len, matchContext));
         return datas;
 
     }
@@ -88,19 +88,19 @@ public class DictionaryMatchHelper {
      * @param start    start
      * @param len      len
      * @param distNode distNode
-     * @return java.util.List<io.github.kylinhunter.tools.dic.core.match.bean.MatchSplit>
+     * @return java.util.List<io.github.kylinhunter.tools.dic.core.match.bean.MatchFrag>
      * @title add
      * @description
      * @author BiJi'an
      * @date 2022-12-04 02:44
      */
-    public static List<MatchSplit> add(List<MatchSplit> datas, String text, int start, int len,
-                                       TrieNode<WordNode> distNode) {
+    public static List<MatchFrag> add(List<MatchFrag> datas, String text, int start, int len,
+                                      TrieNode<WordNode> distNode) {
 
         if (datas == null) {
             datas = Lists.newArrayList();
         }
-        datas.add(new MatchSplit(text, start, len, distNode));
+        datas.add(new MatchFrag(text, start, len, distNode));
         return datas;
 
     }

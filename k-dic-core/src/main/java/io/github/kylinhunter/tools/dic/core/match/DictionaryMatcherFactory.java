@@ -43,8 +43,7 @@ public class DictionaryMatcherFactory {
      * @author BiJi'an
      * @date 2022-12-04 03:06
      */
-    public static DictionaryMatcher create(DictionaryMatcherType dictionaryMatcherType,
-                                           DictionaryGroup dictionaryGroup) {
+    public static DictionaryMatcher create(DictionaryMatcherType dictionaryMatcherType, DictionaryGroup dictionaryGroup) {
 
         return create(dictionaryMatcherType, dictionaryGroup, WordAnalyzerType.DEFAULT);
     }

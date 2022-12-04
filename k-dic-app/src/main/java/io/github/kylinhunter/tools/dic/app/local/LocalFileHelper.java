@@ -7,12 +7,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.util.ListUtils;
-import io.github.kylinhunter.tools.dic.app.bean.DicData;
-import io.github.kylinhunter.tools.dic.core.dictionary.constant.HitMode;
+
 import io.github.kylinhunter.commons.io.ResourceHelper;
 import io.github.kylinhunter.commons.io.file.UserDirUtils;
 import io.github.kylinhunter.commons.io.file.reader.FileReaderUtils;
-
+import io.github.kylinhunter.tools.dic.app.bean.DicData;
+import io.github.kylinhunter.tools.dic.core.dictionary.constant.HitMode;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -40,8 +40,8 @@ public class LocalFileHelper {
                     for (int i = 0; i < 10; i++) {
                         DicData dicData = new DicData();
                         dicData.setWords("words" + i);
-                        dicData.setAssistWords("assistWords" + i);
-                        dicData.setRelationWords("relationWords" + i);
+                        dicData.setAssistWords("assistedKeywords" + i);
+                        dicData.setRelationWords("targetWords" + i);
                         dicData.setHitMode(HitMode.HIGH);
                         dicData.setType(1);
                         dicData.setClassId(1);
@@ -67,7 +67,7 @@ public class LocalFileHelper {
             //            System.out.println(e);
             num2.incrementAndGet();
         });
-        System.out.println(num1 + ":" + num2);
+        //        System.out.println(num1 + ":" + num2);
 
     }
 
