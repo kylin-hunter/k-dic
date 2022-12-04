@@ -21,11 +21,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FullDictionaryMatcher<T extends WordNode> extends AbstractDictionaryMatcher<T>
-        implements DictionaryMatcher<T> {
+public class FullDictionaryMatcher<T extends WordNode, R> extends AbstractDictionaryMatcher<T, R>
+        implements DictionaryMatcher<T, R> {
 
     @SuppressWarnings("CommentedOutCode")
-    public List<MatchResult<T>> process(String text, FindLevel findLevel, Dictionary<T> dictionary) {
+    public List<MatchResult<R>> process(String text, FindLevel findLevel, Dictionary<T> dictionary) {
         if (dictionary.size() <= 0 || text == null || text.length() < 1) {
             return null;
         }
@@ -85,9 +85,9 @@ public class FullDictionaryMatcher<T extends WordNode> extends AbstractDictionar
         return merge(text, matchFrags);
     }
 
-    public List<MatchResult<T>> merge(String oriText, List<MatchFrag<T>> matchFrags) {
+    public List<MatchResult<R>> merge(String oriText, List<MatchFrag<T>> matchFrags) {
         if (matchFrags != null && matchFrags.size() > 0) {
-            List<MatchResult<T>> matchResults = new ArrayList<>();
+            List<MatchResult<R>> matchResults = new ArrayList<>();
             Words oriSplitWords = wordAnalyzer.analyze(oriText);
             for (MatchFrag<T> matchFrag : matchFrags) {
                 //                System.out.println("matchFrag:" + matchFrag);
@@ -96,7 +96,7 @@ public class FullDictionaryMatcher<T extends WordNode> extends AbstractDictionar
                 List<T> wordNodes = node.getValues();
                 if (wordNodes != null && wordNodes.size() > 0) {
                     for (T wordNode : wordNodes) {
-                        MatchResult<T> matchResult = tryGetMatchResult(oriText, matchFrag, wordNode, oriSplitWords);
+                        MatchResult<R> matchResult = tryGetMatchResult(oriText, matchFrag, wordNode, oriSplitWords);
                         if (matchResult != null) {
                             matchResults.add(matchResult);
                         }
@@ -122,14 +122,14 @@ public class FullDictionaryMatcher<T extends WordNode> extends AbstractDictionar
      * @author BiJi'an
      * @date 2022-01-27 02:44
      */
-    private MatchResult<T> tryGetMatchResult(String text, MatchFrag<T> matchFrag, T wordNode,
+    private MatchResult<R> tryGetMatchResult(String text, MatchFrag<T> matchFrag, T wordNode,
                                              Words textWords) {
 
         MatchLevel matchLevel = matchFrag.getLevel();
         if (matchLevel == MatchLevel.NONE) {
             return null;
         }
-        MatchResult<T> matchResult = DictionaryMatchHelper.toMatchResult(matchFrag, wordNode);
+        MatchResult<R> matchResult = DictionaryMatchHelper.toMatchResult(matchFrag, wordNode);
 
         if (matchLevel == MatchLevel.HIGH) {
             Words keywordSplit = wordNode.getAnalyzedWords();

@@ -25,15 +25,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public abstract class AbstractDictionaryMatcher<T extends WordNode> implements DictionaryMatcher<T> {
+public abstract class AbstractDictionaryMatcher<T extends WordNode, R> implements DictionaryMatcher<T, R> {
     protected DictionarySkipper dictionarySkipper = CF.get(DictionarySkipper.class);
     protected DictionaryGroup<T> dictionaryGroup = new DictionaryGroup<>();
     protected WordAnalyzer wordAnalyzer = CF.get(WordAnalyzerType.DEFAULT);
     protected boolean assistMatchEnabled = true;
 
     @Override
-    public List<MatchResult<T>> match(String text, FindLevel findLevel) {
-        List<MatchResult<T>> result = null;
+    public List<MatchResult<R>> match(String text, FindLevel findLevel) {
+        List<MatchResult<R>> result = null;
         switch (findLevel) {
             case HIGH: {
                 result = process(text, FindLevel.HIGH, dictionaryGroup.getHighMiddleLow());
@@ -41,17 +41,17 @@ public abstract class AbstractDictionaryMatcher<T extends WordNode> implements D
             }
             case HIGH_MIDDLE: {
 
-                List<MatchResult<T>> resultHigh = process(text, FindLevel.HIGH, dictionaryGroup.getHigh());
-                List<MatchResult<T>> resultMiddle =
+                List<MatchResult<R>> resultHigh = process(text, FindLevel.HIGH, dictionaryGroup.getHigh());
+                List<MatchResult<R>> resultMiddle =
                         process(text, FindLevel.HIGH_MIDDLE, dictionaryGroup.getMiddleLow());
                 result = CollectionUtils.merge(true, resultHigh, resultMiddle);
                 break;
             }
             case HIGH_MIDDLE_LOW: {
 
-                List<MatchResult<T>> resultHigh = process(text, FindLevel.HIGH, dictionaryGroup.getHigh());
-                List<MatchResult<T>> resultMiddle = process(text, FindLevel.HIGH_MIDDLE, dictionaryGroup.getMiddle());
-                List<MatchResult<T>> resultLow = process(text, FindLevel.HIGH_MIDDLE_LOW, dictionaryGroup.getLow());
+                List<MatchResult<R>> resultHigh = process(text, FindLevel.HIGH, dictionaryGroup.getHigh());
+                List<MatchResult<R>> resultMiddle = process(text, FindLevel.HIGH_MIDDLE, dictionaryGroup.getMiddle());
+                List<MatchResult<R>> resultLow = process(text, FindLevel.HIGH_MIDDLE_LOW, dictionaryGroup.getLow());
                 result = CollectionUtils.merge(true, resultHigh, resultMiddle, resultLow);
                 break;
             }
@@ -97,5 +97,5 @@ public abstract class AbstractDictionaryMatcher<T extends WordNode> implements D
 
     }
 
-    protected abstract List<MatchResult<T>> process(String text, FindLevel high, Dictionary<T> dictionary);
+    protected abstract List<MatchResult<R>> process(String text, FindLevel high, Dictionary<T> dictionary);
 }

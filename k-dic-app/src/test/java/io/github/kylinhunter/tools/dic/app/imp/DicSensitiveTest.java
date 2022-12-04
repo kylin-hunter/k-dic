@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import io.github.kylinhunter.tools.dic.app.bean.DicWordSensitive;
 import io.github.kylinhunter.tools.dic.app.bean.DicWords;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.HitMode;
@@ -32,7 +33,8 @@ class DicSensitiveTest {
     @Test
     void processHigh() {
         FindLevel findLevel = FindLevel.HIGH;
-        List<MatchResult> matchResults = dicSensitive.match(TestCaseDicMatchFull.text, findLevel);
+        List<MatchResult<DicWordSensitive>> matchResults = dicSensitive.match(TestCaseDicMatchFull.text, findLevel);
+
         matchResults.forEach(System.out::println);
         Assertions.assertArrayEquals(TestCaseDicMatchFull.get(findLevel),
                 TestDicMatchHelper.toStringArr(TestCaseDicMatchFull.text, findLevel, matchResults));
@@ -43,7 +45,7 @@ class DicSensitiveTest {
     void processHighMiddle() {
 
         FindLevel findLevel = FindLevel.HIGH_MIDDLE;
-        List<MatchResult> matchResults = dicSensitive.match(TestCaseDicMatchFull.text, findLevel);
+        List<MatchResult<DicWordSensitive>> matchResults = dicSensitive.match(TestCaseDicMatchFull.text, findLevel);
         matchResults.forEach(System.out::println);
         Assertions.assertArrayEquals(TestCaseDicMatchFull.get(findLevel),
                 TestDicMatchHelper.toStringArr(TestCaseDicMatchFull.text, findLevel, matchResults));
@@ -53,7 +55,7 @@ class DicSensitiveTest {
     void processHighMiddleLow() {
 
         FindLevel findLevel = FindLevel.HIGH_MIDDLE_LOW;
-        List<MatchResult> matchResults = dicSensitive.match(TestCaseDicMatchFull.text, findLevel);
+        List<MatchResult<DicWordSensitive>> matchResults = dicSensitive.match(TestCaseDicMatchFull.text, findLevel);
         matchResults.forEach(System.out::println);
         Assertions.assertArrayEquals(TestCaseDicMatchFull.get(findLevel),
                 TestDicMatchHelper.toStringArr(TestCaseDicMatchFull.text, findLevel, matchResults));

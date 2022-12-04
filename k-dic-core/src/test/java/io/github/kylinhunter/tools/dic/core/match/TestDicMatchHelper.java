@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
+import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 
@@ -17,7 +18,7 @@ import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
  * @create 2022-01-01 05:42
  **/
 public class TestDicMatchHelper {
-    public static String[] toStringArr(String text, FindLevel findLevel, List<MatchResult> matchResults) {
+    public static String[] toStringArr(String text, FindLevel findLevel, List<MatchResult<WordNode>> matchResults) {
         List<String> result = toString(text, findLevel, matchResults);
         if (result != null) {
             return result.toArray(new String[0]);
@@ -25,7 +26,7 @@ public class TestDicMatchHelper {
         return new String[0];
     }
 
-    public static List<String> toString(String text, FindLevel findLevel, List<MatchResult> matchResults) {
+    public static List<String> toString(String text, FindLevel findLevel, List<MatchResult<WordNode>> matchResults) {
         System.out.println("************ print start *********************");
         List<String> matchResultsArr = Lists.newArrayList();
         if (text != null) {
@@ -52,7 +53,7 @@ public class TestDicMatchHelper {
                 });
 
                 matchResultsArr = matchResults.stream()
-                        .map(e -> e.getMatchLevel() + ":" + e.getStart() + ":" + e.getEnd() + ":"
+                        .map(e -> e.getMatchLevel().getCode() + ":" + e.getStart() + ":" + e.getEnd() + ":"
                                 + e.getHitWord() + ":" + e.getHitWordRaw() + ":" + Arrays.toString(e.getAssistedWords()))
                         .collect(Collectors.toList());
 

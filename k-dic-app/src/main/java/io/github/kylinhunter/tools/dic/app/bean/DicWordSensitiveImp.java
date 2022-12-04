@@ -10,7 +10,7 @@ import lombok.Data;
  * @date 2022-12-04 23:21
  **/
 @Data
-class DicWordSensitiveImp extends WordNode implements DicWordSensitive {
+public class DicWordSensitiveImp extends WordNode implements DicWordSensitive {
 
     public DicWordSensitiveImp(HitMode hitMode, String keyword) {
         this.hitMode = hitMode;

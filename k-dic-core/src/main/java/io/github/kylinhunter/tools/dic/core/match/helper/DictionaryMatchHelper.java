@@ -29,13 +29,15 @@ public class DictionaryMatchHelper {
      * @author BiJi'an
      * @date 2022-01-27 02:44
      */
-    public static <T extends WordNode> MatchResult<T> toMatchResult(MatchFrag<T> matchFrag, T wordNode) {
+    @SuppressWarnings("unchecked")
+    public static <T extends WordNode,R> MatchResult<R> toMatchResult(MatchFrag<T> matchFrag, T wordNode) {
         MatchLevel matchLevel = matchFrag.getLevel();
-        MatchResult<T> matchResult = new MatchResult<>(matchLevel);
+        MatchResult<R> matchResult = new MatchResult<>(matchLevel);
         matchResult.setHitWord(matchFrag.getHitWord());
         matchResult.setStart(matchFrag.getStart());
         matchResult.setEnd(matchFrag.getEnd());
-        matchResult.setWordNode(wordNode);
+        matchResult.setWordNode((R) wordNode);
+        matchResult.setHitWordRaw(wordNode.getWord());
         return matchResult;
     }
 

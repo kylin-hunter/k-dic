@@ -21,30 +21,47 @@ import io.github.kylinhunter.tools.dic.core.match.imp.PrefixDictionaryMatcher;
  * @date 2022-12-04 23:29
  **/
 public class AbstractDic<T extends DicWord> implements Dic<T> {
-    private final DictionaryMatcher dictionaryMatcher;
+    private final DictionaryMatcher<WordNode, T> dictionaryMatcher;
 
     public AbstractDic(DicType dicType) {
         MatchType matchType = dicType.getMatchType();
         if (matchType == MatchType.FULL) {
-            dictionaryMatcher = new FullDictionaryMatcher();
+            dictionaryMatcher = new FullDictionaryMatcher<>();
         } else if (matchType == MatchType.PREFIX) {
-            dictionaryMatcher = new PrefixDictionaryMatcher();
+            dictionaryMatcher = new PrefixDictionaryMatcher<>();
         } else {
             throw new InitException("unsupported matchType=" + matchType);
         }
 
     }
 
+    /**
+     * @param word word
+     * @return void
+     * @title addWord
+     * @description
+     * @author BiJi'an
+     * @date 2022-12-05 02:46
+     */
     public void addWord(T word) {
         if (word instanceof WordNode) {
             dictionaryMatcher.addWord((WordNode) word);
-        } else {
-            throw new ParamException("word not a sub class of WordNode.class=>" + word.getClass().getName());
-        }
 
+        } else {
+            throw new ParamException("word type err:" + word.getClass().getName());
+        }
     }
 
-    public List<MatchResult> match(String inputText, FindLevel findLevel) {
+    /**
+     * @param inputText inputText
+     * @param findLevel findLevel
+     * @return java.util.List<io.github.kylinhunter.tools.dic.core.match.bean.MatchResult < R>>
+     * @title match
+     * @description
+     * @author BiJi'an
+     * @date 2022-12-05 02:46
+     */
+    public List<MatchResult<T>> match(String inputText, FindLevel findLevel) {
         return dictionaryMatcher.match(inputText, findLevel);
     }
 }

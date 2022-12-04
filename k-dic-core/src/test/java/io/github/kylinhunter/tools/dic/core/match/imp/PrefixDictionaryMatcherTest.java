@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import io.github.kylinhunter.commons.component.CF;
+import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.HitMode;
 import io.github.kylinhunter.tools.dic.core.dictionary.helper.WordNodeConvertor;
@@ -14,18 +14,15 @@ import io.github.kylinhunter.tools.dic.core.match.DictionaryMatcher;
 import io.github.kylinhunter.tools.dic.core.match.TestCaseDicMatchPrefix;
 import io.github.kylinhunter.tools.dic.core.match.TestDicMatchHelper;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
-import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzer;
-import io.github.kylinhunter.tools.dic.words.analyzer.WordAnalyzerType;
 
 class PrefixDictionaryMatcherTest {
 
-    static WordAnalyzer analyzer = CF.get(WordAnalyzerType.DEFAULT.clazz);
-    static DictionaryMatcher dictionaryMatcher;
+    static DictionaryMatcher<WordNode, WordNode> dictionaryMatcher;
 
     @BeforeAll
     static void init() {
 
-        dictionaryMatcher = new PrefixDictionaryMatcher();
+        dictionaryMatcher = new PrefixDictionaryMatcher<>();
 
         dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京", "", ""));
         dictionaryMatcher.addWord(WordNodeConvertor.convert(HitMode.HIGH, "北京人", "", ""));
@@ -181,21 +178,21 @@ class PrefixDictionaryMatcherTest {
     void processNull() {
         String text = "我其实很爱";
         FindLevel findLevel = FindLevel.HIGH;
-        List<MatchResult> matchResults = dictionaryMatcher.match(text, findLevel);
+        List<MatchResult<WordNode>> matchResults = dictionaryMatcher.match(text, findLevel);
         List<String> resultString = TestDicMatchHelper.toString(text, findLevel, matchResults);
-        Assertions.assertTrue(resultString.size() == 0);
+        Assertions.assertEquals(resultString.size(), 0);
 
         text = "我其实很**爱";
         findLevel = FindLevel.HIGH_MIDDLE;
         matchResults = dictionaryMatcher.match(text, findLevel);
         resultString = TestDicMatchHelper.toString(text, findLevel, matchResults);
-        Assertions.assertTrue(resultString.size() == 0);
+        Assertions.assertEquals(resultString.size(), 0);
 
         text = "我其实很**1**爱";
         findLevel = FindLevel.HIGH_MIDDLE_LOW;
         matchResults = dictionaryMatcher.match(text, findLevel);
         resultString = TestDicMatchHelper.toString(text, findLevel, matchResults);
-        Assertions.assertTrue(resultString.size() == 0);
+        Assertions.assertEquals(resultString.size(), 0);
 
     }
 

@@ -19,11 +19,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PrefixDictionaryMatcher<T extends WordNode> extends AbstractDictionaryMatcher<T>
-        implements DictionaryMatcher<T> {
+public class PrefixDictionaryMatcher<T extends WordNode, R> extends AbstractDictionaryMatcher<T, R>
+        implements DictionaryMatcher<T, R> {
 
     @SuppressWarnings("CommentedOutCode")
-    public List<MatchResult<T>> process(String text, FindLevel findLevel, Dictionary<T> dictionary) {
+    public List<MatchResult<R>> process(String text, FindLevel findLevel, Dictionary<T> dictionary) {
         if (dictionary.size() <= 0 || text == null || text.length() < 1) {
             return null;
         }
@@ -77,9 +77,9 @@ public class PrefixDictionaryMatcher<T extends WordNode> extends AbstractDiction
         return merge(text, matchFrags);
     }
 
-    public List<MatchResult<T>> merge(String oriText, List<MatchFrag<T>> matchFrags) {
+    public List<MatchResult<R>> merge(String oriText, List<MatchFrag<T>> matchFrags) {
         if (matchFrags != null && matchFrags.size() > 0) {
-            List<MatchResult<T>> matchResults = new ArrayList<>();
+            List<MatchResult<R>> matchResults = new ArrayList<>();
             for (MatchFrag<T> matchFrag : matchFrags) {
                 //                System.out.println("matchFrag:" + matchFrag);
 
@@ -89,7 +89,7 @@ public class PrefixDictionaryMatcher<T extends WordNode> extends AbstractDiction
                 if (wordNodes != null && wordNodes.size() > 0) {
                     for (T wordNode : wordNodes) { // 某一个词可能对应多个分类
 
-                        MatchResult<T> matchResult = tryGetMatchResult(oriText, matchFrag, wordNode);
+                        MatchResult<R> matchResult = tryGetMatchResult(oriText, matchFrag, wordNode);
                         matchResults.add(matchResult);
                     }
                 }
@@ -112,9 +112,9 @@ public class PrefixDictionaryMatcher<T extends WordNode> extends AbstractDiction
      * @author BiJi'an
      * @date 2022-01-27 02:44
      */
-    private MatchResult<T> tryGetMatchResult(String oriText, MatchFrag<T> matchFrag, T wordNode) {
+    private MatchResult<R> tryGetMatchResult(String oriText, MatchFrag<T> matchFrag, T wordNode) {
 
-        MatchResult<T> matchResult = DictionaryMatchHelper.toMatchResult(matchFrag, wordNode);
+        MatchResult<R> matchResult = DictionaryMatchHelper.toMatchResult(matchFrag, wordNode);
         matchResult.setHitWord(oriText.substring(0, matchResult.getStart()) + wordNode.getWord());
         return matchResult;
 
