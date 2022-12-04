@@ -1,6 +1,5 @@
 ext {
     profile = "local"
-//    KYLIN_VERION = "1.0.2-SNAPSHOT"
     KYLIN_VERIONS = [
             "k-dic-words": '1.0.2',
             "k-dic-core" : '1.0.3',
