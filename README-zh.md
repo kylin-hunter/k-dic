@@ -41,7 +41,7 @@
 #### 1.  敏感词检查
 
 ```java
-代码
+//代码示例
 
         String text = "北京和北**京和北**啊**京"
         + "北京海淀和北**京海淀和北**啊**京海淀"
@@ -86,7 +86,7 @@
         matchResults.forEach(System.out::println);
 ```
 ```java
-结果
+// 打印 结果
         仅高度命中:
         MatchResult[matchLevel=HIGH, hitWord='北京', hitWordRaw='北京', start=0, end=2, assistedWords=null]
         MatchResult[matchLevel=HIGH, hitWord='北京', hitWordRaw='北京', start=15, end=17, assistedWords=null]
