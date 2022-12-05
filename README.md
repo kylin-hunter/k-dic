@@ -41,7 +41,7 @@ a dictionary tool according to trie
 
 
 ```java
-
+// Example 
         String text = "kylin and ky**lin and ky**1**lin "
         + " kylinOS and ky**linOS and ky**1**linOS"
         + " teacher and tea**cher and tea*t*cher and male and tall"
@@ -84,7 +84,8 @@ a dictionary tool according to trie
         matchResults.forEach(System.out::println);
 ```
 ```java
-结果
+
+// print result
         only high hit:
         MatchResult[matchLevel=HIGH, hitWord='kylin', hitWordRaw='kylin', start=0, end=5, assistedWords=null]
         MatchResult[matchLevel=HIGH, hitWord='kylin', hitWordRaw='kylin', start=34, end=39, assistedWords=null]
