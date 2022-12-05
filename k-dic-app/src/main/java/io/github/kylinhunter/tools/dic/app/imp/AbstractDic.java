@@ -7,6 +7,7 @@ import io.github.kylinhunter.commons.exception.embed.ParamException;
 import io.github.kylinhunter.tools.dic.app.Dic;
 import io.github.kylinhunter.tools.dic.app.bean.DicWord;
 import io.github.kylinhunter.tools.dic.app.constant.DicType;
+import io.github.kylinhunter.tools.dic.core.dictionary.WordNodeAware;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.match.DictionaryMatcher;
@@ -20,8 +21,8 @@ import io.github.kylinhunter.tools.dic.core.match.imp.PrefixDictionaryMatcher;
  * @description
  * @date 2022-12-04 23:29
  **/
-public class AbstractDic<T extends DicWord> implements Dic<T> {
-    private final DictionaryMatcher<WordNode, T> dictionaryMatcher;
+public class AbstractDic<T extends DicWord,R extends WordNodeAware> implements Dic<T,R> {
+    private final DictionaryMatcher<WordNode, R> dictionaryMatcher;
 
     public AbstractDic(DicType dicType) {
         MatchType matchType = dicType.getMatchType();
@@ -61,7 +62,7 @@ public class AbstractDic<T extends DicWord> implements Dic<T> {
      * @author BiJi'an
      * @date 2022-12-05 02:46
      */
-    public List<MatchResult<T>> match(String inputText, FindLevel findLevel) {
+    public List<MatchResult<R>> match(String inputText, FindLevel findLevel) {
         return dictionaryMatcher.match(inputText, findLevel);
     }
 }

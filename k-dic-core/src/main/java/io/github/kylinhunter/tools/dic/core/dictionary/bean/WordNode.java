@@ -1,5 +1,6 @@
 package io.github.kylinhunter.tools.dic.core.dictionary.bean;
 
+import io.github.kylinhunter.tools.dic.core.dictionary.WordNodeAware;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.HitMode;
 import io.github.kylinhunter.tools.dic.words.analyzer.bean.Words;
 import lombok.Data;
@@ -9,7 +10,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(of = {"type", "classId", "assistedWords", "targetWords"})
-public class WordNode {
+public class WordNode implements WordNodeAware {
     protected HitMode hitMode;  // hit mode
 
     @EqualsAndHashCode.Include

@@ -10,6 +10,7 @@ import io.github.kylinhunter.commons.component.CF;
 import io.github.kylinhunter.commons.util.CollectionUtils;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.DictionaryGroup;
+import io.github.kylinhunter.tools.dic.core.dictionary.WordNodeAware;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.helper.DictionarySkipper;
@@ -25,7 +26,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public abstract class AbstractDictionaryMatcher<T extends WordNode, R> implements DictionaryMatcher<T, R> {
+public abstract class AbstractDictionaryMatcher<T extends WordNode, R extends WordNodeAware>
+        implements DictionaryMatcher<T, R> {
     protected DictionarySkipper dictionarySkipper = CF.get(DictionarySkipper.class);
     protected DictionaryGroup<T> dictionaryGroup = new DictionaryGroup<>();
     protected WordAnalyzer wordAnalyzer = CF.get(WordAnalyzerType.DEFAULT);

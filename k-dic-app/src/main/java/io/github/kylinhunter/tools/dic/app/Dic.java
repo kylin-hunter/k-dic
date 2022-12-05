@@ -1,6 +1,7 @@
 package io.github.kylinhunter.tools.dic.app;
 
 import io.github.kylinhunter.tools.dic.app.bean.DicWord;
+import io.github.kylinhunter.tools.dic.core.dictionary.WordNodeAware;
 
 /**
  * @author bijian
@@ -8,7 +9,7 @@ import io.github.kylinhunter.tools.dic.app.bean.DicWord;
  * @description DicCache
  * @date 2022/1/22 1:12
  */
-public interface Dic<T extends DicWord> {
+public interface Dic<T extends DicWord, R extends WordNodeAware> {
 
 }
 

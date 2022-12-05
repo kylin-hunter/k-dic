@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary.MatchContext;
+import io.github.kylinhunter.tools.dic.core.dictionary.WordNodeAware;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
@@ -30,7 +31,8 @@ public class DictionaryMatchHelper {
      * @date 2022-01-27 02:44
      */
     @SuppressWarnings("unchecked")
-    public static <T extends WordNode,R> MatchResult<R> toMatchResult(MatchFrag<T> matchFrag, T wordNode) {
+    public static <T extends WordNode, R extends WordNodeAware> MatchResult<R> toMatchResult(MatchFrag<T> matchFrag,
+                                                                                             T wordNode) {
         MatchLevel matchLevel = matchFrag.getLevel();
         MatchResult<R> matchResult = new MatchResult<>(matchLevel);
         matchResult.setHitWord(matchFrag.getHitWord());

@@ -3,6 +3,7 @@ package io.github.kylinhunter.tools.dic.core.match.bean;
 import java.util.Arrays;
 import java.util.StringJoiner;
 
+import io.github.kylinhunter.tools.dic.core.dictionary.WordNodeAware;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +14,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class MatchResult<T> {
+public class MatchResult<T extends WordNodeAware> {
     private MatchLevel matchLevel;
     private String hitWord;
     private String hitWordRaw;

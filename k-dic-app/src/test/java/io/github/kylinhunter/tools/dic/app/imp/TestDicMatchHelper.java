@@ -7,16 +7,18 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
+import io.github.kylinhunter.tools.dic.core.dictionary.WordNodeAware;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
 import io.github.kylinhunter.tools.dic.core.match.bean.MatchResult;
 
 /**
  * @author BiJi'an
  * @description
- * @create 2022-01-01 05:42
+ * @date 2022/12/5
  **/
 public class TestDicMatchHelper {
-    public static <T> String[] toStringArr(String text, FindLevel findLevel, List<MatchResult<T>> matchResults) {
+    public static <R extends WordNodeAware> String[] toStringArr(String text, FindLevel findLevel,
+                                                                 List<MatchResult<R>> matchResults) {
         List<String> result = toString(text, findLevel, matchResults);
         if (result != null) {
             return result.toArray(new String[0]);
@@ -24,7 +26,9 @@ public class TestDicMatchHelper {
         return new String[0];
     }
 
-    public static <T> List<String> toString(String text, FindLevel findLevel, List<MatchResult<T>> matchResults) {
+    @SuppressWarnings("rawtypes")
+    public static <R extends WordNodeAware> List<String> toString(String text, FindLevel findLevel,
+                                                                  List<MatchResult<R>> matchResults) {
         System.out.println("************ print start *********************");
         List<String> matchResultsArr = Lists.newArrayList();
         if (text != null) {

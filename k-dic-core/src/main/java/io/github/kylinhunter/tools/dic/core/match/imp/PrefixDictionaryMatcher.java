@@ -5,6 +5,7 @@ import java.util.List;
 
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary.MatchContext;
+import io.github.kylinhunter.tools.dic.core.dictionary.WordNodeAware;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.DicConst;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.FindLevel;
@@ -19,7 +20,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PrefixDictionaryMatcher<T extends WordNode, R> extends AbstractDictionaryMatcher<T, R>
+public class PrefixDictionaryMatcher<T extends WordNode, R extends WordNodeAware>
+        extends AbstractDictionaryMatcher<T, R>
         implements DictionaryMatcher<T, R> {
 
     @SuppressWarnings("CommentedOutCode")
