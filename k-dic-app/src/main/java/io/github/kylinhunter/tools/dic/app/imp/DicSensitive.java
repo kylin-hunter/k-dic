@@ -19,12 +19,35 @@ public class DicSensitive extends AbstractDic<DicSensitive.SensitiveWord, DicSen
         super(DicType.SENSITIVE);
     }
 
-    public void add(HitMode hitMode, String keyword) {
-        this.addWord(new SensitiveWordAdapter(hitMode, keyword));
-    }
-
+    /**
+     * @param hitMode          hit mode  ，
+     *                         support three mode ,for example: fox
+     *                         HIGH： support whole hit, for example: "fox"
+     *                         MIDDLE：support HIGH mode， and also support hit with some special symbols ，for example:
+     *                         fo*x、fo@#x
+     *                         LOW：support HIGH+MIDDLE mode，  and also support hit other word，for example: "foax"
+     *                         "fo*1#x"
+     * @param keyword          sensitive word  for example: fox
+     * @param assistedKeywords assisted words
+     *                         can be nullable
+     *                         if the words exist ,those words  must be hit,otherwise, sensitive words will not
+     *                         takeeffect
+     * @return void
+     * @title add a word  to dic
+     * @description
+     * @author BiJi'an
+     * @date 2022-12-07 23:06
+     */
     public void add(HitMode hitMode, String keyword, String[] assistedKeywords) {
         this.addWord(new SensitiveWordAdapter(hitMode, keyword, assistedKeywords));
+    }
+
+    /**
+     * @return void
+     * @see #add(HitMode, String, String[])
+     */
+    public void add(HitMode hitMode, String keyword) {
+        this.addWord(new SensitiveWordAdapter(hitMode, keyword));
     }
 
     /**

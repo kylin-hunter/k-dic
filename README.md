@@ -39,6 +39,44 @@ a dictionary tool according to trie
 
 #### 1. check sensitive words
 
+##### 1.1 api
+
+```java
+    /**
+     * @title  add a word  to dic 
+     * @description  
+     * @author BiJi'an 
+     * @param hitMode  hit mode  ，
+     *        support three mode ,for example: fox  
+     *        HIGH： support whole hit, for example: "fox" 
+     *        MIDDLE：support HIGH mode， and also support hit with some special symbols ，for example: fo*x、fo@#x
+     *        LOW：support HIGH+MIDDLE mode，  and also support hit other word，for example: "foax" "fo*1#x"  
+     * @param keyword  sensitive word  for example: fox
+     * @param assistedKeywords assisted words
+     *        can be nullable
+     *        if the words exist ,those words  must be hit,otherwise, sensitive words will not takeeffect
+     * @date 2022-12-07 23:06
+     * @return void
+     */
+    public void add(HitMode hitMode, String keyword, String[] assistedKeywords) ;
+
+    /**
+     * @param inputText the text will be detected
+     * @param findLevel findLevel ，support three mode
+     *                  HIGH: reference HitMode.HIGH
+     *                  HIGH_MIDDLE: reference HitMode.MIDDLE
+     *                  HIGH_MIDDLE_LOW: reference HitMode.LOW
+     * @return List<MatchResult< SensitiveWord>> the sensitive words ,with offset postion
+     * @title check  sensitive word
+     * @description
+     * @author BiJi'an
+     * @date 2022-12-05 02:46
+     */
+    public List<MatchResult<SensitiveWord>> match(String inputText, FindLevel findLevel) ;
+
+```
+
+##### 1.2 exampe
 
 ```java
 // Example 
@@ -83,9 +121,10 @@ a dictionary tool according to trie
         matchResults = dicSensitive.match(text, FindLevel.HIGH_MIDDLE_LOW);
         matchResults.forEach(System.out::println);
 ```
-```java
 
-// print result
+##### 1.3 print result
+
+```java
         only high hit:
         MatchResult[matchLevel=HIGH, hitWord='kylin', hitWordRaw='kylin', start=0, end=5, assistedWords=null]
         MatchResult[matchLevel=HIGH, hitWord='kylin', hitWordRaw='kylin', start=34, end=39, assistedWords=null]
