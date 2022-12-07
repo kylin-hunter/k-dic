@@ -40,8 +40,44 @@
 
 #### 1.  敏感词检查
 
+##### 1.1 主要api介绍
 ```java
-//代码示例
+    /**
+     * @title  添加敏感词到词典中
+     * @description 
+     * @author BiJi'an 
+     * @param hitMode  命中模式 ，
+     *                 分为高中低三种命中模式，以北京为例  
+     *                 HIGH模式：支持命中"北京" 
+     *                 MIDDLE模式：支持HIGH模式， 还额外支持特殊符号夹在其中，例如 "北*京" "北@#京"
+     *                 LOW：支持HIGH+MIDDLE模式， 还额外支持含有一些其他字符，例如 "北啊京" "北*大*京"  
+     * @param keyword  敏感词 ，例如：北京
+     * @param assistedKeywords 辅助词：需要需要命中这些词，敏感词才能够真正命中，允许为空
+     * @date 2022-12-07 23:06
+     * @return void
+     */
+    public void add(HitMode hitMode, String keyword, String[] assistedKeywords) ;
+    
+
+    /**
+     * @param inputText 待检测的文本
+     * @param findLevel findLevel ，支持三种查询模式
+     *                  HIGH: 高度匹配检查
+     *                  HIGH_MIDDLE: 高度检查+中度检查
+     *                  HIGH_MIDDLE_LOW: 高度检查+中度检查+低度检查
+     * @return List<MatchResult< SensitiveWord>> 命中的敏感词，包括命中的敏感词的位置
+     * @title 查询敏感词
+     * @description
+     * @author BiJi'an
+     * @date 2022-12-05 02:46
+     */
+    public List<MatchResult<SensitiveWord>> match(String inputText, FindLevel findLevel) ;
+
+```
+
+##### 1.2 代码示例
+
+```java
 
         String text = "北京和北**京和北**啊**京"
         + "北京海淀和北**京海淀和北**啊**京海淀"
@@ -85,8 +121,10 @@
         matchResults = dicSensitive.match(text, FindLevel.HIGH_MIDDLE_LOW);
         matchResults.forEach(System.out::println);
 ```
+
+##### 1.3 打印 结果
+
 ```java
-// 打印 结果
         仅高度命中:
         MatchResult[matchLevel=HIGH, hitWord='北京', hitWordRaw='北京', start=0, end=2, assistedWords=null]
         MatchResult[matchLevel=HIGH, hitWord='北京', hitWordRaw='北京', start=15, end=17, assistedWords=null]
