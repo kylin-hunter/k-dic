@@ -1,5 +1,5 @@
 dependencies {
-    api 'io.github.kylin-hunter:k-commons:1.0.5'
+    api 'io.github.kylin-hunter:k-commons:1.0.10'
     api(rootProject.dependency_management['IKAnalyzer'])
     api(rootProject.dependency_management['pinyin4j'])
 }
