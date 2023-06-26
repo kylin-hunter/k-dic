@@ -1,8 +1,8 @@
 package io.github.kylinhunter.tools.dic.core.dictionary.constant;
 
 
-import io.github.kylinhunter.commons.util.EnumUtils;
 
+import io.github.kylinhunter.commons.lang.EnumUtils;
 import lombok.Getter;
 
 /**

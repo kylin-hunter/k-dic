@@ -1,6 +1,6 @@
 package io.github.kylinhunter.tools.dic.core.match.bean;
 
-import io.github.kylinhunter.commons.util.EnumUtils;
+import io.github.kylinhunter.commons.lang.EnumUtils;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary.MatchContext;
 import io.github.kylinhunter.tools.dic.core.dictionary.bean.WordNode;
 import io.github.kylinhunter.tools.dic.core.dictionary.constant.MatchLevel;

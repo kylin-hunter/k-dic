@@ -1,13 +1,12 @@
 package io.github.kylinhunter.tools.dic.core.match.imp;
 
+import io.github.kylinhunter.commons.collections.CollectionUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 
 import io.github.kylinhunter.commons.component.CF;
-import io.github.kylinhunter.commons.util.CollectionUtils;
 import io.github.kylinhunter.tools.dic.core.dictionary.Dictionary;
 import io.github.kylinhunter.tools.dic.core.dictionary.DictionaryGroup;
 import io.github.kylinhunter.tools.dic.core.dictionary.WordNodeAware;
@@ -22,6 +21,7 @@ import io.github.kylinhunter.tools.dic.words.analyzer.bean.Words;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 @Getter
 @Setter
