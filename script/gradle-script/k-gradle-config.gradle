@@ -1,9 +1,9 @@
 ext {
     profile = "local"
     KYLIN_VERIONS = [
-            "k-dic-words": '1.0.5',
-            "k-dic-core" : '1.0.5',
-            "k-dic-app"  : '1.0.5',
+            "k-dic-words": '1.0.7',
+            "k-dic-core" : '1.0.7',
+            "k-dic-app"  : '1.0.7',
     ]
     KYLIN_IMAGE_REPO = "私服地址"
     KYLIN_IMAGE_VERSION = "v1"

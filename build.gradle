@@ -28,13 +28,14 @@ allprojects {
     targetCompatibility = JavaVersion.VERSION_1_8
     repositories {
         mavenLocal()
+        mavenCentral()
         maven {
             url "https://maven.aliyun.com/repository/public"
         }
 //        maven {
 //            url "https://s01.oss.sonatype.org/content/repositories/snapshots"
 //        }
-        mavenCentral()
+
     }
 
     tasks.withType(Javadoc) {
@@ -120,6 +121,14 @@ subprojects {
                 artifactId project.name
                 version project.version
                 from components.java
+                versionMapping {
+                    usage('java-api') {
+                        fromResolutionOf('runtimeClasspath')
+                    }
+                    usage('java-runtime') {
+                        fromResolutionResult()
+                    }
+                }
                 pom {
 
                     name = "${KYLIN_MVN_CONFIG.name}"
@@ -174,10 +183,10 @@ subprojects {
 }
 
 wrapper {
-    gradleVersion = '6.9'
+    gradleVersion = '7.6'
     archiveBase = 'GRADLE_USER_HOME'
     archivePath = 'wrapper/dists'
     distributionBase = 'GRADLE_USER_HOME"'
     distributionPath = 'wrapper/dists'
-    distributionUrl = 'https://services.gradle.org/distributions/gradle-6.9-bin.zip'
+    distributionUrl = 'https://services.gradle.org/distributions/gradle-7.6-bin.zip'
 }

@@ -1,5 +1,7 @@
 dependencies {
-    api 'io.github.kylin-hunter:k-commons:1.0.12'
+    api 'io.github.kylin-hunter:k-commons:1.0.13'
+    api 'org.apache.commons:commons-lang3:3.11'
+    api 'commons-io:commons-io:2.10.0'
     api(rootProject.dependency_management['IKAnalyzer'])
     api(rootProject.dependency_management['pinyin4j'])
 }
