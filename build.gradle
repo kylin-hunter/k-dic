@@ -28,13 +28,14 @@ allprojects {
     targetCompatibility = JavaVersion.VERSION_1_8
     repositories {
         mavenLocal()
+        mavenCentral()
         maven {
             url "https://maven.aliyun.com/repository/public"
         }
 //        maven {
 //            url "https://s01.oss.sonatype.org/content/repositories/snapshots"
 //        }
-        mavenCentral()
+
     }
 
     tasks.withType(Javadoc) {
